@@ -40,11 +40,20 @@ interface Row {
 /** Accueil, avant le choix du profil : longueur du parcours le plus court (profil compris). */
 const hubTotal = 1 + Math.min(...segmentOrder.map((s) => visibleSteps(s, {}).length));
 
+/** 0612345678 / +33612345678 → 06 12 34 56 78 (affichage du récapitulatif). */
+function formatPhone(raw: string): string {
+  const n = normalizeFrenchPhone(raw);
+  if (!n) return raw;
+  return ("0" + n.slice(3)).replace(/(\d{2})(?=\d)/g, "$1 ");
+}
+
 const segmentLabel = (s: Segment) => segmentChoices.find((c) => c.value === s)?.label ?? segments[s].label;
 
 export function StudySheet({ segment: fixed, origin }: { segment?: Segment; origin: string }) {
   const [state, dispatch] = useReducer(reducer, fixed ? { ...initialState, started: true, segment: fixed } : initialState);
   const sheetRef = useRef<HTMLDivElement>(null);
+  // Le consentement survit à un aller-retour « Modifier » (les coordonnées sont gardées dans l'état du moteur).
+  const [consent, setConsent] = useState(false);
   const interacted = useRef(false);
   const startedTracking = useRef(false);
 
@@ -146,10 +155,10 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const valueOf = (row: Row): { text: string; note?: string } => {
     if (row.id === "segment") return { text: state.segment ? segmentLabel(state.segment) : "" };
     const s = row.step!;
-    if (s.type === "contact") return { text: [state.contact.name, state.contact.phone].filter(Boolean).join(" · ") };
+    if (s.type === "contact") return { text: [state.contact.name, formatPhone(state.contact.phone)].filter(Boolean).join(" · ") };
     const v = state.answers[s.id];
     const note = s.type === "choice" ? s.options.find((o) => o.value === v)?.reply : undefined;
-    return { text: v ? answerLabel(s, v) : "Passé", note };
+    return { text: v ? answerLabel(s, v) : "Non renseigné", note };
   };
 
   return (
@@ -239,6 +248,9 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
                     onSegment={pickSegment}
                     onAnswer={answer}
                     onSubmit={submit}
+                    onDraft={(c) => dispatch({ type: "contact", contact: c })}
+                    consent={consent}
+                    onConsent={setConsent}
                   />
                 </li>
               );
@@ -252,7 +264,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
                       <p className="min-w-0 flex-1 py-1.5 sm:flex sm:items-baseline sm:gap-2 sm:py-2">
                         <span className="block text-xs text-muted sm:shrink-0 sm:text-sm">{row.label}</span>
                         <span aria-hidden className="hidden min-w-3 flex-1 -translate-y-1 border-b border-dotted border-deep/35 sm:block" />
-                        <span className={cn("block text-[0.95rem] leading-snug font-semibold sm:text-right", v.text === "Passé" ? "text-muted" : "text-deep")}>{v.text}</span>
+                        <span className={cn("block text-[0.95rem] leading-snug font-semibold sm:text-right", v.text === "Non renseigné" ? "text-muted" : "text-deep")}>{v.text}</span>
                       </p>
                       {!done && (
                         <button
@@ -291,10 +303,19 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
 
         {done ? (
           <div data-sheet-done tabIndex={-1} role="status" className="border-t-2 border-hdf px-4 py-5 outline-none sm:px-6">
-            <p className="text-lg font-bold text-deep">{jawabotCopy.successTitle}</p>
+            {/* Le tampon est reposé ici : sur mobile, l'en-tête de la fiche est alors hors écran. */}
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-lg font-bold text-deep">{jawabotCopy.successTitle}</p>
+              <span className="stamp-press mt-0.5 inline-flex shrink-0 items-center rounded-[3px] border-2 border-hdf bg-hdf px-2 py-0.5 text-[0.7rem] font-bold tracking-[0.06em] text-white uppercase sm:hidden">Transmise</span>
+            </div>
             <p className="mt-1.5 text-[0.95rem] leading-relaxed text-muted">
               {jawabotCopy.successText}
             </p>
+            {state.answers.contact_preference === "rappel" && state.contact.bestTime && (
+              <p className="mt-2 text-sm text-deep">
+                Rappel souhaité : <strong>{bestTimeOptions.find((o) => o.value === state.contact.bestTime)?.label.toLowerCase()}</strong>.
+              </p>
+            )}
             {state.leadId && (
               <p className="mt-2 text-sm text-muted">
                 Référence : <strong className="tabular text-deep">{state.leadId}</strong>
@@ -341,6 +362,9 @@ function ActiveRubric({
   onSegment,
   onAnswer,
   onSubmit,
+  onDraft,
+  consent,
+  onConsent,
 }: {
   row: Row;
   fixed: boolean;
@@ -348,6 +372,9 @@ function ActiveRubric({
   onSegment: (s: Segment) => void;
   onAnswer: (s: Step, v: string) => void;
   onSubmit: (c: JawabotContact) => void;
+  onDraft: (c: JawabotContact) => void;
+  consent: boolean;
+  onConsent: (v: boolean) => void;
 }) {
   const qid = `q-${row.id}`;
   if (row.id === "segment")
@@ -379,6 +406,9 @@ function ActiveRubric({
           submitting={state.status === "submitting"}
           retry={state.status === "error"}
           onSubmit={onSubmit}
+          onDraft={onDraft}
+          consent={consent}
+          onConsent={onConsent}
         />
       )}
     </div>
@@ -435,7 +465,7 @@ function LineInput({ step, postal = false, labelledBy, onSubmit }: { step?: Text
             setError(undefined);
           }}
           {...(postal
-            ? { inputMode: "numeric" as const, autoComplete: "postal-code", maxLength: 5, placeholder: "59410" }
+            ? { inputMode: "numeric" as const, autoComplete: "postal-code", maxLength: 5 }
             : { autoComplete: step?.autoComplete ?? "off", maxLength: step?.maxLength, placeholder: step?.placeholder })}
           className={cn(
             "min-h-12 w-full min-w-0 rounded-none border-0 border-b-2 border-deep/30 bg-transparent px-1 text-lg text-ink placeholder:text-muted focus:border-hdf aria-[invalid=true]:border-[#b42318]",
@@ -447,6 +477,7 @@ function LineInput({ step, postal = false, labelledBy, onSubmit }: { step?: Text
           <ArrowRight className="size-4" aria-hidden />
         </button>
       </div>
+      {postal && !error && <p className="mt-1.5 text-xs text-muted">5 chiffres, par exemple 59410.</p>}
       {error && (
         <p id={errId} role="alert" className="mt-2 text-sm font-semibold text-[#b42318]">
           {error}
@@ -468,6 +499,9 @@ function ContactFields({
   submitting,
   retry,
   onSubmit,
+  onDraft,
+  consent,
+  onConsent,
 }: {
   askRole: boolean;
   askBestTime: boolean;
@@ -475,9 +509,11 @@ function ContactFields({
   submitting: boolean;
   retry: boolean;
   onSubmit: (v: JawabotContact) => void;
+  onDraft: (v: JawabotContact) => void;
+  consent: boolean;
+  onConsent: (v: boolean) => void;
 }) {
   const [v, setV] = useState<JawabotContact>(initial);
-  const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof JawabotContact | "consent", string>>>({});
   const alertRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
@@ -485,7 +521,9 @@ function ContactFields({
   }, [retry]);
 
   const set = (k: keyof JawabotContact) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setV((s) => ({ ...s, [k]: e.target.value }));
+    const next = { ...v, [k]: e.target.value };
+    setV(next);
+    onDraft(next);
     setErrors((s) => ({ ...s, [k]: undefined }));
   };
 
@@ -511,14 +549,14 @@ function ContactFields({
       }}
     >
       <TextField label="Nom et prénom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} data-autofocus />
-      <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
+      <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" hint="Par exemple 06 12 34 56 78." value={v.phone} onChange={set("phone")} error={errors.phone} />
       {askBestTime && <SelectField label="Meilleur moment pour vous rappeler" placeholder="Sélectionnez…" options={bestTimeOptions} value={v.bestTime} onChange={set("bestTime")} error={errors.bestTime} />}
       <TextField label="E-mail" type="email" autoComplete="email" optional value={v.email} onChange={set("email")} error={errors.email} />
       {askRole && <TextField label="Fonction" autoComplete="organization-title" optional value={v.role} onChange={set("role")} />}
       <ConsentField
         checked={consent}
         onChange={(c) => {
-          setConsent(c);
+          onConsent(c);
           setErrors((s) => ({ ...s, consent: undefined }));
         }}
         error={errors.consent}

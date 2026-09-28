@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { company, telHref } from "@/config/company";
 import { faqFor } from "@/config/faq";
 import type { Segment } from "@/config/services";
@@ -25,11 +25,12 @@ export function Faq({ segment }: { segment?: Segment }) {
               <details key={item.q} className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-base font-semibold text-deep">
                   {item.q}
-                  <span className="grid size-8 shrink-0 place-items-center rounded-[3px] border-2 border-hdf/60 text-hdf transition-transform duration-300 group-open:rotate-45">
-                    <Plus className="size-4" aria-hidden />
+                  <span className="grid size-8 shrink-0 place-items-center rounded-[3px] border-2 border-hdf/60 text-hdf">
+                    <Plus className="size-4 group-open:hidden" aria-hidden />
+                    <Minus className="hidden size-4 group-open:block" aria-hidden />
                   </span>
                 </summary>
-                <p className="max-w-[68ch] pb-5 leading-relaxed text-muted">{item.a}</p>
+                <p className="max-w-[60ch] pb-5 leading-relaxed text-muted">{item.a}</p>
               </details>
             ))}
           </div>

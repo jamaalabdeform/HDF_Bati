@@ -90,11 +90,11 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
         {!defaultSegment && (
         <fieldset className="sm:col-span-2" aria-describedby={errors.segment ? "cb-segment-error" : undefined}>
           <legend className="mb-1.5 text-sm font-semibold text-deep">Vous êtes</legend>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid gap-2 sm:grid-cols-3">
             {segmentOrder.map((id) => (
               <label
                 key={id}
-                className="group flex min-h-12 cursor-pointer items-center gap-2 rounded-md border border-deep/20 px-2 text-[0.8rem] font-semibold text-deep transition-colors hover:border-hdf sm:px-3 sm:text-sm has-[:checked]:border-hdf has-[:checked]:bg-surface has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-navy"
+                className="group flex min-h-12 cursor-pointer items-center gap-2 rounded-md border border-deep/20 px-3 text-sm font-semibold text-deep transition-colors hover:border-hdf has-[:checked]:border-hdf has-[:checked]:bg-surface has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-navy"
               >
                 <input
                   type="radio"
@@ -122,7 +122,7 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
         </fieldset>
         )}
         <TextField label="Nom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} className="sm:col-span-2" />
-        <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
+        <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" hint="Par exemple 06 12 34 56 78." value={v.phone} onChange={set("phone")} error={errors.phone} />
         <TextField label="Code postal" inputMode="numeric" autoComplete="postal-code" maxLength={5} value={v.postalCode} onChange={(e) => { e.target.value = e.target.value.replace(/\D/g, ""); set("postalCode")(e); }} error={errors.postalCode} />
         <SelectField label="Type de projet" placeholder={v.segment ? "Sélectionnez…" : "Choisissez un profil"} disabled={!v.segment} options={v.segment ? callbackProjectOptions[v.segment] : []} value={v.project} onChange={set("project")} error={errors.project} />
         <SelectField label="Meilleur moment pour être rappelé" placeholder="Sélectionnez…" options={bestTimeOptions} value={v.bestTime} onChange={set("bestTime")} error={errors.bestTime} />

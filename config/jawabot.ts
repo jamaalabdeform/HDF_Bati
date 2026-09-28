@@ -82,7 +82,7 @@ export const segmentChoices: { value: Segment; label: string }[] = [
 const contactPreference: ChoiceStep = {
   id: "contact_preference",
   type: "choice",
-  summaryLabel: "Souhait",
+  summaryLabel: "Suite souhaitée",
   question: "Pour la suite, vous préférez :",
   options: [
     { value: "rappel", label: "Être rappelé" },

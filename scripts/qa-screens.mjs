@@ -131,10 +131,15 @@ for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/partic
   await sheet.getByRole("button", { name: "Continuer" }).click();
   await page.waitForTimeout(350);
   await pick("Gaz");
-  // Modifier une rubrique déjà remplie puis reprendre
-  await sheet.getByRole("button", { name: "Modifier : Chauffage actuel" }).click();
+  // « Modifier » une rubrique antérieure : seule sa réponse est reprise, les suivantes restent.
+  await sheet.getByRole("button", { name: "Modifier : Statut" }).click();
   await page.waitForTimeout(350);
-  await pick("Gaz");
+  await pick("Propriétaire bailleur");
+  const kept = await sheet.getByText("59410").count();
+  if (!kept) throw new Error("« Modifier » a effacé le code postal déjà saisi");
+  await sheet.getByRole("button", { name: "Modifier : Statut" }).click();
+  await page.waitForTimeout(350);
+  await pick("Propriétaire occupant");
   await pick("Réduire mes dépenses d’énergie");
   await page.screenshot({ path: `${OUT}/${tag}-fiche-2.png` });
   await pick("Dans les 3 mois");

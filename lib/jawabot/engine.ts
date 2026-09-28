@@ -39,7 +39,7 @@ export type JawabotAction =
   | { type: "segment"; segment: Segment }
   | { type: "answer"; stepId: string; value: string }
   | { type: "back" }
-  /** Reprend la fiche à une rubrique : efface sa réponse et toutes les suivantes. */
+  /** Reprend la fiche à une rubrique : efface sa seule réponse, les autres sont conservées. */
   | { type: "rewind"; stepId: string }
   | { type: "contact"; contact: JawabotContact }
   | { type: "submitting" }
@@ -83,8 +83,12 @@ export function reducer(state: JawabotState, action: JawabotAction): JawabotStat
       };
     case "segment":
       return { ...state, segment: action.segment, answers: {} };
-    case "answer":
-      return { ...state, answers: { ...state.answers, [action.stepId]: action.value } };
+    case "answer": {
+      // Une réponse peut masquer des rubriques conditionnelles : leurs anciennes réponses sont retirées.
+      const answers = { ...state.answers, [action.stepId]: action.value };
+      if (state.segment) for (const s of getFlow(state.segment)) if (s.when && !s.when(answers)) delete answers[s.id];
+      return { ...state, answers };
+    }
     case "back": {
       if (state.status === "done") return state;
       const answered = answeredSteps(state);
@@ -97,11 +101,9 @@ export function reducer(state: JawabotState, action: JawabotAction): JawabotStat
     case "rewind": {
       if (state.status === "done" || state.status === "submitting") return state;
       if (action.stepId === "segment") return { ...state, segment: null, answers: {}, status: "chatting" };
-      const flow = state.segment ? getFlow(state.segment) : [];
-      const idx = flow.findIndex((s) => s.id === action.stepId);
-      if (idx < 0) return state;
+      if (!(action.stepId in state.answers)) return state;
       const answers = { ...state.answers };
-      for (const s of flow.slice(idx)) delete answers[s.id];
+      delete answers[action.stepId];
       return { ...state, answers, status: "chatting" };
     }
     case "contact":
