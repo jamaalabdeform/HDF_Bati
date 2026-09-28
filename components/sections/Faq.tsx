@@ -7,7 +7,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 /** FAQ en <details> natif : accessible au clavier, zéro JavaScript. */
 export function Faq() {
   return (
-    <section id={anchors.faq} data-section="faq" aria-labelledby="faq-title" className="bg-white py-20 sm:py-24">
+    <section id={anchors.faq} data-section="faq" aria-labelledby="faq-title" className="bg-white py-14 sm:py-24">
       <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <SectionHeading id="faq-title" title="Les questions que l’on nous pose le plus" intro="Une autre question ? Posez-la directement à HDF Bâti : nous vous répondons simplement." />
           <div className="divide-y divide-line rounded-[var(--radius-card)] border border-line bg-white">

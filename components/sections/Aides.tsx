@@ -8,7 +8,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 
 export function Aides() {
   return (
-    <section id={anchors.aides} data-section="aides" aria-labelledby="aides-title" className="bg-white py-20 sm:py-24">
+    <section id={anchors.aides} data-section="aides" aria-labelledby="aides-title" className="bg-white py-14 sm:py-24">
       <Container className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading id="aides-title" title={aides.title} intro={aides.intro} />

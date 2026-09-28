@@ -13,7 +13,7 @@ const checkTone = { green: "text-hdf", navy: "text-navy", deep: "text-deep" } as
 
 export function ProjectCards() {
   return (
-    <section id={anchors.projets} data-section="votre_projet" aria-labelledby="projets-title" className="bg-white py-20 sm:py-24">
+    <section id={anchors.projets} data-section="votre_projet" aria-labelledby="projets-title" className="bg-white py-14 sm:py-24">
       <Container>
         <SectionHeading
           id="projets-title"
@@ -21,7 +21,7 @@ export function ProjectCards() {
           intro="Choisissez votre profil : chaque demande suit un parcours adapté, avec les bonnes questions dès le départ."
         />
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projectCards.map((card) => (
             <article
               key={card.id}
@@ -29,7 +29,7 @@ export function ProjectCards() {
               className="group flex scroll-mt-28 flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-white transition-colors duration-200 hover:border-deep/30"
             >
               <div className="relative">
-                <MediaImage asset={card.image} sizes="(min-width: 1024px) 24rem, (min-width: 768px) 50vw, 100vw" className="aspect-[16/9] sm:aspect-[16/10]" />
+                <MediaImage asset={card.image} sizes="(min-width: 1024px) 24rem, (min-width: 768px) 50vw, 100vw" className="aspect-[2/1] sm:aspect-[16/10]" />
                 <Badge tone={card.tone} className="absolute bottom-3 left-3">
                   {card.badge}
                 </Badge>

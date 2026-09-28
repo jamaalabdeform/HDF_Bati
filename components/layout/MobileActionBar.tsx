@@ -3,12 +3,16 @@
 import { MessageCircle, Phone } from "lucide-react";
 import { telHref } from "@/config/company";
 import { jawabotCopy } from "@/config/jawabot";
+import { anchors } from "@/config/navigation";
 import { useJawabot } from "../jawabot/JawabotProvider";
+import { useSectionInView } from "./useSectionInView";
 
 /** Barre d'action mobile : téléphone + Jawabot toujours accessibles au pouce. */
 export function MobileActionBar() {
   const { open, isOpen, preferredSegment } = useJawabot();
-  if (isOpen) return null;
+  // Masquée sur le formulaire de rappel : elle recouvrirait ses champs et doublerait son bouton.
+  const onCallback = useSectionInView(anchors.rappel);
+  if (isOpen || onCallback) return null;
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-white/95 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur sm:hidden">
       <div className="grid grid-cols-[auto_1fr] gap-2">

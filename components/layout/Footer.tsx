@@ -17,7 +17,7 @@ export function Footer() {
 
   return (
     <footer data-section="footer" className="bg-deep pb-24 text-white sm:pb-0">
-      <Container className="grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1.2fr] lg:gap-12">
+      <Container className="grid gap-8 py-12 sm:gap-10 sm:py-14 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1.2fr] lg:gap-12">
         <div>
           <Logo variant="full-inverse" height={96} className="h-auto w-[280px] max-w-full" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/75">
@@ -27,7 +27,7 @@ export function Footer() {
 
         <div>
           <p className="text-sm font-semibold text-white/60">HDF Bâti</p>
-          <ul className="mt-4 space-y-1">
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.offres.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className="inline-flex min-h-10 items-center text-sm text-white/85 hover:text-white hover:underline">

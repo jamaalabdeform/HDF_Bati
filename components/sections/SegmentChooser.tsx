@@ -22,7 +22,7 @@ export function SegmentChooser() {
   const { open, preferredSegment, setPreferredSegment } = useJawabot();
   return (
     <fieldset className="mt-7">
-      <legend className="mb-3 text-sm font-semibold text-deep">Vous êtes :</legend>
+      <legend className="mb-3 text-base font-bold text-deep">Étudier mon projet — vous êtes :</legend>
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {segmentOrder.map((id) => {
           const s = segments[id];

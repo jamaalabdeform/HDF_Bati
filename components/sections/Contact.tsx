@@ -13,7 +13,7 @@ export function Contact() {
     { label: "Adresse", value: fullAddress, href: mapsHref, external: true },
   ];
   return (
-    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-20 sm:py-24">
+    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-24">
       <Container className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <SectionHeading id="contact-title" title={`Contacter ${company.name}`} intro={`Entreprise basée à ${company.address.city}, dans le ${company.address.department}. Nous intervenons dans les Hauts-de-France et, selon le projet, partout en France.`} />

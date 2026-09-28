@@ -8,7 +8,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 
 export function Callback() {
   return (
-    <section id={anchors.rappel} data-section="rappel" aria-labelledby="rappel-title" className="bg-deep py-20 text-white sm:py-24">
+    <section id={anchors.rappel} data-section="rappel" aria-labelledby="rappel-title" className="bg-deep py-14 text-white sm:py-24">
       <Container className="grid items-start gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <SectionHeading id="rappel-title" invert title="Vous préférez être rappelé ?" intro="Laissez vos coordonnées : HDF Bâti vous rappelle au moment qui vous arrange pour parler de votre projet." />

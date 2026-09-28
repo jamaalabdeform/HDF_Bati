@@ -11,7 +11,7 @@ export function WhyHdf() {
   const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed");
 
   return (
-    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-surface py-20 sm:py-24">
+    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-surface py-14 sm:py-24">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" intro="Un rappel rapide, des démarches d’aides faites avec vous, et une étude sérieuse avant toute proposition." />
