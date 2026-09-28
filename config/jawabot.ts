@@ -74,9 +74,9 @@ export const jawabotCopy = {
 } as const;
 
 export const segmentChoices: { value: Segment; label: string }[] = [
-  { value: "particulier", label: "Mon logement" },
-  { value: "professionnel", label: "Mon entreprise" },
-  { value: "collectivite", label: "Une collectivité" },
+  { value: "particulier", label: "Particulier : mon logement" },
+  { value: "professionnel", label: "Professionnel : mon entreprise" },
+  { value: "collectivite", label: "Collectivité : ma structure publique" },
 ];
 
 const contactPreference: ChoiceStep = {

@@ -33,7 +33,7 @@ export function Contact() {
             className="inline-flex min-h-12 shrink-0 items-center gap-2 self-start rounded-md border-2 border-hdf px-5 font-semibold text-hdf transition-colors hover:bg-hdf hover:text-white sm:self-auto"
           >
             <MessageCircle className="size-5" aria-hidden />
-            Échanger avec HDF Bâti
+            Échanger avec HDF Bâti sur WhatsApp
           </a>
         </div>
 

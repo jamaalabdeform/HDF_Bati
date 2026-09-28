@@ -22,8 +22,9 @@ export interface JawabotState {
   contact: JawabotContact;
   status: JawabotStatus;
   leadId?: string;
-  /** Réponse d'information à afficher après un choix (clé = step id). */
   started: boolean;
+  /** Rubrique rouverte par « Modifier » : sa réponse reste en place tant qu'elle n'est pas remplacée. */
+  editing: string | null;
 }
 
 export const initialState: JawabotState = {
@@ -32,6 +33,7 @@ export const initialState: JawabotState = {
   contact: { name: "", phone: "", email: "", role: "", bestTime: "" },
   status: "chatting",
   started: false,
+  editing: null,
 };
 
 export type JawabotAction =
@@ -39,8 +41,12 @@ export type JawabotAction =
   | { type: "segment"; segment: Segment }
   | { type: "answer"; stepId: string; value: string }
   | { type: "back" }
-  /** Reprend la fiche à une rubrique : efface sa seule réponse, les autres sont conservées. */
+  /** Rouvre une rubrique déjà remplie ; toutes les réponses restent en place. */
   | { type: "rewind"; stepId: string }
+  /** Referme la rubrique rouverte en gardant sa réponse. */
+  | { type: "keep" }
+  /** Reprise d'une fiche interrompue (réponses seulement, jamais les coordonnées). */
+  | { type: "restore"; segment: Segment | null; answers: Answers }
   | { type: "contact"; contact: JawabotContact }
   | { type: "submitting" }
   | { type: "done"; leadId?: string }
@@ -58,6 +64,10 @@ export function answeredSteps(state: JawabotState): Step[] {
 
 export function currentStep(state: JawabotState): Step | null {
   if (!state.segment) return null;
+  if (state.editing) {
+    const edited = visibleSteps(state.segment, state.answers).find((s) => s.id === state.editing);
+    if (edited) return edited;
+  }
   return visibleSteps(state.segment, state.answers).find((s) => !(s.id in state.answers)) ?? null;
 }
 
@@ -82,12 +92,12 @@ export function reducer(state: JawabotState, action: JawabotAction): JawabotStat
         answers: action.segment ? { ...(action.preset ?? {}) } : {},
       };
     case "segment":
-      return { ...state, segment: action.segment, answers: {} };
+      return { ...state, segment: action.segment, answers: {}, editing: null };
     case "answer": {
       // Une réponse peut masquer des rubriques conditionnelles : leurs anciennes réponses sont retirées.
       const answers = { ...state.answers, [action.stepId]: action.value };
       if (state.segment) for (const s of getFlow(state.segment)) if (s.when && !s.when(answers)) delete answers[s.id];
-      return { ...state, answers };
+      return { ...state, answers, editing: null };
     }
     case "back": {
       if (state.status === "done") return state;
@@ -100,12 +110,14 @@ export function reducer(state: JawabotState, action: JawabotAction): JawabotStat
     }
     case "rewind": {
       if (state.status === "done" || state.status === "submitting") return state;
-      if (action.stepId === "segment") return { ...state, segment: null, answers: {}, status: "chatting" };
+      if (action.stepId === "segment") return { ...state, segment: null, answers: {}, editing: null, status: "chatting" };
       if (!(action.stepId in state.answers)) return state;
-      const answers = { ...state.answers };
-      delete answers[action.stepId];
-      return { ...state, answers, status: "chatting" };
+      return { ...state, editing: action.stepId, status: "chatting" };
     }
+    case "keep":
+      return { ...state, editing: null };
+    case "restore":
+      return { ...state, started: true, segment: action.segment, answers: { ...action.answers }, editing: null };
     case "contact":
       return { ...state, contact: action.contact };
     case "submitting":

@@ -107,8 +107,8 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
                   }}
                   className="sr-only"
                 />
-                <span aria-hidden className="grid size-4 shrink-0 place-items-center rounded-[3px] border-2 border-deep/35 group-has-[:checked]:border-hdf">
-                  <span className="size-2 rounded-[1px] bg-hdf opacity-0 group-has-[:checked]:opacity-100" />
+                <span aria-hidden className="grid size-4 shrink-0 place-items-center rounded-full border-2 border-deep/35 group-has-[:checked]:border-hdf">
+                  <span className="size-2 rounded-full bg-hdf opacity-0 group-has-[:checked]:opacity-100" />
                 </span>
                 {segments[id].chooserLabel}
               </label>

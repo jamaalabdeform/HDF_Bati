@@ -122,7 +122,7 @@ for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/partic
     await sheet.getByRole("button", { name: label, exact: true }).click();
     await page.waitForTimeout(350);
   };
-  if (path === "/") await pick("Mon logement");
+  if (path === "/") await pick("Particulier : mon logement");
   await page.screenshot({ path: `${OUT}/${tag}-fiche-1.png` });
   await pick("Pompe à chaleur");
   await pick("Maison individuelle");

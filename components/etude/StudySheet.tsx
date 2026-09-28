@@ -57,22 +57,51 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const interacted = useRef(false);
   const startedTracking = useRef(false);
 
-  // Accueil : un lien de campagne peut préremplir le profil (?profil=particulier…).
+  const storageKey = `hdf-fiche:${fixed ?? "accueil"}`;
+  const [restored, setRestored] = useState(false);
+
+  // Reprise après interruption : seules les réponses au projet sont gardées, le temps de la visite.
+  // Sinon, sur l'accueil, un lien de campagne peut préremplir le profil (?profil=particulier…).
   useEffect(() => {
+    let saved: { segment: Segment | null; answers: Record<string, string> } | null = null;
+    try {
+      const raw = sessionStorage.getItem(storageKey);
+      if (raw) saved = JSON.parse(raw);
+    } catch {
+      saved = null;
+    }
+    if (saved && Object.keys(saved.answers ?? {}).length > 0 && (fixed ? saved.segment === fixed : saved.segment && saved.segment in segments)) {
+      dispatch({ type: "restore", segment: saved.segment, answers: saved.answers });
+      // Lecture de sessionStorage possible seulement après hydratation.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setRestored(true);
+      return;
+    }
     if (fixed) return;
     const p = new URLSearchParams(window.location.search).get("profil");
     if (p && p in segments) dispatch({ type: "segment", segment: p as Segment });
-  }, [fixed]);
+  }, [fixed, storageKey]);
+
+  useEffect(() => {
+    try {
+      if (state.status === "done" || !state.segment || Object.keys(state.answers).length === 0) sessionStorage.removeItem(storageKey);
+      else sessionStorage.setItem(storageKey, JSON.stringify({ segment: state.segment, answers: state.answers }));
+    } catch {
+      /* stockage indisponible : la fiche fonctionne sans reprise */
+    }
+  }, [state.segment, state.answers, state.status, storageKey]);
 
   const steps = visibleSteps(state.segment, state.answers);
   const rows: Row[] = [...(fixed ? [] : [{ id: "segment", label: "Votre demande" }]), ...steps.map((s) => ({ id: s.id, label: s.summaryLabel, step: s }))];
   const step = currentStep(state);
   const done = state.status === "done";
   const activeId = done ? null : !state.segment ? "segment" : step?.id ?? null;
-  const activeIndex = rows.findIndex((r) => r.id === activeId);
-  const filledCount = done ? rows.length : Math.max(activeIndex, 0);
+  const isAnswered = (r: Row) => (r.id === "segment" ? state.segment !== null : r.step?.type === "contact" ? done : r.id in state.answers);
+  const answeredCount = rows.filter(isAnswered).length;
   const counted = state.segment !== null;
   const total = counted ? rows.length : hubTotal;
+  // Rang affiché : prochaine rubrique à remplir ; il ne recule pas quand une rubrique est rouverte.
+  const position = done ? total : Math.min(answeredCount + 1, total);
 
   // Après chaque réponse : la rubrique suivante prend le focus et reste à l'écran.
   useEffect(() => {
@@ -105,7 +134,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const answer = (s: Step, value: string) => {
     markStart();
     dispatch({ type: "answer", stepId: s.id, value });
-    track("jawabot_step", { segment: state.segment ?? undefined, step_id: s.id, step_index: filledCount + 1, answer: s.type === "choice" ? value : undefined });
+    track("jawabot_step", { segment: state.segment ?? undefined, step_id: s.id, step_index: answeredCount + 1, answer: s.type === "choice" ? value : undefined });
   };
 
   const rewind = (id: string) => {
@@ -210,20 +239,35 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
             {!done && (
               <span className="tabular font-semibold text-muted">
                 {" "}
-                · {Math.min(filledCount + 1, total)}/{total}
+                · {position}/{total}
               </span>
             )}
           </h2>
           <p className="sr-only" aria-live="polite">
-            {done ? "Fiche transmise." : `Question ${Math.min(filledCount + 1, total)} sur ${total}.`}
+            {done ? "Fiche transmise." : `Question ${position} sur ${total}.`}
           </p>
+          {restored && !done && counted && (
+            <p className="mt-2 text-sm text-muted">
+              Vos réponses précédentes ont été gardées.{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setRestored(false);
+                  restart();
+                }}
+                className="inline-flex min-h-11 items-center font-semibold text-hdf underline underline-offset-2 hover:text-deep"
+              >
+                Recommencer
+              </button>
+            </p>
+          )}
           <ol aria-hidden className="mt-3 flex gap-1">
             {(counted ? rows : Array.from({ length: hubTotal }, (_, i) => ({ id: `g${i}` }))).map((r, i) => (
               <li
                 key={r.id}
                 className={cn(
                   "h-1.5 flex-1 rounded-[1px] transition-colors duration-300",
-                  i < filledCount ? "bg-hdf" : i === filledCount && !done ? "bg-energy" : "bg-line",
+                  counted ? (isAnswered(r as Row) && r.id !== activeId ? "bg-hdf" : r.id === activeId ? "bg-energy" : "bg-line") : i === 0 ? "bg-energy" : "bg-line",
                 )}
               />
             ))}
@@ -235,23 +279,37 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
           {rows.map((row, i) => {
             const n = String(i + 1).padStart(2, "0");
             const isActive = row.id === activeId;
-            const isFilled = done || i < activeIndex;
+            const isFilled = done || isAnswered(row);
             if (isActive)
               return (
                 <li key={row.id} data-active-rubric className="rubric-in relative grid scroll-mt-24 grid-cols-[1.75rem_1fr] gap-x-2 border-t border-line py-4 first:border-t-0 sm:gap-x-3">
                   <span aria-hidden className="absolute top-4 bottom-4 -left-4 w-1 bg-energy sm:-left-6" />
                   <span className="tabular pt-1 text-sm font-bold text-hdf">{n}</span>
-                  <ActiveRubric
-                    row={row}
-                    fixed={!!fixed}
-                    state={state}
-                    onSegment={pickSegment}
-                    onAnswer={answer}
-                    onSubmit={submit}
-                    onDraft={(c) => dispatch({ type: "contact", contact: c })}
-                    consent={consent}
-                    onConsent={setConsent}
-                  />
+                  <div className="min-w-0">
+                    <ActiveRubric
+                      row={row}
+                      fixed={!!fixed}
+                      state={state}
+                      onSegment={pickSegment}
+                      onAnswer={answer}
+                      onSubmit={submit}
+                      onDraft={(c) => dispatch({ type: "contact", contact: c })}
+                      consent={consent}
+                      onConsent={setConsent}
+                    />
+                    {state.editing === row.id && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          interacted.current = true;
+                          dispatch({ type: "keep" });
+                        }}
+                        className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-muted underline underline-offset-2 hover:text-deep"
+                      >
+                        Garder « {valueOf(row).text} »
+                      </button>
+                    )}
+                  </div>
                 </li>
               );
             if (isFilled) {
@@ -333,7 +391,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-hdf px-4 text-sm font-semibold text-white transition-colors hover:bg-hdf-dark"
               >
                 <MessageCircle className="size-4" aria-hidden />
-                Échanger avec HDF Bâti
+                Échanger avec HDF Bâti sur WhatsApp
               </a>
               <a
                 href={telHref}
@@ -385,7 +443,7 @@ function ActiveRubric({
         <h3 id={qid} className="text-lg leading-snug font-bold text-deep">
           {jawabotCopy.segmentQuestion}
         </h3>
-        <Choices labelledBy={qid} options={segmentChoices} onPick={(v) => onSegment(v as Segment)} />
+        <Choices key="segment" labelledBy={qid} options={segmentChoices} onPick={(v) => onSegment(v as Segment)} />
         {!fixed && <p className="mt-2 text-xs text-muted">Vous pourrez modifier chaque réponse avant l’envoi.</p>}
       </div>
     );
@@ -396,9 +454,9 @@ function ActiveRubric({
         {s.question}
       </h3>
       {s.help && <p className="mt-1 text-sm text-muted">{s.help}</p>}
-      {s.type === "choice" && <Choices labelledBy={qid} options={s.options} onPick={(v) => onAnswer(s, v)} />}
-      {s.type === "text" && <LineInput key={s.id} step={s} labelledBy={qid} onSubmit={(v) => onAnswer(s, v)} />}
-      {s.type === "postal" && <LineInput key={s.id} postal labelledBy={qid} onSubmit={(v) => onAnswer(s, v)} />}
+      {s.type === "choice" && <Choices key={s.id} labelledBy={qid} options={s.options} selected={state.answers[s.id]} onPick={(v) => onAnswer(s, v)} />}
+      {s.type === "text" && <LineInput key={s.id} step={s} labelledBy={qid} initial={state.answers[s.id]} onSubmit={(v) => onAnswer(s, v)} />}
+      {s.type === "postal" && <LineInput key={s.id} postal labelledBy={qid} initial={state.answers[s.id]} onSubmit={(v) => onAnswer(s, v)} />}
       {s.type === "contact" && (
         <ContactFields
           key={s.id}
@@ -417,30 +475,56 @@ function ActiveRubric({
   );
 }
 
-function Choices({ options, onPick, labelledBy }: { options: readonly Pick<ChoiceOption, "value" | "label">[]; onPick: (v: string) => void; labelledBy: string }) {
+/**
+ * Choix unique : la case se coche un court instant, puis la fiche avance (flèche en bout de ligne).
+ * En mode « Modifier », la réponse actuelle est cochée d'emblée.
+ */
+function Choices({ options, onPick, labelledBy, selected }: { options: readonly Pick<ChoiceOption, "value" | "label">[]; onPick: (v: string) => void; labelledBy: string; selected?: string }) {
+  const [picked, setPicked] = useState<string | undefined>();
+  const current = picked ?? selected;
+  const choose = (v: string) => {
+    if (picked) return;
+    setPicked(v);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) onPick(v);
+    else setTimeout(() => onPick(v), 160);
+  };
   return (
     <div role="group" aria-labelledby={labelledBy} className={cn("mt-3 grid gap-2", options.length > 3 && "sm:grid-cols-2")}>
-      {options.map((o, i) => (
-        <button
-          key={o.value}
-          type="button"
-          data-autofocus={i === 0 ? true : undefined}
-          onClick={() => onPick(o.value)}
-          className="group flex min-h-12 items-center gap-3 rounded-md border border-deep/20 bg-white px-3 py-2 text-left text-[0.95rem] leading-tight font-semibold text-deep transition-[border-color,background-color] duration-150 hover:border-hdf hover:bg-surface active:bg-hdf/10"
-        >
-          <span aria-hidden className="grid size-5 shrink-0 place-items-center rounded-[3px] border-2 border-deep/35 transition-colors group-hover:border-hdf">
-            <span className="size-2.5 rounded-[1px] bg-hdf opacity-0 transition-opacity group-hover:opacity-40 group-active:opacity-100" />
-          </span>
-          {o.label}
-        </button>
-      ))}
+      {options.map((o, i) => {
+        const on = current === o.value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            aria-pressed={on}
+            data-autofocus={(selected ? on : i === 0) ? true : undefined}
+            onClick={() => choose(o.value)}
+            className={cn(
+              "group flex min-h-12 items-center gap-3 rounded-md border bg-white px-3 py-2 text-left text-[0.95rem] leading-tight font-semibold text-deep transition-[border-color,background-color] duration-150 hover:border-hdf hover:bg-surface",
+              on ? "border-hdf bg-surface" : "border-deep/20",
+            )}
+          >
+            <span aria-hidden className={cn("grid size-5 shrink-0 place-items-center rounded-[3px] border-2 transition-colors group-hover:border-hdf", on ? "border-hdf" : "border-deep/35")}>
+              <span className={cn("size-2.5 rounded-[1px] bg-hdf transition-opacity", on ? "opacity-100" : "opacity-0 group-hover:opacity-40")} />
+            </span>
+            <span className="flex-1">{o.label}</span>
+            <ArrowRight aria-hidden className="size-4 shrink-0 text-hdf opacity-50 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100" />
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-function LineInput({ step, postal = false, labelledBy, onSubmit }: { step?: TextStep; postal?: boolean; labelledBy: string; onSubmit: (v: string) => void }) {
-  const [value, setValue] = useState("");
+function LineInput({ step, postal = false, labelledBy, initial = "", onSubmit }: { step?: TextStep; postal?: boolean; labelledBy: string; initial?: string; onSubmit: (v: string) => void }) {
+  const [value, setValue] = useState(initial);
   const [error, setError] = useState<string>();
+  const inputRef = useRef<HTMLInputElement>(null);
+  // Une erreur rend la main au champ, pas au bouton.
+  useEffect(() => {
+    if (error) inputRef.current?.focus();
+  }, [error]);
   const optional = step?.optional ?? false;
   const errId = `${labelledBy}-err`;
   return (
@@ -457,6 +541,7 @@ function LineInput({ step, postal = false, labelledBy, onSubmit }: { step?: Text
     >
       <div className="flex items-end gap-3">
         <input
+          ref={inputRef}
           data-autofocus
           aria-labelledby={labelledBy}
           aria-invalid={error ? true : undefined}

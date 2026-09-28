@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { dossierHref } from "@/config/dossiers";
 import { anchors } from "@/config/navigation";
 import { projectCards, segments } from "@/config/services";
-import { buttonClasses } from "../ui/Button";
 import { Container } from "../ui/Container";
 
 /** Accueil : trois fiches, une par profil, chacune menant à sa page. */
@@ -30,9 +29,10 @@ export function DossierEntries() {
                       </li>
                     ))}
                   </ul>
-                  <Link href={`${dossierHref(c.segment)}#${anchors.etude}`} className={buttonClasses({ size: "md", className: "mt-6 w-full sm:w-fit" })}>
-                    <span>{s.cta}</span>
-                    <ArrowRight className="size-4" aria-hidden />
+                  {/* Lien secondaire : la fiche du premier écran reste la seule action orange de l'accueil. */}
+                  <Link href={dossierHref(c.segment)} className="group mt-5 inline-flex min-h-11 w-fit items-center gap-2 font-semibold text-hdf underline decoration-hdf/40 underline-offset-4 hover:decoration-hdf">
+                    Voir le dossier {s.label.toLowerCase()}
+                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
                   </Link>
                 </div>
               </li>

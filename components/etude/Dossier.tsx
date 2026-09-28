@@ -43,7 +43,6 @@ export function Dossier({ d }: { d: DossierData }) {
         <div className="rounded-md border border-line bg-white">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-8">
             <p className="text-sm font-bold text-deep">Dossier d’étude · {segments[d.segment].label}</p>
-            <p className="text-xs text-muted">5 étapes · 4 rubriques</p>
           </div>
           <div className="grid gap-x-12 gap-y-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[16rem_minmax(0,1fr)]">
             <nav aria-labelledby="sommaire-title" className="lg:sticky lg:top-24 lg:self-start">
