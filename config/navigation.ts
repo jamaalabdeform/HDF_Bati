@@ -27,7 +27,7 @@ export const footerNav = {
     { label: "Particuliers", href: `/#${anchors.particuliers}` },
     { label: "Professionnels", href: `/#${anchors.professionnels}` },
     { label: "Collectivités", href: `/#${anchors.collectivites}` },
-    { label: "Énergie", href: `/#${anchors.energie}` },
+    { label: "Énergie", href: `/#${anchors.professionnels}` },
   ],
   legal: [
     { label: "Mentions légales", href: "/mentions-legales" },

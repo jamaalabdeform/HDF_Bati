@@ -64,7 +64,7 @@ export function Hero() {
 
         <div className="hero-unveil grid grid-cols-3 gap-2 sm:grid-cols-2 sm:grid-rows-2 sm:gap-3">
           {mosaic.map((m, i) => (
-            <div key={m.badge} className={i === 0 ? "relative sm:row-span-2" : "relative"}>
+            <div key={m.badge} className={i === 0 ? "relative flex flex-col sm:row-span-2" : "relative flex flex-col"}>
               <MediaImage
                 asset={m.asset}
                 priority={m.priority}
@@ -72,9 +72,11 @@ export function Hero() {
                 sizes={i === 0 ? "(min-width: 1024px) 17rem, (min-width: 640px) 45vw, 33vw" : "(min-width: 1024px) 17rem, (min-width: 640px) 45vw, 33vw"}
                 className={i === 0 ? "aspect-[3/4] h-full rounded-2xl sm:aspect-auto sm:rounded-[1.5rem]" : "aspect-[3/4] h-full rounded-2xl sm:aspect-[4/3] sm:rounded-[1.5rem]"}
               />
-              <Badge tone={m.tone} size="responsive" className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3">
-                {m.badge}
-              </Badge>
+              <span className="absolute bottom-3 left-3 hidden sm:block">
+                <Badge tone={m.tone}>{m.badge}</Badge>
+              </span>
+              {/* Mobile : vignettes trop étroites pour un badge, le profil passe en légende. */}
+              <p className="mt-1.5 text-center text-xs font-semibold text-deep sm:hidden">{m.badge}</p>
             </div>
           ))}
         </div>

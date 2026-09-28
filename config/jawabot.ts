@@ -70,7 +70,7 @@ export const jawabotCopy = {
   successText:
     "HDF Bâti a reçu le résumé de votre projet et revient vers vous pour en parler.",
   errorText:
-    "Votre demande n’a pas pu être envoyée. Vous pouvez nous appeler directement ou réessayer dans un instant.",
+    "Votre demande n’a pas pu être envoyée. Réessayez dans un instant, ou contactez-nous directement au",
 } as const;
 
 export const segmentChoices: { value: Segment; label: string }[] = [

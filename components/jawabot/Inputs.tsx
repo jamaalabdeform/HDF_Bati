@@ -5,6 +5,7 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import type { ChoiceOption, TextStep } from "@/config/jawabot";
 import { bestTimeOptions, CONSENT_TEXT, isValidEmail, isValidPostalCode, normalizeFrenchPhone } from "@/lib/lead";
 import { positioning } from "@/config/positioning";
+import { company, telHref, whatsappHref } from "@/config/company";
 import { ConsentField, SelectField, TextField } from "../forms/Field";
 import { cn } from "../ui/cn";
 
@@ -171,7 +172,10 @@ export function ContactInput({
         if (askBestTime && !v.bestTime) next.bestTime = "Choisissez un moment pour être rappelé.";
         if (!consent) next.consent = "Votre accord est nécessaire pour être recontacté.";
         setErrors(next);
-        if (Object.keys(next).length) return;
+        if (Object.keys(next).length) {
+          requestAnimationFrame(() => (e.target as HTMLFormElement).querySelector<HTMLElement>("[aria-invalid=true]")?.focus());
+          return;
+        }
         onSubmit({ ...v, name: v.name.trim(), email: v.email.trim() });
       }}
     >
@@ -182,16 +186,25 @@ export function ContactInput({
           {recap.join(" · ")}
         </p>
       )}
+      <p className="text-xs leading-relaxed text-muted">{positioning.reactivite.short}. Vos informations servent uniquement à traiter votre demande.</p>
       <TextField label="Nom et prénom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} data-autofocus />
       <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
       {askBestTime && <SelectField label="Meilleur moment pour vous rappeler" placeholder="Sélectionnez…" options={bestTimeOptions} value={v.bestTime} onChange={set("bestTime")} error={errors.bestTime} />}
       <TextField label="E-mail" type="email" autoComplete="email" optional value={v.email} onChange={set("email")} error={errors.email} />
       {askRole && <TextField label="Fonction" autoComplete="organization-title" optional value={v.role} onChange={set("role")} />}
-      <ConsentField checked={consent} onChange={(c) => { setConsent(c); setErrors((s) => ({ ...s, consent: undefined })); }} error={errors.consent} text={CONSENT_TEXT} />
-      <div className="sticky bottom-0 -mx-4 space-y-2 border-t border-line bg-white px-4 pt-3 pb-1">
+      <div className="sticky bottom-0 -mx-4 space-y-2.5 border-t border-line bg-white px-4 pt-3 pb-1">
+        <ConsentField checked={consent} onChange={(c) => { setConsent(c); setErrors((s) => ({ ...s, consent: undefined })); }} error={errors.consent} text={CONSENT_TEXT} />
         {retry && (
           <p ref={alertRef} tabIndex={-1} role="alert" className="rounded-xl bg-[#fdecea] px-3 py-2 text-sm text-[#8b1d12] outline-none">
-            {errorText}
+            {errorText}{" "}
+            <a href={telHref} data-track="phone" data-track-location="jawabot_error" className="tabular font-semibold whitespace-nowrap underline">
+              {company.phone.display}
+            </a>{" "}
+            ou{" "}
+            <a href={whatsappHref("Bonjour HDF Bâti, je n’ai pas pu envoyer ma demande depuis votre site.")} target="_blank" rel="noopener noreferrer" data-track="whatsapp" data-track-location="jawabot_error" className="font-semibold underline">
+              WhatsApp
+            </a>
+            .
           </p>
         )}
         <button
@@ -202,9 +215,6 @@ export function ContactInput({
           {submitting ? <Loader2 className="size-5 animate-spin" aria-hidden /> : null}
           {submitting ? "Envoi en cours…" : retry ? "Réessayer l’envoi" : ctaLabel}
         </button>
-        <p className="text-center text-xs leading-relaxed text-muted">
-          {positioning.reactivite.short}. Vos informations servent uniquement à traiter votre demande.
-        </p>
       </div>
     </form>
   );
