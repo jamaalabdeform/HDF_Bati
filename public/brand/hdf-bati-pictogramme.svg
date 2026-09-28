@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 220 240" role="img" aria-label="HDF BÂTI">
+  <title>HDF BÂTI</title>
+  <g fill="none" stroke="#0B7A3B" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 105 L105 30 L185 110"/>
+    <path d="M30 105 V220 H160 V150"/>
+    <path d="M55 150 L105 100 L160 155"/>
+  </g>
+  <ellipse cx="180" cy="52" rx="22" ry="38" transform="rotate(35 180 52)" fill="#79C51D"/>
+</svg>
