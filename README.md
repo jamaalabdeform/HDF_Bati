@@ -86,7 +86,7 @@ lib/
 
 - **Accueil + une page par profil** (`/particuliers`, `/professionnels`, `/collectivites`) : chaque page ouvre sur la fiche d'étude du profil, puis le dossier d'étude (sommaire en 5 étapes + rubriques « Ce que nous étudions / Ce que vous préparez / Qui vous rappelle / Ce que vous recevez »), la FAQ du profil et le rappel. Bouton principal et barre mobile reprennent le libellé du profil.
 - **Fiche d'étude** (`components/etude/StudySheet.tsx`) : formulaire par étapes intégré à la page (pas de fenêtre, pas de chat). Chaque rubrique se remplit en place, « Modifier » revient à une rubrique, progression « n/N », consentement explicite → `/api/lead` → fiche « Transmise » proposant **ensuite** WhatsApp (message pré-rempli avec la référence du lead) ou l'appel. Questions pilotées par `config/jawabot.ts`.
-- **Formulaire express** « Vous préférez être rappelé ? » (nom, téléphone, code postal, projet, moment, consentement, anti-spam).
+- **Formulaire express** « Vous préférez être rappelé ? » en version courte (profil, nom, téléphone, moment, consentement, anti-spam). Si la fiche d'étude a été commencée, le profil et ses réponses (code postal, projet…) sont repris et joints à la demande.
 - Paramètre de campagne `?profil=particulier|professionnel|collectivite` : présélectionne le profil dans la fiche de l’accueil (utile pour des annonces Meta ciblées).
 
 ### Leads → CRM → WhatsApp Farid

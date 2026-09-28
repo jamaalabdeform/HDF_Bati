@@ -177,13 +177,11 @@ for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/partic
   await form.getByRole("radio", { name: "Particulier" }).check({ force: true });
   await form.getByLabel("Nom", { exact: true }).fill("Test Rappel");
   await form.getByLabel("Téléphone", { exact: true }).fill("0612345678");
-  await form.getByLabel("Code postal", { exact: true }).fill("59300");
-  await form.getByLabel("Type de projet").selectOption("pac");
   await form.getByLabel("Meilleur moment pour être rappelé").selectOption("matin");
   await form.getByRole("checkbox").check();
   await form.getByRole("button", { name: "Demander un rappel" }).click();
-  await page.getByText("Demande de rappel bien reçue").waitFor({ timeout: 8000 });
-  await page.getByText("Demande de rappel bien reçue").screenshot({ path: `${OUT}/375-callback-ok.png` });
+  await page.getByText("Merci, HDF Bâti vous rappelle.").waitFor({ timeout: 8000 });
+  await page.getByText("Merci, HDF Bâti vous rappelle.").screenshot({ path: `${OUT}/375-callback-ok.png` });
   report.push({ width: 375, flow: "callback", validationErrorsShown: errorCount, events, errors });
   await context.close();
 }

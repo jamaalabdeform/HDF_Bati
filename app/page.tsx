@@ -12,7 +12,7 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(faqJsonLd())} />
       <DossierHero />
       <DossierEntries />
-      <WhyHdf withoutPromises />
+      <WhyHdf />
       <Faq />
       <Callback />
       <Contact />

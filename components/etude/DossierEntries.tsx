@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { dossierHref } from "@/config/dossiers";
 import { anchors } from "@/config/navigation";
+import { commitments } from "@/config/proofs";
 import { projectCards, segments } from "@/config/services";
 import { Container } from "../ui/Container";
 
@@ -21,8 +22,8 @@ export function DossierEntries() {
                 <span className="w-fit rounded-t-md bg-deep px-4 py-2 text-sm font-semibold text-white">{s.label}s</span>
                 <div className="flex flex-1 flex-col border-t-2 border-deep pt-5">
                   <h3 className="text-xl leading-snug font-bold text-deep">{c.title}</h3>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{c.text}</p>
-                  <ul className="mt-4 flex-1 border-t border-line">
+                  <p className="mt-2 hidden text-[0.95rem] leading-relaxed text-muted sm:block">{c.text}</p>
+                  <ul className="mt-4 hidden flex-1 border-t border-line sm:block">
                     {c.points.map((p) => (
                       <li key={p} className="border-b border-dotted border-deep/30 py-2.5 text-[0.95rem] font-semibold text-deep">
                         {p}
@@ -39,6 +40,16 @@ export function DossierEntries() {
             );
           })}
         </ul>
+
+        {/* La même méthode pour les trois dossiers (les deux premiers engagements sont déjà au premier écran). */}
+        <dl className="mt-12 grid gap-x-10 border-t-2 border-deep sm:grid-cols-2">
+          {commitments.slice(2).map((c) => (
+            <div key={c.title} className="border-b border-line py-5 sm:border-b-0">
+              <dt className="font-bold text-deep">{c.title}</dt>
+              <dd className="mt-1.5 max-w-[60ch] text-[0.95rem] leading-relaxed text-muted">{c.text}</dd>
+            </div>
+          ))}
+        </dl>
       </Container>
     </section>
   );

@@ -42,7 +42,7 @@ export function Dossier({ d }: { d: DossierData }) {
       <Container>
         <div className="rounded-md border border-line bg-white">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 sm:px-8">
-            <p className="text-sm font-bold text-deep">Dossier d’étude · {segments[d.segment].label}</p>
+            <p className="text-sm font-bold text-deep">Votre projet, étape par étape · {segments[d.segment].label}s</p>
           </div>
           <div className="grid gap-x-12 gap-y-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[16rem_minmax(0,1fr)]">
             <nav aria-labelledby="sommaire-title" className="lg:sticky lg:top-24 lg:self-start">
@@ -51,8 +51,8 @@ export function Dossier({ d }: { d: DossierData }) {
               </h2>
               <ol className="mt-3 border-t-2 border-deep">
                 {d.sommaire.map((s, i) => (
-                  <li key={s.title} className="grid grid-cols-[2rem_1fr] gap-x-2 border-b border-line py-3">
-                    <span className="tabular text-sm font-bold text-hdf">{String(i + 1).padStart(2, "0")}</span>
+                  <li key={s.title} className="grid grid-cols-[4.25rem_1fr] gap-x-2 border-b border-line py-3">
+                    <span className="text-sm font-semibold text-hdf">Étape {i + 1}</span>
                     <span className="text-[0.95rem] leading-snug font-semibold text-deep">{s.title}</span>
                   </li>
                 ))}

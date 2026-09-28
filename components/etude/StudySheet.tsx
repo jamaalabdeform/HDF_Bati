@@ -37,8 +37,10 @@ interface Row {
   step?: Step;
 }
 
-/** Accueil, avant le choix du profil : longueur du parcours le plus court (profil compris). */
-const hubTotal = 1 + Math.min(...segmentOrder.map((s) => visibleSteps(s, {}).length));
+/** Accueil, avant le choix du profil : longueurs possibles du parcours (profil compris). */
+const hubLengths = segmentOrder.map((s) => 1 + visibleSteps(s, {}).length);
+const hubTotal = Math.min(...hubLengths);
+const hubMax = Math.max(...hubLengths);
 
 /** 0612345678 / +33612345678 → 06 12 34 56 78 (affichage du récapitulatif). */
 function formatPhone(raw: string): string {
@@ -236,7 +238,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
         <div className="px-4 pt-4 sm:px-6">
           <h2 className="text-xl font-bold text-deep sm:text-[1.4rem]">
             Étudions votre projet
-            {!done && (
+            {!done && counted && (
               <span className="tabular font-semibold text-muted">
                 {" "}
                 · {position}/{total}
@@ -244,7 +246,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
             )}
           </h2>
           <p className="sr-only" aria-live="polite">
-            {done ? "Fiche transmise." : `Question ${position} sur ${total}.`}
+            {done ? "Fiche transmise." : counted ? `Question ${position} sur ${total}.` : ""}
           </p>
           {restored && !done && counted && (
             <p className="mt-2 text-sm text-muted">
@@ -255,19 +257,19 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
                   setRestored(false);
                   restart();
                 }}
-                className="inline-flex min-h-11 items-center font-semibold text-hdf underline underline-offset-2 hover:text-deep"
+                className="-my-3 inline py-3 font-semibold text-hdf underline underline-offset-2 hover:text-deep"
               >
                 Recommencer
               </button>
             </p>
           )}
-          <ol aria-hidden className="mt-3 flex gap-1">
-            {(counted ? rows : Array.from({ length: hubTotal }, (_, i) => ({ id: `g${i}` }))).map((r, i) => (
+          <ol aria-hidden className={cn("mt-3 flex gap-1", !counted && "hidden")}>
+            {rows.map((r) => (
               <li
                 key={r.id}
                 className={cn(
                   "h-1.5 flex-1 rounded-[1px] transition-colors duration-300",
-                  counted ? (isAnswered(r as Row) && r.id !== activeId ? "bg-hdf" : r.id === activeId ? "bg-energy" : "bg-line") : i === 0 ? "bg-energy" : "bg-line",
+                  isAnswered(r) && r.id !== activeId ? "bg-hdf" : r.id === activeId ? "bg-energy" : "bg-line",
                 )}
               />
             ))}
@@ -359,7 +361,11 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
               </li>
             ))}
         </ol>
-        {!counted && <p className="px-4 pb-3 text-sm text-muted sm:px-6">Puis {hubTotal - 3} autres questions courtes, adaptées à votre profil.</p>}
+        {!counted && (
+          <p className="px-4 pb-3 text-sm text-muted sm:px-6">
+            Puis {hubTotal - 3} à {hubMax - 3} autres questions courtes, selon votre profil.
+          </p>
+        )}
 
         {done ? (
           <div data-sheet-done tabIndex={-1} role="status" className="border-t-2 border-hdf px-4 py-5 outline-none sm:px-6">
@@ -388,7 +394,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
                 rel="noopener noreferrer"
                 data-track="whatsapp"
                 data-track-location="fiche_transmise"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-hdf px-4 text-sm font-semibold text-white transition-colors hover:bg-hdf-dark"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-hdf px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-hdf-dark"
               >
                 <MessageCircle className="size-4" aria-hidden />
                 Échanger avec HDF Bâti sur WhatsApp

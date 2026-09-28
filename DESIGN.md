@@ -243,6 +243,8 @@ Directs et sans ornement ; l'orange signifie qu'on avance.
 - **Corner Style:** 6px.
 - **Background:** blanc sur champ profond ; sur fond clair, pas de carte : des colonnes réglées de filets (seule exception : la feuille du dossier d'étude, bordée, sans ombre).
 - **Sections du bas:** pas de gabarit répété ; FAQ empilée à largeur de texte, « Pourquoi » titre au-dessus des colonnes, Contact en bandeau de trois coordonnées.
+- **Formulaire de rappel:** version courte dans la même feuille que la fiche (cases carrées, bordure d'erreur sur le groupe), succès en « Demande de rappel » avec tampon « Transmise » et référence.
+- **Barre d'action mobile:** fond blanc plein (pas de flou), un seul bouton vers la fiche ; le téléphone reste dans l'en-tête.
 - **Shadow Strategy:** voir The One Sheet Rule.
 - **Internal Padding:** 16–24px dans la feuille, 20–28px dans le formulaire de rappel.
 
