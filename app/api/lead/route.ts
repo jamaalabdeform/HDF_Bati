@@ -85,8 +85,10 @@ export async function POST(req: NextRequest) {
   const consentMarketing = (body as { consentMarketing?: boolean }).consentMarketing === true;
   const result = await dispatchLead(lead, { ip, ua: req.headers.get("user-agent") ?? undefined, consentMarketing });
 
-  const delivered = result.crm === true || result.notify === true;
-  const configured = result.crm !== "not_configured" || result.notify !== "not_configured";
+  // Transmis dès qu'une destination au moins l'a reçu (CRM, webhook Make/n8n ou WhatsApp direct).
+  const channels = [result.crm, result.notify, result.whatsapp];
+  const delivered = channels.some((c) => c === true);
+  const configured = channels.some((c) => c !== "not_configured");
 
   if (!configured) {
     // Aucun connecteur : acceptable en développement / préproduction, jamais en production.
@@ -99,9 +101,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (!delivered) {
-    console.error("[lead] échec de transmission", lead.id, result);
+    // Journal complet : le lead reste récupérable dans les logs de l'hébergeur.
+    console.error("[lead] échec de transmission", lead.id, result, "\n" + lead.summary, lead.contact.name, lead.contact.phone);
     return NextResponse.json({ error: "lead_delivery_failed" }, { status: 502 });
   }
 
+  if (result.whatsapp === false) console.error("[lead] alerte WhatsApp non remise (lead transmis ailleurs)", lead.id);
+  console.info("[lead] transmis", lead.id, { crm: result.crm, notify: result.notify, whatsapp: result.whatsapp });
   return NextResponse.json({ ok: true, leadId: lead.id, temperature: lead.score.temperature });
 }

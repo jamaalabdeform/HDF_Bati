@@ -94,8 +94,10 @@ export function makeLeadId(date = new Date()): string {
 /** Résumé court, exploitable par Farid (WhatsApp / CRM). */
 export function buildSummary(input: Pick<LeadInput, "segment" | "answers" | "contact" | "source">, score: LeadScore): string {
   const seg = segments[input.segment].label;
-  const lines: string[] = [`${seg} — ${input.source === "jawabot" ? "Jawabot" : "Demande de rappel"}`];
-  if (input.source === "jawabot") {
+  const lines: string[] = [`${seg} — ${input.source === "jawabot" ? "Fiche d’étude" : "Demande de rappel"}`];
+  const fromFiche = getFlow(input.segment).some((s) => s.type !== "contact" && input.answers[s.id]);
+  if (input.source === "jawabot" || fromFiche) {
+    // Fiche d'étude, ou rappel qui joint les réponses d'une fiche commencée.
     for (const step of getFlow(input.segment)) {
       if (step.type === "contact") continue;
       const v = input.answers[step.id];

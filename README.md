@@ -97,6 +97,32 @@ construit le résumé pour Farid puis envoie en parallèle :
 1. `CRM_WEBHOOK_URL` : `{ type: "hdf_lead", pipelineStage: "nouveau", lead }` — lead complet avec UTM, first-touch, consentement horodaté, `event_id`.
 2. `LEAD_NOTIFY_WEBHOOK_URL` : `{ text, leadId, temperature, lead }` — `text` est le message court prêt à envoyer à Farid (format UI Kit : besoin, score, contact, source, action).
 3. Meta Conversions API (si `META_CAPI_TOKEN` et consentement publicité) : événement `Lead` dédupliqué avec le Pixel via `event_id`.
+4. **WhatsApp direct** (si `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_NOTIFY_TO`) : message à Farid (et à l'associé) via l'API officielle WhatsApp Business Cloud — `lib/server/whatsapp.ts`.
+
+Le lead est considéré comme transmis dès qu'**une** destination l'a reçu ; sinon le visiteur voit
+l'erreur avec le téléphone et WhatsApp en repli, et le lead complet est écrit dans les journaux du serveur.
+
+#### Leads → WhatsApp de Farid : mise en place (une fois)
+
+1. **Numéro expéditeur.** Un numéro dédié à HDF Bâti (nouvelle SIM ou numéro fixe/virtuel capable de recevoir un SMS ou un appel), **différent du 06 01 45 11 10** : un numéro déjà utilisé dans l'application WhatsApp ne peut pas servir d'expéditeur API sans être retiré de l'application. Farid continue de recevoir sur son 06 habituel.
+2. **Meta Business** (business.facebook.com) → *Comptes WhatsApp* → ajouter le numéro expéditeur ; puis *developers.facebook.com* → application de type « Business » → produit **WhatsApp** → noter le **Phone number ID**.
+3. **Jeton permanent** : *Paramètres de l'entreprise → Utilisateurs système* → créer un utilisateur système administrateur → lui attribuer l'application et le compte WhatsApp → *Générer un jeton* avec les permissions `whatsapp_business_messaging` et `whatsapp_business_management` (expiration : jamais).
+4. **Modèle de message** : *WhatsApp Manager → Modèles de message → Créer* — catégorie **Utilité**, nom `nouveau_lead_hdf`, langue **Français**, corps :
+
+   ```
+   Nouveau lead HDF Bâti — {{1}}
+   Nom : {{2}}
+   Téléphone : {{3}}
+   Demande : {{4}}
+   À faire : {{5}}
+   Réf. {{6}}
+   ```
+
+   Exemples demandés par Meta : `Particulier` · `Jean Dupont` · `06 12 34 56 78` · `Projet : Pompe à chaleur · Code postal : 59410` · `Rappeler — le matin (9h–12h)` · `HDF-20260101-ABCD`. Le modèle est indispensable : sans lui, WhatsApp n'accepte un message que si Farid a écrit au numéro expéditeur dans les 24 h précédentes.
+5. **Variables chez l'hébergeur** (Vercel → *Settings → Environment Variables*, environnement *Production*) : `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_NOTIFY_TO=33601451110` (ajouter l'associé après une virgule), `WHATSAPP_TEMPLATE_NAME=nouveau_lead_hdf`, `WHATSAPP_TEMPLATE_LANG=fr` — puis **redéployer**.
+6. **Tester** : `npm run test:whatsapp` avec les mêmes variables (message « TEST » à Farid), puis une vraie demande depuis le site : le message doit arriver en quelques secondes, et les journaux Vercel affichent `[lead] transmis … whatsapp: true`.
+
+Tant que le compte Meta n'est pas vérifié, l'envoi reste possible mais limité (quelques centaines de conversations par jour : largement suffisant pour une landing).
 
 Signature optionnelle : en-tête `X-HDF-Signature = sha256(LEAD_WEBHOOK_SECRET + corps)`.
 Sans connecteur : accepté et journalisé en préproduction ; **refusé (503) en production** pour ne jamais perdre un lead en silence.

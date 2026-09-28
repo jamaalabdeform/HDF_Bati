@@ -2,13 +2,15 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { LeadRecord } from "@/lib/lead";
 import { segments } from "@/config/services";
+import { sendWhatsappLead, whatsappConfigured } from "./whatsapp";
 
 /**
  * Connecteurs backend — tous optionnels et pilotés par variables d'environnement.
  *
  *  CRM_WEBHOOK_URL            → POST JSON du lead complet (CRM, Make, n8n, Zapier, HubSpot…)
- *  LEAD_NOTIFY_WEBHOOK_URL    → POST JSON { text, lead } pour l'alerte WhatsApp Farid
- *                               (WhatsApp Business Cloud API via Make/n8n, ou autre)
+ *  WHATSAPP_TOKEN + WHATSAPP_PHONE_NUMBER_ID + WHATSAPP_NOTIFY_TO
+ *                             → alerte WhatsApp DIRECTE à Farid (API officielle Meta, voir whatsapp.ts)
+ *  LEAD_NOTIFY_WEBHOOK_URL    → POST JSON { text, lead } vers Make / n8n (alternative ou complément)
  *  LEAD_WEBHOOK_SECRET        → envoyé dans l'en-tête X-HDF-Signature (HMAC simple)
  *  META_PIXEL_ID + META_CAPI_TOKEN → Meta Conversions API (événement Lead dédupliqué)
  */
@@ -95,6 +97,7 @@ async function sendMetaLead(lead: LeadRecord, ip?: string, ua?: string): Promise
 export interface DispatchResult {
   crm: boolean | "not_configured";
   notify: boolean | "not_configured";
+  whatsapp: boolean | "not_configured";
   meta: boolean | "not_configured";
 }
 
@@ -103,10 +106,12 @@ export async function dispatchLead(lead: LeadRecord, ctx: { ip?: string; ua?: st
   const notifyUrl = process.env.LEAD_NOTIFY_WEBHOOK_URL;
   const metaReady = !!(process.env.META_CAPI_TOKEN && (process.env.META_PIXEL_ID ?? process.env.NEXT_PUBLIC_META_PIXEL_ID));
 
-  const [crm, notify, meta] = await Promise.all([
+  const text = faridMessage(lead);
+  const [crm, notify, whatsapp, meta] = await Promise.all([
     crmUrl ? postJson(crmUrl, { type: "hdf_lead", pipelineStage: "nouveau", lead }) : Promise.resolve("not_configured" as const),
-    notifyUrl ? postJson(notifyUrl, { text: faridMessage(lead), leadId: lead.id, temperature: lead.score.temperature, lead }) : Promise.resolve("not_configured" as const),
+    notifyUrl ? postJson(notifyUrl, { text, leadId: lead.id, temperature: lead.score.temperature, lead }) : Promise.resolve("not_configured" as const),
+    whatsappConfigured() ? sendWhatsappLead(lead, text) : Promise.resolve("not_configured" as const),
     metaReady && ctx.consentMarketing ? sendMetaLead(lead, ctx.ip, ctx.ua) : Promise.resolve("not_configured" as const),
   ]);
-  return { crm, notify, meta };
+  return { crm, notify, whatsapp, meta };
 }

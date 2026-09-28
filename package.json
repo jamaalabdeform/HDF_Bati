@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check:content": "node scripts/list-pending.mjs",
-    "qa:screens": "node scripts/qa-screens.mjs"
+    "qa:screens": "node scripts/qa-screens.mjs",
+    "test:whatsapp": "node scripts/whatsapp-test.mjs"
   },
   "engines": {
     "node": ">=20.9"
