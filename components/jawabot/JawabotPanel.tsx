@@ -13,6 +13,7 @@ import { readConsent } from "@/lib/consent";
 import { useJawabot } from "./JawabotProvider";
 import { BotBubble, UserBubble, TypingBubble } from "./Bubbles";
 import { ChoiceInput, ContactInput, PostalInput, TextInput } from "./Inputs";
+import { cn } from "../ui/cn";
 
 export function JawabotPanel() {
   const { isOpen, close, state, dispatch } = useJawabot();
@@ -22,6 +23,8 @@ export function JawabotPanel() {
   const step = currentStep(state);
   const answered = answeredSteps(state);
   const pct = Math.round(progress(state) * 100);
+  // Étape coordonnées : le formulaire occupe le panneau, la conversation se replie.
+  const atContact = step?.type === "contact" && state.status !== "done" && !thinking;
 
   // Petite pause « Jawabot écrit… » entre deux questions (désactivée si mouvement réduit).
   const answeredCount = answered.length + (state.segment ? 1 : 0);
@@ -46,7 +49,11 @@ export function JawabotPanel() {
   useEffect(() => {
     if (!isOpen) return;
     const node = dialogRef.current;
-    const t = setTimeout(() => node?.querySelector<HTMLElement>("[data-autofocus]")?.focus() ?? node?.focus(), 60);
+    // Après un échec d'envoi, le focus reste sur le message d'erreur (posé par ContactInput).
+    const t = setTimeout(() => {
+      if (state.status === "error") return;
+      (node?.querySelector<HTMLElement>("[data-autofocus]") ?? node)?.focus();
+    }, 60);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key !== "Tab" || !node) return;
@@ -146,7 +153,7 @@ export function JawabotPanel() {
         </div>
 
         {/* Conversation */}
-        <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain bg-surface px-4 py-5" aria-live="polite" aria-relevant="additions">
+        <div ref={scrollRef} className={cn("flex-1 space-y-3 overflow-y-auto overscroll-contain bg-surface px-4 py-5", atContact && "hidden")} aria-live="polite" aria-relevant="additions">
           <BotBubble>
             <span className="font-semibold">{jawabotCopy.greeting}</span>
             <br />
@@ -216,7 +223,7 @@ export function JawabotPanel() {
         </div>
 
         {/* Zone de réponse */}
-        <div className="border-t border-line bg-white px-4 pt-3 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
+        <div className={cn("border-t border-line bg-white px-4 pt-3 pb-[max(0.9rem,env(safe-area-inset-bottom))]", atContact && "min-h-0 flex-1 overflow-y-auto overscroll-contain")}>
           {state.status !== "done" && !thinking && (
             <>
               {!state.segment && (
@@ -235,11 +242,12 @@ export function JawabotPanel() {
               {step?.type === "contact" && (
                 <ContactInput
                   key={step.id}
+                  question={step.question}
+                  errorText={jawabotCopy.errorText}
                   askRole={!!step.askRole}
                   askBestTime={state.answers.contact_preference === "rappel"}
                   recap={answered
                     .filter((s) => s.type !== "text" && s.id !== "contact_preference")
-                    .slice(0, 4)
                     .map((s) => answerLabel(s, state.answers[s.id]))}
                   initial={state.contact}
                   submitting={state.status === "submitting"}

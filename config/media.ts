@@ -29,14 +29,6 @@ export const media = {
     status: "provisional_ai",
     focus: "50% 45%",
   },
-  particuliers: {
-    src: "/images/provisoire-local-technique.jpg",
-    alt: "Propriétaire consultant son téléphone dans le local technique de sa maison, à côté de la chaudière",
-    width: 1080,
-    height: 1260,
-    status: "provisional_ai",
-    focus: "60% 30%",
-  },
   professionnels: {
     src: "/images/provisoire-pac-hydraulique.jpg",
     alt: "Technicien raccordant l'hydraulique d'une unité de pompe à chaleur",

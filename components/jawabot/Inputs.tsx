@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { ChoiceOption, TextStep } from "@/config/jawabot";
 import { bestTimeOptions, CONSENT_TEXT, isValidEmail, isValidPostalCode, normalizeFrenchPhone } from "@/lib/lead";
@@ -122,6 +122,8 @@ interface ContactValues {
 }
 
 export function ContactInput({
+  question,
+  errorText,
   askRole,
   askBestTime,
   recap,
@@ -131,6 +133,8 @@ export function ContactInput({
   ctaLabel,
   onSubmit,
 }: {
+  question: string;
+  errorText: string;
   askRole: boolean;
   askBestTime: boolean;
   recap: string[];
@@ -143,6 +147,11 @@ export function ContactInput({
   const [v, setV] = useState<ContactValues>(initial);
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues | "consent", string>>>({});
+  const alertRef = useRef<HTMLParagraphElement>(null);
+  // Échec d'envoi : le message apparaît au-dessus du bouton et reçoit le focus.
+  useEffect(() => {
+    if (retry) alertRef.current?.focus();
+  }, [retry]);
 
   const set = (k: keyof ContactValues) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setV((s) => ({ ...s, [k]: e.target.value }));
@@ -152,7 +161,7 @@ export function ContactInput({
   return (
     <form
       noValidate
-      className="max-h-[52dvh] space-y-3 overflow-y-auto px-0.5 pb-1 sm:max-h-none"
+      className="space-y-3 px-0.5"
       onSubmit={(e) => {
         e.preventDefault();
         const next: typeof errors = {};
@@ -166,6 +175,7 @@ export function ContactInput({
         onSubmit({ ...v, name: v.name.trim(), email: v.email.trim() });
       }}
     >
+      <p className="font-semibold text-deep">{question}</p>
       {recap.length > 0 && (
         <p className="rounded-xl bg-surface px-3 py-2 text-sm text-deep">
           <span className="sr-only">Récapitulatif de votre demande : </span>
@@ -178,17 +188,24 @@ export function ContactInput({
       <TextField label="E-mail" type="email" autoComplete="email" optional value={v.email} onChange={set("email")} error={errors.email} />
       {askRole && <TextField label="Fonction" autoComplete="organization-title" optional value={v.role} onChange={set("role")} />}
       <ConsentField checked={consent} onChange={(c) => { setConsent(c); setErrors((s) => ({ ...s, consent: undefined })); }} error={errors.consent} text={CONSENT_TEXT} />
-      <button
-        type="submit"
-        disabled={submitting}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-action px-5 font-semibold text-ink transition hover:bg-action-hover disabled:opacity-70"
-      >
-        {submitting ? <Loader2 className="size-5 animate-spin" aria-hidden /> : null}
-        {submitting ? "Envoi en cours…" : retry ? "Réessayer l’envoi" : ctaLabel}
-      </button>
-      <p className="text-center text-xs leading-relaxed text-muted">
-        {positioning.reactivite.short}. Vos informations servent uniquement à traiter votre demande.
-      </p>
+      <div className="sticky bottom-0 -mx-4 space-y-2 border-t border-line bg-white px-4 pt-3 pb-1">
+        {retry && (
+          <p ref={alertRef} tabIndex={-1} role="alert" className="rounded-xl bg-[#fdecea] px-3 py-2 text-sm text-[#8b1d12] outline-none">
+            {errorText}
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-action px-5 font-semibold text-ink transition hover:bg-action-hover disabled:opacity-70"
+        >
+          {submitting ? <Loader2 className="size-5 animate-spin" aria-hidden /> : null}
+          {submitting ? "Envoi en cours…" : retry ? "Réessayer l’envoi" : ctaLabel}
+        </button>
+        <p className="text-center text-xs leading-relaxed text-muted">
+          {positioning.reactivite.short}. Vos informations servent uniquement à traiter votre demande.
+        </p>
+      </div>
     </form>
   );
 }

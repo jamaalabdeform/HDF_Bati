@@ -159,6 +159,7 @@ for (const width of [390, 1440]) {
   await page.waitForTimeout(300);
   await form.screenshot({ path: `${OUT}/375-callback-errors.png` });
   const errorCount = await form.locator("[role=alert]").count();
+  await form.getByRole("radio", { name: "Particulier" }).check({ force: true });
   await form.getByLabel("Nom", { exact: true }).fill("Test Rappel");
   await form.getByLabel("Téléphone", { exact: true }).fill("0612345678");
   await form.getByLabel("Code postal", { exact: true }).fill("59300");

@@ -1,6 +1,4 @@
 import { anchors } from "./navigation";
-import type { MediaAsset } from "./media";
-import { media } from "./media";
 
 /**
  * Les 3 parcours commerciaux HDF Bâti. Un même univers, trois portes d'entrée
@@ -67,7 +65,6 @@ export interface ProjectCard {
   segment: Segment;
   /** Sous-besoin pré-sélectionné dans Jawabot (optionnel). */
   presetNeed?: string;
-  image: MediaAsset;
 }
 
 export const projectCards: ProjectCard[] = [
@@ -81,7 +78,6 @@ export const projectCards: ProjectCard[] = [
     points: ["Pompe à chaleur", "Photovoltaïque", "Rénovation énergétique"],
     cta: "Étudier mon projet",
     segment: "particulier",
-    image: media.particuliers,
   },
   {
     id: "professionnels",
@@ -93,7 +89,6 @@ export const projectCards: ProjectCard[] = [
     points: ["Pompe à chaleur et photovoltaïque", "Performance du bâtiment", "Contrats d’énergie"],
     cta: "Parler à HDF Bâti",
     segment: "professionnel",
-    image: media.professionnels,
   },
   {
     id: "collectivites",
@@ -105,7 +100,6 @@ export const projectCards: ProjectCard[] = [
     points: ["Contrats d’électricité et de gaz", "Échéances et renouvellements", "Chauffage et photovoltaïque des bâtiments"],
     cta: "Optimiser mes contrats",
     segment: "collectivite",
-    image: media.energie,
   },
 ];
 

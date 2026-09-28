@@ -27,7 +27,7 @@ export default async function LocalLandingPage({ params }: Props) {
   if (!page) notFound();
   return (
     <section className="bg-surface py-16 sm:py-24">
-      <Container className="max-w-3xl">
+      <Container width="text">
         <h1 className="text-3xl font-bold text-deep sm:text-5xl">{page.title}</h1>
         <p className="mt-4 text-lg text-muted">{page.intro}</p>
         <div className="mt-10 grid gap-4">

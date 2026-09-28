@@ -51,14 +51,26 @@ export const bestTimeOptions = [
   { value: "indifferent", label: "Peu importe" },
 ] as const;
 
-export const callbackProjectOptions = [
-  { value: "pac", label: "Pompe à chaleur", segment: "particulier" },
-  { value: "photovoltaique", label: "Panneaux photovoltaïques", segment: "particulier" },
-  { value: "renovation", label: "Rénovation énergétique", segment: "particulier" },
-  { value: "pro", label: "Projet professionnel", segment: "professionnel" },
-  { value: "contrats", label: "Contrats d’énergie (pro / collectivité)", segment: "professionnel" },
-  { value: "collectivite", label: "Projet de collectivité", segment: "collectivite" },
-] as const satisfies readonly { value: string; label: string; segment: Segment }[];
+/** Formulaire de rappel : projets proposés selon le profil choisi (un parcours par profil). */
+export const callbackProjectOptions: Record<Segment, readonly { value: string; label: string }[]> = {
+  particulier: [
+    { value: "pac", label: "Pompe à chaleur" },
+    { value: "photovoltaique", label: "Panneaux photovoltaïques" },
+    { value: "renovation", label: "Rénovation énergétique" },
+  ],
+  professionnel: [
+    { value: "pac", label: "Pompe à chaleur / chauffage" },
+    { value: "photovoltaique", label: "Photovoltaïque" },
+    { value: "performance", label: "Performance du bâtiment" },
+    { value: "contrats", label: "Contrats d’énergie" },
+  ],
+  collectivite: [
+    { value: "contrats", label: "Contrats d’énergie" },
+    { value: "pac", label: "Chauffage / pompe à chaleur" },
+    { value: "photovoltaique", label: "Photovoltaïque" },
+    { value: "global", label: "Accompagnement global" },
+  ],
+};
 
 /** Normalise un numéro français en +33XXXXXXXXX. Retourne null si invalide. */
 export function normalizeFrenchPhone(input: string): string | null {
@@ -92,7 +104,7 @@ export function buildSummary(input: Pick<LeadInput, "segment" | "answers" | "con
     const best = bestTimeOptions.find((o) => o.value === input.contact.bestTime)?.label;
     if (best) lines.push(`Rappel souhaité : ${best}`);
   } else {
-    const project = callbackProjectOptions.find((o) => o.value === input.answers.projet)?.label;
+    const project = callbackProjectOptions[input.segment].find((o) => o.value === input.answers.projet)?.label;
     if (project) lines.push(`Projet : ${project}`);
     if (input.contact.postalCode) lines.push(`Code postal : ${input.contact.postalCode}`);
     const best = bestTimeOptions.find((o) => o.value === input.contact.bestTime)?.label;

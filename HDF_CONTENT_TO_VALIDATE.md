@@ -50,7 +50,7 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 
 | # | Sujet | Où | Détail |
 |---|-------|----|--------|
-| 18 | **Photos provisoires** | `config/media.ts` (`status: "provisional_ai"`) | Les 4 visuels actuels sont extraits des vidéos publicitaires **générées par IA** fournies (maison du Nord, local technique, hydraulique PAC, mairie), en excluant toute image portant un faux logo ou un faux texte. À remplacer par de vraies photos HDF dès que possible (le Brand Book proscrit l'IA reconnaissable). Remplacement : déposer le fichier dans `public/images/` et modifier `config/media.ts`. |
+| 18 | **Photos provisoires** | `config/media.ts` (`status: "provisional_ai"`) | Les 3 visuels actuels (hero : un par profil) sont extraits des vidéos publicitaires **générées par IA** fournies (maison du Nord, hydraulique PAC, mairie), en excluant toute image portant un faux logo ou un faux texte. À remplacer par de vraies photos HDF dès que possible (le Brand Book proscrit l'IA reconnaissable). Remplacement : déposer le fichier dans `public/images/` et modifier `config/media.ts`. |
 | 19 | **Vidéos publicitaires** | — | La fin de la vidéo « Commercial_for_energy_advisory_firm » affiche un **faux numéro (079 61 58 41 69), une fausse adresse e-mail et un texte déformé** ; les polos portent un logo « HDF » inventé. Ne pas diffuser ces vidéos telles quelles en Meta Ads. |
 
 ## 4. Logo — correction effectuée, à valider
