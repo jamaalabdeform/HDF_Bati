@@ -50,6 +50,7 @@ export const company = {
     source: SRC_BRIEF,
   },
 
+  // Adresse Gmail conservée jusqu’à l’achat du nom de domaine (décision du 28/09/2026).
   email: "HDF.bati@gmail.com",
 
   /** Numéro WhatsApp qui reçoit les prospects (Farid + associé selon le questionnaire). */
