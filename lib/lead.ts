@@ -89,6 +89,8 @@ export function buildSummary(input: Pick<LeadInput, "segment" | "answers" | "con
       const v = input.answers[step.id];
       if (v) lines.push(`${step.summaryLabel} : ${answerLabel(step, v)}`);
     }
+    const best = bestTimeOptions.find((o) => o.value === input.contact.bestTime)?.label;
+    if (best) lines.push(`Rappel souhaité : ${best}`);
   } else {
     const project = callbackProjectOptions.find((o) => o.value === input.answers.projet)?.label;
     if (project) lines.push(`Projet : ${project}`);

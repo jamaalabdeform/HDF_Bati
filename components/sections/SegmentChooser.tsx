@@ -9,12 +9,12 @@ const icons: Record<Segment, typeof Home> = { particulier: Home, professionnel: 
 const toneRing: Record<Segment, string> = {
   particulier: "group-hover:border-hdf data-[active=true]:border-hdf",
   professionnel: "group-hover:border-navy data-[active=true]:border-navy",
-  collectivite: "group-hover:border-action data-[active=true]:border-action",
+  collectivite: "group-hover:border-deep data-[active=true]:border-deep",
 };
 const toneIcon: Record<Segment, string> = {
   particulier: "bg-hdf/10 text-hdf",
   professionnel: "bg-navy/10 text-navy",
-  collectivite: "bg-action/15 text-[#8a4309]",
+  collectivite: "bg-deep/10 text-deep",
 };
 
 /** Choix immédiat du profil : ouvre Jawabot directement sur le bon parcours. */

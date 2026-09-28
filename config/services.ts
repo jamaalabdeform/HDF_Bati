@@ -16,8 +16,8 @@ export interface SegmentDef {
   chooserHint: string;
   /** Badge d'activité (Brand Book). */
   badge: string;
-  /** Couleur de segment (tokens UI : particulier=vert, pro=bleu, énergie/collectivité=orange). */
-  tone: "green" | "navy" | "orange";
+  /** Couleur de segment : particulier = vert, pro = bleu, collectivité = vert profond (l’orange est réservé à l’action). */
+  tone: "green" | "navy" | "deep";
   cta: string;
 }
 
@@ -46,7 +46,7 @@ export const segments: Record<Segment, SegmentDef> = {
     chooserLabel: "Collectivité",
     chooserHint: "Ma structure publique",
     badge: "Collectivités",
-    tone: "orange",
+    tone: "deep",
     cta: "Optimiser mes contrats",
   },
 };
@@ -90,22 +90,21 @@ export const projectCards: ProjectCard[] = [
     tone: "navy",
     title: "Maîtrisez les besoins énergétiques de votre activité",
     text: "Des solutions adaptées à vos bâtiments et à vos contraintes professionnelles.",
-    points: ["Pompe à chaleur", "Performance du bâtiment", "Photovoltaïque"],
+    points: ["Pompe à chaleur et photovoltaïque", "Performance du bâtiment", "Contrats d’énergie"],
     cta: "Parler à HDF Bâti",
     segment: "professionnel",
     image: media.professionnels,
   },
   {
-    id: "energie",
+    id: "collectivites",
     anchor: anchors.energie,
-    badge: "Énergie",
-    tone: "orange",
+    badge: "Collectivités",
+    tone: "deep",
     title: "Reprenez le contrôle de vos contrats d’énergie",
-    text: "Nous accompagnons les professionnels et les collectivités dans l’analyse et l’optimisation de leurs contrats.",
-    points: ["Électricité et gaz", "Échéances et renouvellements", "Professionnels et collectivités"],
-    cta: "Étudier mes contrats",
-    segment: "professionnel",
-    presetNeed: "contrats",
+    text: "Communes, intercommunalités et établissements publics : analyse et optimisation de vos contrats d’électricité et de gaz, et accompagnement de vos projets de bâtiments.",
+    points: ["Contrats d’électricité et de gaz", "Échéances et renouvellements", "Chauffage et photovoltaïque des bâtiments"],
+    cta: "Optimiser mes contrats",
+    segment: "collectivite",
     image: media.energie,
   },
 ];

@@ -1,4 +1,5 @@
 import { company } from "./company";
+import { positioning } from "./positioning";
 import { confirmed, pending, type Validated } from "./validation";
 
 /**
@@ -8,17 +9,11 @@ import { confirmed, pending, type Validated } from "./validation";
  */
 
 export const commitments = [
-  {
-    title: "Un interlocuteur, du premier échange au suivi",
-    text: `${company.contactPerson.firstName} et l’équipe HDF Bâti suivent votre demande personnellement : vous savez toujours à qui parler.`,
-  },
+  { title: positioning.reactivite.title, text: positioning.reactivite.text },
+  { title: positioning.aides.title, text: positioning.aides.text },
   {
     title: "On étudie avant de proposer",
     text: "Votre logement, votre bâtiment ou vos contrats sont analysés avant toute proposition. Nous expliquons les étapes avant que vous vous engagiez.",
-  },
-  {
-    title: "Une entreprise des Hauts-de-France",
-    text: `Basée à ${company.address.city} (${company.address.department}), HDF Bâti intervient dans la région et, selon le projet, partout en France.`,
   },
   {
     title: "Des réponses honnêtes",

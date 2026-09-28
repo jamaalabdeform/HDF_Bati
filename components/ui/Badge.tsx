@@ -1,12 +1,10 @@
 import { cn } from "./cn";
 
-export type Tone = "green" | "navy" | "orange" | "deep" | "light";
+export type Tone = "green" | "navy" | "deep" | "light";
 
 const tones: Record<Tone, string> = {
   green: "bg-hdf text-white",
   navy: "bg-navy text-white",
-  // Badge orange : fond clair + texte brun foncé (contraste AA), l'orange plein reste pour l'action
-  orange: "bg-[#fdebd9] text-[#8a4309] ring-1 ring-inset ring-action/30",
   deep: "bg-deep text-white",
   light: "bg-white/90 text-deep ring-1 ring-inset ring-deep/10",
 };

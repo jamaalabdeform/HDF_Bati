@@ -8,9 +8,8 @@ import { MediaImage } from "../ui/MediaImage";
 import { SectionHeading } from "../ui/SectionHeading";
 import { cn } from "../ui/cn";
 
-const rule = { green: "bg-hdf", navy: "bg-navy", orange: "bg-action" } as const;
-const checkTone = { green: "text-hdf", navy: "text-navy", orange: "text-[#b35b0c]" } as const;
-const cta = { green: "", navy: "bg-navy hover:bg-[#052c4b]", orange: "bg-deep hover:bg-[#0a4a38]" } as const;
+const rule = { green: "bg-hdf", navy: "bg-navy", deep: "bg-deep" } as const;
+const checkTone = { green: "text-hdf", navy: "text-navy", deep: "text-deep" } as const;
 
 export function ProjectCards() {
   return (
@@ -18,8 +17,8 @@ export function ProjectCards() {
       <Container>
         <SectionHeading
           id="projets-title"
-          title="Votre projet, votre parcours"
-          intro="Choisissez votre situation : chaque demande suit un parcours adapté, avec les bonnes questions dès le départ."
+          title="Particulier, professionnel ou collectivité : votre parcours"
+          intro="Choisissez votre profil : chaque demande suit un parcours adapté, avec les bonnes questions dès le départ."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +30,7 @@ export function ProjectCards() {
             >
               <div className="relative">
                 <MediaImage asset={card.image} sizes="(min-width: 1024px) 24rem, (min-width: 768px) 50vw, 100vw" className="aspect-[16/9] sm:aspect-[16/10]" />
-                <Badge tone={card.tone === "orange" ? "orange" : card.tone} className="absolute bottom-3 left-3">
+                <Badge tone={card.tone} className="absolute bottom-3 left-3">
                   {card.badge}
                 </Badge>
               </div>
@@ -52,8 +51,7 @@ export function ProjectCards() {
                     origin={`card_${card.id}`}
                     segment={card.segment}
                     preset={card.presetNeed ? { besoin: card.presetNeed } : undefined}
-                    variant={card.tone === "green" ? "primary" : "secondary"}
-                    className={cn("w-full", cta[card.tone])}
+                    className="w-full"
                     iconEnd={<ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />}
                   >
                     {card.cta}

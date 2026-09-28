@@ -1,7 +1,8 @@
-import { ArrowRight, PhoneCall } from "lucide-react";
+import { ArrowRight, FileCheck2, PhoneCall, PhoneIncoming } from "lucide-react";
 import { company } from "@/config/company";
 import { media } from "@/config/media";
 import { anchors } from "@/config/navigation";
+import { positioning } from "@/config/positioning";
 import { SignatureCurve } from "../brand/SignatureCurve";
 import { JawabotTrigger } from "../jawabot/JawabotTrigger";
 import { ButtonLink } from "../ui/Button";
@@ -24,8 +25,18 @@ export function Hero() {
             Pompes à chaleur, rénovation énergétique et optimisation de vos contrats d’énergie.
           </p>
           <p className="mt-2 max-w-[52ch] text-[0.95rem] leading-relaxed text-muted sm:text-base">
-            {company.name} est une entreprise d’{company.address.city} ({company.address.department}). Particuliers, professionnels et collectivités : nous étudions votre situation avant de vous proposer une solution.
+            {company.name}, entreprise d’{company.address.city} ({company.address.department}), accompagne les particuliers, les professionnels et les collectivités.
           </p>
+          <ul className="mt-5 grid gap-2.5 text-[0.95rem] font-semibold text-deep sm:text-base">
+            <li className="flex items-start gap-3">
+              <PhoneIncoming className="mt-0.5 size-5 shrink-0 text-hdf" aria-hidden />
+              {positioning.reactivite.short}
+            </li>
+            <li className="flex items-start gap-3">
+              <FileCheck2 className="mt-0.5 size-5 shrink-0 text-hdf" aria-hidden />
+              {positioning.aides.short}
+            </li>
+          </ul>
 
           <SegmentChooser />
 
@@ -49,12 +60,8 @@ export function Hero() {
           />
           {/* Ce que fait HDF Bâti — posé sur la photo */}
           <div className="absolute -bottom-5 left-3 right-3 rounded-2xl bg-white p-4 shadow-[var(--shadow-float)] sm:right-auto sm:-left-6 sm:w-72 lg:-left-10">
-            <p className="text-sm font-semibold text-deep">HDF Bâti vous accompagne pour</p>
-            <ul className="mt-2 space-y-1.5 text-sm text-ink">
-              <li className="flex items-center gap-2.5"><span aria-hidden className="size-2 rounded-full bg-hdf" />la pompe à chaleur et la rénovation</li>
-              <li className="flex items-center gap-2.5"><span aria-hidden className="size-2 rounded-full bg-navy" />les bâtiments professionnels</li>
-              <li className="flex items-center gap-2.5"><span aria-hidden className="size-2 rounded-full bg-action" />les contrats d’énergie</li>
-            </ul>
+            <p className="text-sm font-semibold text-deep">Pompe à chaleur, photovoltaïque, rénovation</p>
+            <p className="mt-1 text-sm text-muted">et contrats d’énergie pour les professionnels et les collectivités.</p>
           </div>
         </div>
       </Container>

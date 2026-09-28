@@ -128,12 +128,12 @@ for (const width of [390, 1440]) {
   await pick("Réduire mes dépenses d’énergie");
   await page.screenshot({ path: `${OUT}/${width}-jawabot-2.png` });
   await pick("Dans les 3 mois");
-  await pick("Prendre rendez-vous");
+  await pick("Convenir d’un rendez-vous");
   await dialog.getByLabel("Nom et prénom").fill("Test QA");
   await dialog.getByLabel("Téléphone", { exact: true }).fill("06 12 34 56 78");
   await dialog.getByRole("checkbox").check();
   await page.screenshot({ path: `${OUT}/${width}-jawabot-3.png` });
-  await dialog.getByRole("button", { name: "Étudier mon projet" }).click();
+  await dialog.getByRole("button", { name: "Envoyer ma demande" }).click();
   await dialog.getByText("Merci, votre demande est bien transmise.").waitFor({ timeout: 8000 });
   await page.waitForTimeout(300);
   await page.screenshot({ path: `${OUT}/${width}-jawabot-4.png` });

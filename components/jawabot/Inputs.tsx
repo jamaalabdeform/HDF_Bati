@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { ChoiceOption, TextStep } from "@/config/jawabot";
-import { CONSENT_TEXT, isValidEmail, isValidPostalCode, normalizeFrenchPhone } from "@/lib/lead";
-import { ConsentField, TextField } from "../forms/Field";
+import { bestTimeOptions, CONSENT_TEXT, isValidEmail, isValidPostalCode, normalizeFrenchPhone } from "@/lib/lead";
+import { positioning } from "@/config/positioning";
+import { ConsentField, SelectField, TextField } from "../forms/Field";
 import { cn } from "../ui/cn";
 
 export function ChoiceInput({ options, onPick }: { options: readonly Pick<ChoiceOption, "value" | "label">[]; onPick: (value: string) => void }) {
@@ -117,10 +118,13 @@ interface ContactValues {
   phone: string;
   email: string;
   role: string;
+  bestTime: string;
 }
 
 export function ContactInput({
   askRole,
+  askBestTime,
+  recap,
   initial,
   submitting,
   retry,
@@ -128,6 +132,8 @@ export function ContactInput({
   onSubmit,
 }: {
   askRole: boolean;
+  askBestTime: boolean;
+  recap: string[];
   initial: ContactValues;
   submitting: boolean;
   retry: boolean;
@@ -138,7 +144,7 @@ export function ContactInput({
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues | "consent", string>>>({});
 
-  const set = (k: keyof ContactValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const set = (k: keyof ContactValues) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setV((s) => ({ ...s, [k]: e.target.value }));
     setErrors((s) => ({ ...s, [k]: undefined }));
   };
@@ -153,14 +159,22 @@ export function ContactInput({
         if (v.name.trim().length < 2) next.name = "Indiquez votre nom.";
         if (!normalizeFrenchPhone(v.phone)) next.phone = "Numéro français à 10 chiffres (ex. : 06 12 34 56 78).";
         if (v.email && !isValidEmail(v.email)) next.email = "Adresse e-mail invalide.";
+        if (askBestTime && !v.bestTime) next.bestTime = "Choisissez un moment pour être rappelé.";
         if (!consent) next.consent = "Votre accord est nécessaire pour être recontacté.";
         setErrors(next);
         if (Object.keys(next).length) return;
         onSubmit({ ...v, name: v.name.trim(), email: v.email.trim() });
       }}
     >
+      {recap.length > 0 && (
+        <p className="rounded-xl bg-surface px-3 py-2 text-sm text-deep">
+          <span className="sr-only">Récapitulatif de votre demande : </span>
+          {recap.join(" · ")}
+        </p>
+      )}
       <TextField label="Nom et prénom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} data-autofocus />
-      <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" value={v.phone} onChange={set("phone")} error={errors.phone} />
+      <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
+      {askBestTime && <SelectField label="Meilleur moment pour vous rappeler" placeholder="Sélectionnez…" options={bestTimeOptions} value={v.bestTime} onChange={set("bestTime")} error={errors.bestTime} />}
       <TextField label="E-mail" type="email" autoComplete="email" optional value={v.email} onChange={set("email")} error={errors.email} />
       {askRole && <TextField label="Fonction" autoComplete="organization-title" optional value={v.role} onChange={set("role")} />}
       <ConsentField checked={consent} onChange={(c) => { setConsent(c); setErrors((s) => ({ ...s, consent: undefined })); }} error={errors.consent} text={CONSENT_TEXT} />
@@ -172,6 +186,9 @@ export function ContactInput({
         {submitting ? <Loader2 className="size-5 animate-spin" aria-hidden /> : null}
         {submitting ? "Envoi en cours…" : retry ? "Réessayer l’envoi" : ctaLabel}
       </button>
+      <p className="text-center text-xs leading-relaxed text-muted">
+        {positioning.reactivite.short}. Vos informations servent uniquement à traiter votre demande.
+      </p>
     </form>
   );
 }

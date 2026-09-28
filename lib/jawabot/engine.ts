@@ -13,6 +13,7 @@ export interface JawabotContact {
   phone: string;
   email: string;
   role: string;
+  bestTime: string;
 }
 
 export interface JawabotState {
@@ -28,7 +29,7 @@ export interface JawabotState {
 export const initialState: JawabotState = {
   segment: null,
   answers: {},
-  contact: { name: "", phone: "", email: "", role: "" },
+  contact: { name: "", phone: "", email: "", role: "", bestTime: "" },
   status: "chatting",
   started: false,
 };

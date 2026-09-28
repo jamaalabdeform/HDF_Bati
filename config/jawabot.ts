@@ -60,7 +60,7 @@ export const jawabotCopy = {
   name: "Jawabot",
   title: "HDF Bâti • Assistant",
   launcher: "Parlez-nous de votre projet",
-  greeting: "Bonjour 👋",
+  greeting: "Bonjour,",
   intro: "Je vais vous poser quelques questions pour mieux comprendre votre besoin.",
   segmentQuestion: "Votre demande concerne :",
   humanNote: "Un conseiller HDF Bâti reprend ensuite personnellement votre demande.",
@@ -86,7 +86,7 @@ const contactPreference: ChoiceStep = {
   question: "Pour la suite, vous préférez :",
   options: [
     { value: "rappel", label: "Être rappelé" },
-    { value: "rdv", label: "Prendre rendez-vous" },
+    { value: "rdv", label: "Convenir d’un rendez-vous" },
     { value: "whatsapp", label: "Échanger sur WhatsApp" },
   ],
 };

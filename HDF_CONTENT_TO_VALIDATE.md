@@ -39,6 +39,13 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 | 16 | **Coordonnées GPS** | `config/company.ts` → `geo` | Latitude / longitude de la fiche Google Business (schema.org `geo`). |
 | 17 | **Réseaux sociaux** | `config/company.ts` → `social` | URLs Facebook, Instagram, LinkedIn (les liens n'apparaissent qu'une fois renseignés). |
 
+## 2 bis. Positionnement (PRODUCT.md) — formulations prudentes en ligne
+
+| # | Sujet | Où | Détail |
+|---|-------|----|--------|
+| 17a | **Réactivité** | `config/positioning.ts` → `reactivite.precise` | Affiché aujourd'hui : « Un conseiller vous rappelle rapidement » / « Pas de centre d'appels ». À fournir : délai public tenable (Farid : « dans la minute » pour un prospect chaud) et horaires. |
+| 17b | **Aides gérées en direct** | `config/positioning.ts` → `aides.precise`, `config/aides.ts` | Affiché aujourd'hui : « Nous nous occupons des démarches d'aides avec vous », « Selon conditions d'éligibilité ». À valider juridiquement : mécanisme exact (HDF Bâti perçoit l'aide et règle le sous-traitant), ce que le client n'a pas à faire ou à avancer. |
+
 ## 3. Visuels
 
 | # | Sujet | Où | Détail |

@@ -16,7 +16,7 @@ export const anchors = {
 export const mainNav = [
   { label: "Particuliers", href: `/#${anchors.particuliers}` },
   { label: "Professionnels", href: `/#${anchors.professionnels}` },
-  { label: "Collectivités & énergie", href: `/#${anchors.energie}` },
+  { label: "Collectivités", href: `/#${anchors.collectivites}` },
   { label: "Aides", href: `/#${anchors.aides}` },
   { label: "FAQ", href: `/#${anchors.faq}` },
   { label: "Contact", href: `/#${anchors.contact}` },

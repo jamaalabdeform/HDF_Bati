@@ -10,3 +10,6 @@ qa-screens/
 
 # Graphify (régénéré à chaque session)
 graphify-out/
+
+# Impeccable : état local
+.impeccable/live/

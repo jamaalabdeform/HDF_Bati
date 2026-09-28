@@ -19,7 +19,7 @@ export function Contact() {
           <SectionHeading id="contact-title" title={`Contacter ${company.name}`} intro={`Entreprise basée à ${company.address.city}, dans le ${company.address.department}. Nous intervenons dans les Hauts-de-France et, selon le projet, partout en France.`} />
           <div className="mt-8 max-w-[60ch] border-t border-line pt-6">
             <p className="font-bold text-deep">Une question rapide ?</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted">Écrivez-nous sur WhatsApp. Pour un projet, décrivez-le d’abord à Jawabot : nous vous répondrons avec tous les éléments en main.</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">Écrivez-nous sur WhatsApp. Pour un projet, décrivez-le d’abord à notre assistant en ligne : nous vous répondrons avec tous les éléments en main.</p>
             <a
               href={whatsappHref(genericWhatsappMessage)}
               target="_blank"

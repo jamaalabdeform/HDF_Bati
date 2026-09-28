@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, MessageCircle, Phone, RotateCcw, X } from "lucide-react";
 import { answerLabel, jawabotCopy, segmentChoices, type Step } from "@/config/jawabot";
 import { company, telHref, whatsappHref } from "@/config/company";
-import { segments } from "@/config/services";
 import { newEventId, track } from "@/lib/analytics";
 import { answeredSteps, currentStep, progress } from "@/lib/jawabot/engine";
 import { httpBackend } from "@/lib/jawabot/adapter";
@@ -89,7 +88,7 @@ export function JawabotPanel() {
     track("jawabot_step", { segment: state.segment ?? undefined, step_id: s.id, step_index: answered.length + 1, answer: s.type === "choice" ? value : undefined });
   };
 
-  const onSubmit = async (contact: { name: string; phone: string; email: string; role: string }) => {
+  const onSubmit = async (contact: { name: string; phone: string; email: string; role: string; bestTime: string }) => {
     if (!state.segment) return;
     dispatch({ type: "contact", contact });
     dispatch({ type: "submitting" });
@@ -98,7 +97,7 @@ export function JawabotPanel() {
       source: "jawabot",
       segment: state.segment,
       answers: state.answers,
-      contact: { name: contact.name, phone: contact.phone, email: contact.email || undefined, role: contact.role || undefined, postalCode: state.answers.code_postal },
+      contact: { name: contact.name, phone: contact.phone, email: contact.email || undefined, role: contact.role || undefined, postalCode: state.answers.code_postal, bestTime: contact.bestTime || undefined },
       consent: { accepted: true, text: CONSENT_TEXT, version: CONSENT_TEXT_VERSION, at: new Date().toISOString() },
       attribution: getAttribution(),
       page: window.location.href,
@@ -114,7 +113,6 @@ export function JawabotPanel() {
     }
   };
 
-  const seg = state.segment ? segments[state.segment] : null;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-end sm:inset-auto sm:right-5 sm:bottom-5" role="presentation">
@@ -238,10 +236,15 @@ export function JawabotPanel() {
                 <ContactInput
                   key={step.id}
                   askRole={!!step.askRole}
+                  askBestTime={state.answers.contact_preference === "rappel"}
+                  recap={answered
+                    .filter((s) => s.type !== "text" && s.id !== "contact_preference")
+                    .slice(0, 4)
+                    .map((s) => answerLabel(s, state.answers[s.id]))}
                   initial={state.contact}
                   submitting={state.status === "submitting"}
                   retry={state.status === "error"}
-                  ctaLabel={seg?.cta ?? "Envoyer ma demande"}
+                  ctaLabel="Envoyer ma demande"
                   onSubmit={onSubmit}
                 />
               )}
@@ -259,7 +262,7 @@ export function JawabotPanel() {
                   <RotateCcw className="size-4" aria-hidden /> Nouvelle demande
                 </button>
               )}
-              <span className="text-right text-[0.7rem] text-muted">{pct} %</span>
+              <span className="text-right text-[0.7rem] text-muted">{step?.type === "contact" ? "Dernière étape" : `${pct} %`}</span>
             </div>
           )}
         </div>

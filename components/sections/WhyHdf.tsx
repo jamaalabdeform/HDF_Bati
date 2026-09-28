@@ -1,4 +1,5 @@
 import { anchors } from "@/config/navigation";
+import { positioning } from "@/config/positioning";
 import { commitments, proofs } from "@/config/proofs";
 import { SHOW_PENDING } from "@/config/validation";
 import { Container } from "../ui/Container";
@@ -13,7 +14,7 @@ export function WhyHdf() {
     <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-surface py-20 sm:py-24">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ? Parce qu’on étudie avant de proposer." intro="Notre façon de travailler tient en quelques principes simples, appliqués à chaque demande." />
+          <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" intro="Un rappel rapide, des démarches d’aides faites avec vous, et une étude sérieuse avant toute proposition." />
 
           <dl className="grid gap-x-10 sm:grid-cols-2">
             {commitments.map((c) => (
@@ -34,6 +35,13 @@ export function WhyHdf() {
               </li>
             ))}
           </ul>
+        )}
+
+        {SHOW_PENDING && (
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+            <Pending label="Réactivité — version chiffrée" note={positioning.reactivite.precise.note} />
+            <Pending label="Aides — mécanisme précis" note={positioning.aides.precise.note} />
+          </div>
         )}
 
         {SHOW_PENDING && pendingProofs.length > 0 && (

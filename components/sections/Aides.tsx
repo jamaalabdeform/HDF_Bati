@@ -20,7 +20,7 @@ export function Aides() {
           </p>
           <Pending className="mt-4" label="Relecture juridique du bloc « Aides » avant mise en production." note="Formulations prudentes en place ; vérifier la conformité (DGCCRF / réglementation rénovation énergétique)." />
           <div className="mt-8">
-            <JawabotTrigger origin="aides" segment="particulier" preset={{ projet: "ne_sait_pas" }} variant="secondary" size="lg">
+            <JawabotTrigger origin="aides" segment="particulier" preset={{ projet: "ne_sait_pas" }} size="lg">
               Vérifier ma situation
             </JawabotTrigger>
           </div>
