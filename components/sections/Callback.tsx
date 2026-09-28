@@ -18,7 +18,7 @@ export function Callback() {
               <span>
                 Ou appelez directement le{" "}
                 <a href={telHref} data-track="phone" data-track-location="callback_section" className="inline-flex min-h-11 items-center font-bold whitespace-nowrap text-white underline-offset-4 hover:underline">
-                  {company.phone.display}
+                  <span className="tabular">{company.phone.display}</span>
                 </a>
               </span>
             </li>

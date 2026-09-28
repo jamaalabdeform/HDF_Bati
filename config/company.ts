@@ -60,10 +60,6 @@ export const company = {
     ),
   },
 
-  contactPerson: {
-    firstName: "Farid",
-    role: "Directeur général",
-  },
 
   serviceArea: confirmed(
     "Hauts-de-France, et partout en France selon le projet",

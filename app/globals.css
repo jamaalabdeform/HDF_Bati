@@ -72,6 +72,7 @@ p {
   color: var(--color-deep);
 }
 :root {
+  scrollbar-color: rgb(8 61 46 / 0.35) transparent;
   caret-color: var(--color-hdf);
   accent-color: var(--color-hdf);
 }

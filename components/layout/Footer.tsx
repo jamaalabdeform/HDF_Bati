@@ -79,7 +79,7 @@ export function Footer() {
             <li>
               <a href={telHref} data-track="phone" data-track-location="footer" className="inline-flex min-h-10 items-center gap-2.5 font-semibold text-white hover:underline">
                 <Phone className="size-4 shrink-0 text-energy" aria-hidden />
-                {company.phone.display}
+                <span className="tabular">{company.phone.display}</span>
               </a>
             </li>
             <li>

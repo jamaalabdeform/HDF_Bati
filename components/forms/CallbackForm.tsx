@@ -86,7 +86,7 @@ export function CallbackForm() {
     <form id="callback-form" noValidate onSubmit={onSubmit} className="relative rounded-[var(--radius-card)] bg-white p-5 text-ink sm:p-7">
       <div className="grid gap-4 sm:grid-cols-2">
         <TextField label="Nom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} className="sm:col-span-2" />
-        <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" value={v.phone} onChange={set("phone")} error={errors.phone} />
+        <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
         <TextField label="Code postal" inputMode="numeric" autoComplete="postal-code" maxLength={5} value={v.postalCode} onChange={(e) => { e.target.value = e.target.value.replace(/\D/g, ""); set("postalCode")(e); }} error={errors.postalCode} />
         <SelectField label="Type de projet" placeholder="Sélectionnez…" options={callbackProjectOptions} value={v.project} onChange={set("project")} error={errors.project} />
         <SelectField label="Meilleur moment pour être rappelé" placeholder="Sélectionnez…" options={bestTimeOptions} value={v.bestTime} onChange={set("bestTime")} error={errors.bestTime} />

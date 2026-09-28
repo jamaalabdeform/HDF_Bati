@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "./cn";
 
-type Variant = "primary" | "secondary" | "outline" | "ghost" | "light";
+type Variant = "primary";
 type Size = "md" | "lg" | "sm";
 
 const base =
@@ -11,10 +11,6 @@ const base =
 const variants: Record<Variant, string> = {
   // Orange action : texte encre (contraste AA 4.7:1) — l'orange est réservé à l'action.
   primary: "bg-action text-ink hover:bg-action-hover",
-  secondary: "bg-hdf text-white hover:bg-hdf-dark",
-  outline: "border-2 border-deep/15 bg-white text-deep hover:border-hdf hover:text-hdf",
-  ghost: "text-deep hover:text-hdf underline-offset-4 hover:underline",
-  light: "bg-white text-deep hover:bg-surface",
 };
 
 const sizes: Record<Size, string> = {

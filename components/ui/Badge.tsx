@@ -1,12 +1,11 @@
 import { cn } from "./cn";
 
-export type Tone = "green" | "navy" | "deep" | "light";
+export type Tone = "green" | "navy" | "deep";
 
 const tones: Record<Tone, string> = {
   green: "bg-hdf text-white",
   navy: "bg-navy text-white",
   deep: "bg-deep text-white",
-  light: "bg-white/90 text-deep ring-1 ring-inset ring-deep/10",
 };
 
 export function Badge({ tone = "green", children, className }: { tone?: Tone; children: React.ReactNode; className?: string }) {

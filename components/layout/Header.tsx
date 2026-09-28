@@ -60,7 +60,7 @@ export function Header() {
             className="hidden min-h-11 items-center gap-2 rounded-full px-3 text-[0.92rem] font-semibold whitespace-nowrap text-deep transition-colors hover:text-hdf md:inline-flex lg:hidden xl:inline-flex"
           >
             <Phone className="size-4 text-hdf" aria-hidden />
-            {company.phone.display}
+            <span className="tabular">{company.phone.display}</span>
           </a>
           <div className="hidden sm:block">
             <JawabotTrigger origin="header" usePreferred size="sm">

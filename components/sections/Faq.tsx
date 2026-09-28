@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { company, telHref } from "@/config/company";
 import { faq } from "@/config/faq";
 import { anchors } from "@/config/navigation";
 import { Container } from "../ui/Container";
@@ -9,7 +10,15 @@ export function Faq() {
   return (
     <section id={anchors.faq} data-section="faq" aria-labelledby="faq-title" className="bg-white py-14 sm:py-24">
       <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-        <SectionHeading id="faq-title" title="Les questions que l’on nous pose le plus" intro="Une autre question ? Posez-la directement à HDF Bâti : nous vous répondons simplement." />
+        <SectionHeading id="faq-title" title="Les questions que l’on nous pose le plus" intro={
+            <>
+              Une autre question ? Posez-la directement à HDF Bâti au{" "}
+              <a href={telHref} data-track="phone" data-track-location="faq" className="tabular font-semibold whitespace-nowrap text-deep underline hover:text-hdf">
+                {company.phone.display}
+              </a>
+              .
+            </>
+          } />
           <div className="divide-y divide-line rounded-[var(--radius-card)] border border-line bg-white">
             {faq.map((item) => (
               <details key={item.q} className="group px-5 sm:px-6 [&_summary::-webkit-details-marker]:hidden">

@@ -62,7 +62,7 @@ export function TextInput({ step, onSubmit }: { step: TextStep; onSubmit: (v: st
           placeholder={step.placeholder}
           autoComplete={step.autoComplete ?? "off"}
           aria-invalid={error ? true : undefined}
-          className="min-h-12 w-full min-w-0 rounded-xl border border-deep/20 px-3.5 text-base outline-none focus:border-hdf focus:ring-4 focus:ring-hdf/15"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-deep/20 px-3.5 text-base placeholder:text-muted outline-none focus:border-hdf focus:ring-4 focus:ring-hdf/15"
         />
         <SendButton />
       </div>
@@ -104,7 +104,7 @@ export function PostalInput({ onSubmit }: { onSubmit: (v: string) => void }) {
             setError(undefined);
           }}
           aria-invalid={error ? true : undefined}
-          className="min-h-12 w-full min-w-0 rounded-xl border border-deep/20 px-3.5 text-base tracking-wider outline-none focus:border-hdf focus:ring-4 focus:ring-hdf/15"
+          className="min-h-12 w-full min-w-0 rounded-xl border border-deep/20 px-3.5 text-base placeholder:text-muted tracking-wider outline-none focus:border-hdf focus:ring-4 focus:ring-hdf/15"
         />
         <SendButton />
       </div>

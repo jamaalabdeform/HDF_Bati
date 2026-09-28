@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cn } from "../ui/cn";
 
 const control =
-  "block w-full min-h-12 rounded-xl border border-deep/20 bg-white px-3.5 text-base text-ink placeholder:text-muted/75 transition-[border-color,box-shadow] outline-none hover:border-deep/35 focus:border-hdf focus:ring-4 focus:ring-hdf/15 aria-[invalid=true]:border-[#b42318] aria-[invalid=true]:ring-[#b42318]/10";
+  "block w-full min-h-12 rounded-xl border border-deep/20 bg-white px-3.5 text-base text-ink placeholder:text-muted transition-[border-color,box-shadow] outline-none hover:border-deep/35 focus:border-hdf focus:ring-4 focus:ring-hdf/15 aria-[invalid=true]:border-[#b42318] aria-[invalid=true]:ring-[#b42318]/10";
 
 interface FieldShell {
   label: string;
