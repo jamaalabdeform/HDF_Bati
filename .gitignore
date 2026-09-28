@@ -13,3 +13,4 @@ graphify-out/
 
 # Impeccable : état local
 .impeccable/live/
+.impeccable/review/

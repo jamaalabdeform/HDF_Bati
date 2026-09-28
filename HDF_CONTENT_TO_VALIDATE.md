@@ -50,8 +50,19 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 
 | # | Sujet | Où | Détail |
 |---|-------|----|--------|
-| 18 | **Photos provisoires** | `config/media.ts` (`status: "provisional_ai"`) | Les 3 visuels actuels (hero : un par profil) sont extraits des vidéos publicitaires **générées par IA** fournies (maison du Nord, hydraulique PAC, mairie), en excluant toute image portant un faux logo ou un faux texte. À remplacer par de vraies photos HDF dès que possible (le Brand Book proscrit l'IA reconnaissable). Remplacement : déposer le fichier dans `public/images/` et modifier `config/media.ts`. |
+| 18 | **Photos de chantier** | — | Les visuels provisoires extraits des vidéos IA ont été **retirés** (refonte « fiche d'étude », 28/09/2026) : le site n'affiche aucune photo. Fournir 4 à 5 vraies photos HDF (avec accord client) pour les pages profil. |
 | 19 | **Vidéos publicitaires** | — | La fin de la vidéo « Commercial_for_energy_advisory_firm » affiche un **faux numéro (079 61 58 41 69), une fausse adresse e-mail et un texte déformé** ; les polos portent un logo « HDF » inventé. Ne pas diffuser ces vidéos telles quelles en Meta Ads. |
+
+## 3 bis. Pages profil — « Après votre demande » (`config/dossiers.ts`)
+
+Rubriques affichées d'après le questionnaire de Farid (RDV du 27/09/2026) — **à relire par Farid avant la mise en ligne** :
+
+| # | Sujet | Où | Détail |
+|---|-------|----|--------|
+| 19a | **Qui rappelle** | `dossiers.*.rappel` | « Un responsable de HDF Bâti reprend lui-même votre fiche : pas de centre d'appels. » (Farid ou son associé rappellent eux-mêmes ; Farid n'est pas nommé sur le site.) |
+| 19b | **Pièces à préparer (particulier)** | `dossiers.particulier.preparez` | Adresse, mode de chauffage, **dernier avis d'imposition envoyé par e-mail** pour vérifier l'éligibilité aux aides. |
+| 19c | **Pièces à préparer (pro / collectivité)** | `dossiers.professionnel/collectivite.preparez.precise` | Non communiqué : factures, contrats, historiques ? (masqué en production). |
+| 19d | **Ce que reçoit le client** | `dossiers.*.recevez` | Formulations prudentes (réponse sur la faisabilité, proposition après étude, pas d'économie chiffrée avant l'étude). |
 
 ## 4. Logo — correction effectuée, à valider
 
@@ -69,7 +80,7 @@ Correction appliquée (`scripts/build-logo.py`, fichiers `public/brand/*.svg`) :
 **Action :** faire valider ce master corrigé par Farid / le graphiste, puis remplacer les assets
 print et réseaux sociaux (carte de visite, avatars, templates) qui portent encore « BÂT I ».
 
-## 5. Jawabot & scoring
+## 5. Fiche d’étude (Jawabot) & scoring
 
 | # | Sujet | Où | Détail |
 |---|-------|----|--------|

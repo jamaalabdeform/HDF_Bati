@@ -9,7 +9,7 @@
  * - cibles tactiles < 44 px (mobile) ;
  * - erreurs console / requêtes en échec ;
  * - images sans alt / logos déformés.
- * Puis parcours Jawabot complet + formulaire de rappel.
+ * Sur l'accueil et les 3 pages profil, puis parcours complet de la fiche d'étude + formulaire de rappel.
  */
 import { chromium } from "playwright";
 import fs from "node:fs";
@@ -17,6 +17,12 @@ import fs from "node:fs";
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const OUT = process.argv[3] ?? "qa-screens";
 const WIDTHS = [375, 390, 430, 768, 1024, 1440];
+const PAGES = [
+  { path: "/", name: "accueil" },
+  { path: "/particuliers", name: "particuliers" },
+  { path: "/professionnels", name: "professionnels" },
+  { path: "/collectivites", name: "collectivites" },
+];
 const HEIGHTS = { 375: 667, 390: 844, 430: 932, 768: 1024, 1024: 768, 1440: 900 };
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -37,7 +43,7 @@ async function audit(page, width) {
       if (r.width === 0 || r.height === 0) continue;
       if (el.closest("svg") && el.tagName !== "svg") continue;
       // Hors viewport horizontalement (hors éléments décoratifs positionnés)
-      if ((r.right > window.innerWidth + 1 || r.left < -1) && cs.position !== "fixed" && !el.closest("[class*='SignatureCurve'], svg[aria-hidden=true]") && el.tagName !== "svg") {
+      if ((r.right > window.innerWidth + 1 || r.left < -1) && cs.position !== "fixed" && !el.closest("svg[aria-hidden=true]") && el.tagName !== "svg") {
         const clip = el.closest("section, header, footer");
         const clipCs = clip ? getComputedStyle(clip) : null;
         if (!clipCs || clipCs.overflowX === "visible") issues.push(`Hors cadre : <${el.tagName.toLowerCase()} class="${(el.className?.baseVal ?? el.className ?? "").toString().slice(0, 60)}"> (${Math.round(r.left)}→${Math.round(r.right)})`);
@@ -74,15 +80,15 @@ async function audit(page, width) {
   }, width);
 }
 
-for (const width of WIDTHS) {
+for (const pg of PAGES) for (const width of WIDTHS) {
   const context = await browser.newContext({ viewport: { width, height: HEIGHTS[width] }, deviceScaleFactor: 1, locale: "fr-FR" });
   const page = await context.newPage();
   const consoleErrors = [];
   page.on("console", (m) => m.type() === "error" && consoleErrors.push(m.text()));
   page.on("pageerror", (e) => consoleErrors.push(e.message));
   page.on("requestfailed", (r) => consoleErrors.push(`Requête en échec : ${r.url()}`));
-  await page.goto(`${BASE}/?utm_source=facebook&utm_medium=paid&utm_campaign=qa`, { waitUntil: "networkidle" });
-  await page.screenshot({ path: `${OUT}/${width}-fold.png` });
+  await page.goto(`${BASE}${pg.path}?utm_source=facebook&utm_medium=paid&utm_campaign=qa`, { waitUntil: "networkidle" });
+  await page.screenshot({ path: `${OUT}/${pg.name}-${width}-fold.png` });
   // Déclenche les apparitions au défilement
   await page.evaluate(async () => {
     for (let y = 0; y < document.documentElement.scrollHeight; y += 300) {
@@ -93,13 +99,13 @@ for (const width of WIDTHS) {
   });
   await page.waitForTimeout(900);
   const issues = await audit(page, width);
-  await page.screenshot({ path: `${OUT}/${width}-full.png`, fullPage: true });
-  report.push({ width, issues, consoleErrors });
+  await page.screenshot({ path: `${OUT}/${pg.name}-${width}-full.png`, fullPage: true });
+  report.push({ width, page: pg.name, issues, consoleErrors });
   await context.close();
 }
 
-// Parcours Jawabot (mobile 390 + desktop 1440)
-for (const width of [390, 1440]) {
+// Fiche d'étude : accueil (choix du profil) à 390, page particuliers à 390 et 1440
+for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/particuliers"]]) {
   const context = await browser.newContext({ viewport: { width, height: HEIGHTS[width] }, locale: "fr-FR" });
   const page = await context.newPage();
   const errors = [];
@@ -109,36 +115,40 @@ for (const width of [390, 1440]) {
     if (m.type() === "error") errors.push(m.text());
     if (m.text().startsWith("[analytics]")) events.push(m.text().split(" ")[1]);
   });
-  await page.goto(`${BASE}/?utm_source=facebook&utm_campaign=pac_test`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: /^Particulier/ }).first().click();
-  const dialog = page.getByRole("dialog", { name: /Assistant/ });
-  await dialog.waitFor();
-  await page.screenshot({ path: `${OUT}/${width}-jawabot-1.png` });
+  await page.goto(`${BASE}${path}?utm_source=facebook&utm_campaign=pac_test`, { waitUntil: "networkidle" });
+  const tag = `${path === "/" ? "accueil" : "particuliers"}-${width}`;
+  const sheet = page.locator("#etude");
   const pick = async (label) => {
-    await dialog.getByRole("button", { name: label, exact: true }).click();
-    await page.waitForTimeout(500);
+    await sheet.getByRole("button", { name: label, exact: true }).click();
+    await page.waitForTimeout(350);
   };
+  if (path === "/") await pick("Mon logement");
+  await page.screenshot({ path: `${OUT}/${tag}-fiche-1.png` });
   await pick("Pompe à chaleur");
   await pick("Maison individuelle");
   await pick("Propriétaire occupant");
-  await dialog.getByLabel("Code postal", { exact: true }).fill("59410");
-  await dialog.getByRole("button", { name: "Valider" }).click();
-  await page.waitForTimeout(500);
+  await sheet.getByRole("textbox", { name: "Où se situe le logement ?" }).fill("59410");
+  await sheet.getByRole("button", { name: "Continuer" }).click();
+  await page.waitForTimeout(350);
+  await pick("Gaz");
+  // Modifier une rubrique déjà remplie puis reprendre
+  await sheet.getByRole("button", { name: "Modifier : Chauffage actuel" }).click();
+  await page.waitForTimeout(350);
   await pick("Gaz");
   await pick("Réduire mes dépenses d’énergie");
-  await page.screenshot({ path: `${OUT}/${width}-jawabot-2.png` });
+  await page.screenshot({ path: `${OUT}/${tag}-fiche-2.png` });
   await pick("Dans les 3 mois");
   await pick("Convenir d’un rendez-vous");
-  await dialog.getByLabel("Nom et prénom").fill("Test QA");
-  await dialog.getByLabel("Téléphone", { exact: true }).fill("06 12 34 56 78");
-  await dialog.getByRole("checkbox").check();
-  await page.screenshot({ path: `${OUT}/${width}-jawabot-3.png` });
-  await dialog.getByRole("button", { name: "Envoyer ma demande" }).click();
-  await dialog.getByText("Merci, votre demande est bien transmise.").waitFor({ timeout: 8000 });
-  await page.waitForTimeout(300);
-  await page.screenshot({ path: `${OUT}/${width}-jawabot-4.png` });
+  await sheet.getByLabel("Nom et prénom").fill("Test QA");
+  await sheet.getByLabel("Téléphone", { exact: true }).fill("06 12 34 56 78");
+  await sheet.getByRole("checkbox").check();
+  await page.screenshot({ path: `${OUT}/${tag}-fiche-3.png` });
+  await sheet.getByRole("button", { name: "Envoyer ma fiche" }).click();
+  await sheet.getByText("Merci, votre fiche est transmise.").waitFor({ timeout: 8000 });
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: `${OUT}/${tag}-fiche-4.png` });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-  report.push({ width, flow: "jawabot", ok: true, events, errors, overflow });
+  report.push({ width, flow: `fiche ${path}`, ok: true, events, errors, overflow });
   await context.close();
 }
 
@@ -176,7 +186,7 @@ for (const width of [390, 1440]) {
 await browser.close();
 fs.writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 2));
 for (const r of report) {
-  const label = r.flow ? `${r.flow} @${r.width}` : `@${r.width}px`;
+  const label = r.flow ? `${r.flow} @${r.width}` : `${r.page} @${r.width}px`;
   const probs = [...(r.issues ?? []), ...(r.consoleErrors ?? []), ...(r.errors ?? [])];
   console.log(`\n${label} — ${probs.length ? `${probs.length} problème(s)` : "OK"}${r.events ? ` — événements : ${r.events.join(", ")}` : ""}`);
   for (const p of probs.slice(0, 25)) console.log("  • " + p);

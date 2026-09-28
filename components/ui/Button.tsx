@@ -6,7 +6,7 @@ type Variant = "primary";
 type Size = "md" | "lg" | "sm";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-full font-semibold leading-tight transition-[background-color,color,box-shadow,transform,border-color] duration-200 ease-[var(--ease-out-soft)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 select-none text-center whitespace-nowrap";
+  "group inline-flex items-center justify-center gap-2 rounded-md font-semibold leading-tight transition-[background-color,color,box-shadow,transform,border-color] duration-200 ease-[var(--ease-out-soft)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 select-none text-center whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
   // Orange action : texte encre (contraste AA 4.7:1) — l'orange est réservé à l'action.

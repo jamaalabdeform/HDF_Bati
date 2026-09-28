@@ -13,20 +13,20 @@ export function Contact() {
     { label: "Adresse", value: fullAddress, href: mapsHref, external: true },
   ];
   return (
-    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-24">
+    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-20">
       <Container className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <SectionHeading id="contact-title" title={`Contacter ${company.name}`} intro={`Entreprise basée à ${company.address.city}, dans le ${company.address.department}. Nous intervenons dans les Hauts-de-France et, selon le projet, partout en France.`} />
           <div className="mt-8 max-w-[60ch] border-t border-line pt-6">
             <p className="font-bold text-deep">Une question rapide ?</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted">Écrivez-nous sur WhatsApp. Pour un projet, décrivez-le d’abord à notre assistant en ligne : nous vous répondrons avec tous les éléments en main.</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">Écrivez-nous sur WhatsApp. Pour un projet, remplissez d’abord la fiche d’étude : nous vous répondrons avec tous les éléments en main.</p>
             <a
               href={whatsappHref(genericWhatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
               data-track="whatsapp"
               data-track-location="contact"
-              className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-hdf px-5 font-semibold text-hdf transition-colors hover:bg-hdf hover:text-white"
+              className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-md border-2 border-hdf px-5 font-semibold text-hdf transition-colors hover:bg-hdf hover:text-white"
             >
               <MessageCircle className="size-5" aria-hidden />
               Échanger avec HDF Bâti

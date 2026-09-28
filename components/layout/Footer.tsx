@@ -16,7 +16,7 @@ export function Footer() {
   const liveSocials = socials.filter((s) => s.data.status === "confirmed" && s.data.value);
 
   return (
-    <footer data-section="footer" className="bg-deep pb-24 text-white sm:pb-0">
+    <footer data-section="footer" className="on-deep border-t border-white/15 bg-deep pb-24 text-white sm:pb-0">
       <Container className="grid gap-8 py-12 sm:gap-10 sm:py-14 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1.2fr] lg:gap-12">
         <div>
           <Logo variant="full-inverse" height={96} className="h-auto w-[280px] max-w-full" />

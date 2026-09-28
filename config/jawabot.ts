@@ -65,8 +65,8 @@ export const jawabotCopy = {
   segmentQuestion: "Votre demande concerne :",
   humanNote: "Un conseiller HDF Bâti reprend ensuite personnellement votre demande.",
   disclaimer:
-    "Jawabot prépare votre demande : il ne remplace ni une étude technique, ni un devis, et ne confirme aucune aide.",
-  successTitle: "Merci, votre demande est bien transmise.",
+    "Cette fiche prépare votre demande : elle ne remplace ni une étude technique, ni un devis, et ne confirme aucune aide.",
+  successTitle: "Merci, votre fiche est transmise.",
   successText:
     "HDF Bâti a reçu le résumé de votre projet et revient vers vous pour en parler.",
   errorText:

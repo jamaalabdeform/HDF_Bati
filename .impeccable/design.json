@@ -1,0 +1,436 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T17:05:45+00:00",
+  "title": "Design System: HDF Bâti",
+  "extensions": {
+    "colorMeta": {
+      "hdf": {
+        "role": "primary",
+        "displayName": "Vert HDF",
+        "canonical": "#0b7a3b",
+        "oklch": "oklch(50.8% 0.133 151.0)",
+        "tonalRamp": [
+          "#010f04",
+          "#002e12",
+          "#085025",
+          "#1b743c",
+          "#389857",
+          "#5ebc79",
+          "#84e29c",
+          "#c9fed4"
+        ]
+      },
+      "hdf-dark": {
+        "role": "primary",
+        "displayName": "Vert HDF appuyé",
+        "canonical": "#096a33",
+        "oklch": "oklch(46.0% 0.120 151.2)",
+        "tonalRamp": [
+          "#010f04",
+          "#002e12",
+          "#085025",
+          "#1a743c",
+          "#43965c",
+          "#68ba7e",
+          "#8ce0a1",
+          "#c9fed4"
+        ]
+      },
+      "deep": {
+        "role": "primary",
+        "displayName": "Vert profond",
+        "canonical": "#083d2e",
+        "oklch": "oklch(32.2% 0.060 168.9)",
+        "tonalRamp": [
+          "#010f09",
+          "#052c21",
+          "#1b4c3c",
+          "#3c6c5b",
+          "#5e8e7c",
+          "#80b29e",
+          "#a3d6c2",
+          "#c8fce8"
+        ]
+      },
+      "action": {
+        "role": "secondary",
+        "displayName": "Orange action",
+        "canonical": "#e47a17",
+        "oklch": "oklch(68.6% 0.163 55.4)",
+        "tonalRamp": [
+          "#170600",
+          "#3c1b01",
+          "#643309",
+          "#934b07",
+          "#c3660b",
+          "#f0852a",
+          "#fab98c",
+          "#feeade"
+        ]
+      },
+      "action-hover": {
+        "role": "secondary",
+        "displayName": "Orange action clair",
+        "canonical": "#ec8b30",
+        "oklch": "oklch(72.6% 0.154 58.7)",
+        "tonalRamp": [
+          "#160700",
+          "#3a1d02",
+          "#61350b",
+          "#8f4f0b",
+          "#be6a12",
+          "#ea8a2e",
+          "#fbb986",
+          "#feeadc"
+        ]
+      },
+      "energy": {
+        "role": "secondary",
+        "displayName": "Vert énergie",
+        "canonical": "#79c51d",
+        "oklch": "oklch(74.5% 0.200 132.4)",
+        "tonalRamp": [
+          "#050e00",
+          "#172c03",
+          "#2d4c0d",
+          "#43700e",
+          "#5b9515",
+          "#72bd08",
+          "#95e348",
+          "#d4feb4"
+        ]
+      },
+      "navy": {
+        "role": "tertiary",
+        "displayName": "Bleu confiance",
+        "canonical": "#073b63",
+        "oklch": "oklch(34.3% 0.087 248.0)",
+        "tonalRamp": [
+          "#000c1b",
+          "#012745",
+          "#14456d",
+          "#366590",
+          "#5787b4",
+          "#79aad9",
+          "#a1cefa",
+          "#e2f0ff"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface vert pâle",
+        "canonical": "#f2f7f4",
+        "oklch": "oklch(97.2% 0.007 160.1)",
+        "tonalRamp": [
+          "#090c0a",
+          "#222624",
+          "#3f4341",
+          "#5e6260",
+          "#7f8481",
+          "#a2a6a3",
+          "#c6cac8",
+          "#ebf0ed"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "#dce7df",
+        "oklch": "oklch(91.7% 0.016 154.5)",
+        "tonalRamp": [
+          "#060d08",
+          "#1f2722",
+          "#3c453e",
+          "#5b645d",
+          "#7b857e",
+          "#9ea8a1",
+          "#c2ccc5",
+          "#e7f2ea"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Encre",
+        "canonical": "#192d27",
+        "oklch": "oklch(27.8% 0.028 173.2)",
+        "tonalRamp": [
+          "#000f0a",
+          "#162a24",
+          "#324741",
+          "#516760",
+          "#728881",
+          "#94aba3",
+          "#b7d0c7",
+          "#dcf5ed"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Gris sourd",
+        "canonical": "#4c5f58",
+        "oklch": "oklch(46.7% 0.026 170.8)",
+        "tonalRamp": [
+          "#010f0a",
+          "#182923",
+          "#344740",
+          "#53665f",
+          "#748880",
+          "#96aba3",
+          "#b9cfc7",
+          "#def4ec"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papier",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Rouge erreur",
+        "canonical": "#b42318",
+        "oklch": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "#1e0100",
+          "#4d0100",
+          "#7e0b05",
+          "#b12015",
+          "#da4a3b",
+          "#fb7866",
+          "#fdb4a8",
+          "#ffe9e5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "H1 de l'accueil ; variante 2rem → 3rem sur les pages profil."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titres de section H2, sans sur-titre."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Question de la rubrique active, titres de rubriques et d'étapes."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Textes courants et introductions, 60ch maximum."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Libellés, boutons, onglets, réponses remplies."
+      },
+      "rubric-number": {
+        "displayName": "Numéro de rubrique",
+        "purpose": "01, 02… en chiffres tabulaires vert HDF dans la marge de la feuille."
+      },
+      "stamp": {
+        "displayName": "Tampon",
+        "purpose": "Statut de la fiche, seul texte en capitales."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-sheet",
+        "value": "0 1px 0 rgb(255 255 255 / 0.6) inset, 0 24px 48px -24px rgb(0 0 0 / 0.45)",
+        "purpose": "Feuille (fiche d'étude, formulaire de rappel) posée sur le champ vert profond."
+      },
+      {
+        "name": "shadow-float",
+        "value": "0 12px 28px -10px rgb(17 24 22 / 0.28), 0 2px 6px -2px rgb(17 24 22 / 0.12)",
+        "purpose": "Panneaux réellement flottants (bandeau de consentement)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-soft",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Transitions des boutons et entrée de la rubrique active."
+      },
+      {
+        "name": "rubric-in",
+        "value": "0.28s ease-out-soft; translateY(6px) → 0, opacity 0 → 1",
+        "purpose": "La rubrique active glisse en place."
+      },
+      {
+        "name": "stamp-press",
+        "value": "0.4s cubic-bezier(0.16, 1, 0.3, 1); scale(1.3) rotate(-6deg) → rotate(-2deg)",
+        "purpose": "Le tampon « Transmise » se pose à l'envoi."
+      },
+      {
+        "name": "button-transition",
+        "value": "200ms ease-out-soft; active scale(0.98)",
+        "purpose": "Survol et appui des boutons."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animations et transitions ramenées à 0.01ms",
+        "purpose": "Respect de prefers-reduced-motion."
+      }
+    ],
+    "focus": [
+      {
+        "name": "focus-light",
+        "value": "outline: 3px solid var(--color-navy); outline-offset: 3px",
+        "purpose": "Focus visible sur fond clair et dans la feuille."
+      },
+      {
+        "name": "focus-deep",
+        "value": "outline-color: var(--color-energy) sous .on-deep",
+        "purpose": "Focus visible sur le champ vert profond."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tout appel à l'action : envoyer, étudier mon projet, demander un rappel. Seul usage de l'orange.",
+      "html": "<button class=\"ds-btn-primary\">Étudier mon projet <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border:0;border-radius:6px;background:var(--color-action,#e47a17);color:var(--color-ink,#192d27);font:600 0.95rem/1.25 Inter,system-ui,sans-serif;cursor:pointer;transition:background-color .2s cubic-bezier(.22,1,.36,1),transform .2s cubic-bezier(.22,1,.36,1)}.ds-btn-primary:hover{background:var(--color-action-hover,#ec8b30)}.ds-btn-primary:active{transform:scale(.98)}.ds-btn-primary:focus-visible{outline:3px solid var(--color-navy,#073b63);outline-offset:3px}"
+    },
+    {
+      "name": "Bouton contour marque",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Action secondaire sur fond clair (WhatsApp dans Contact).",
+      "html": "<a href=\"#\" class=\"ds-btn-outline\">Échanger avec HDF Bâti</a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border:2px solid var(--color-hdf,#0b7a3b);border-radius:6px;color:var(--color-hdf,#0b7a3b);font:600 1rem/1.25 Inter,system-ui,sans-serif;text-decoration:none;transition:background-color .15s,color .15s}.ds-btn-outline:hover{background:var(--color-hdf,#0b7a3b);color:#fff}.ds-btn-outline:focus-visible{outline:3px solid var(--color-navy,#073b63);outline-offset:3px}"
+    },
+    {
+      "name": "Champ de saisie",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Champ de formulaire standard (rappel, coordonnées de la fiche).",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field-label\" for=\"ds-tel\">Téléphone</label><input id=\"ds-tel\" class=\"ds-input\" placeholder=\"06 12 34 56 78\"></div>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;max-width:320px}.ds-field-label{font:600 .875rem/1.25 Inter,system-ui,sans-serif;color:var(--color-deep,#083d2e)}.ds-input{min-height:48px;padding:0 14px;border:1px solid rgb(8 61 46/.2);border-radius:6px;background:#fff;color:var(--color-ink,#192d27);font:400 1rem Inter,system-ui,sans-serif;outline:none;transition:border-color .15s,box-shadow .15s}.ds-input::placeholder{color:var(--color-muted,#4c5f58)}.ds-input:hover{border-color:rgb(8 61 46/.35)}.ds-input:focus{border-color:var(--color-hdf,#0b7a3b);box-shadow:0 0 0 4px rgb(11 122 59/.15)}"
+    },
+    {
+      "name": "Choix de rubrique",
+      "kind": "chip",
+      "refersTo": "choice-option",
+      "description": "Réponse cliquable d'une rubrique active : ligne pleine largeur avec case carrée.",
+      "html": "<button class=\"ds-choice\"><span class=\"ds-choice-box\"><span class=\"ds-choice-dot\"></span></span>Mon logement</button>",
+      "css": ".ds-choice{display:flex;align-items:center;gap:12px;width:100%;max-width:340px;min-height:48px;padding:8px 12px;border:1px solid rgb(8 61 46/.2);border-radius:6px;background:#fff;color:var(--color-deep,#083d2e);font:600 .95rem/1.2 Inter,system-ui,sans-serif;text-align:left;cursor:pointer;transition:border-color .15s,background-color .15s}.ds-choice-box{display:grid;place-items:center;width:20px;height:20px;border:2px solid rgb(8 61 46/.35);border-radius:3px;transition:border-color .15s}.ds-choice-dot{width:10px;height:10px;border-radius:1px;background:var(--color-hdf,#0b7a3b);opacity:0;transition:opacity .15s}.ds-choice:hover{border-color:var(--color-hdf,#0b7a3b);background:var(--color-surface,#f2f7f4)}.ds-choice:hover .ds-choice-box{border-color:var(--color-hdf,#0b7a3b)}.ds-choice:hover .ds-choice-dot{opacity:.4}.ds-choice:active .ds-choice-dot{opacity:1}.ds-choice:focus-visible{outline:3px solid var(--color-navy,#073b63);outline-offset:3px}"
+    },
+    {
+      "name": "Tampon de statut",
+      "kind": "custom",
+      "refersTo": "status-stamp",
+      "description": "Statut de la fiche : « À compléter » en contour, « Transmise » plein vert HDF posé de biais à l'envoi.",
+      "html": "<span class=\"ds-stamp\">À compléter</span> <span class=\"ds-stamp ds-stamp-sent\">Transmise</span>",
+      "css": ".ds-stamp{display:inline-flex;align-items:center;padding:2px 8px;border:2px solid rgb(11 122 59/.7);border-radius:3px;color:var(--color-hdf,#0b7a3b);font:700 .7rem/1.25 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase}.ds-stamp-sent{border-color:var(--color-hdf,#0b7a3b);background:var(--color-hdf,#0b7a3b);color:#fff;transform:rotate(-2deg);animation:ds-stamp .4s cubic-bezier(.16,1,.3,1) both}@keyframes ds-stamp{from{transform:scale(1.3) rotate(-6deg);opacity:0}to{transform:rotate(-2deg);opacity:1}}@media (prefers-reduced-motion:reduce){.ds-stamp-sent{animation:none}}"
+    },
+    {
+      "name": "Fiche d'étude",
+      "kind": "card",
+      "refersTo": "study-sheet",
+      "description": "La feuille signature posée sur le champ vert profond : en-tête, progression, rubrique remplie, active et à venir.",
+      "html": "<div class=\"ds-field-deep\"><div class=\"ds-sheet\"><div class=\"ds-sheet-head\"><div><p class=\"ds-sheet-title\">Fiche d’étude</p><p class=\"ds-sheet-sub\">HDF Bâti · Nouvelle demande</p></div><span class=\"ds-sheet-stamp\">À compléter</span></div><div class=\"ds-sheet-body\"><p class=\"ds-sheet-h\">Étudions votre projet · <span class=\"ds-tab\">3/10</span></p><ol class=\"ds-progress\"><li class=\"on\"></li><li class=\"on\"></li><li class=\"cur\"></li><li></li><li></li></ol><ol class=\"ds-rows\"><li class=\"ds-row\"><span class=\"ds-num\">01</span><p class=\"ds-fill\"><span class=\"ds-lab\">Votre demande concerne</span><span class=\"ds-dots\"></span><span class=\"ds-val\">Mon logement</span></p></li><li class=\"ds-row ds-active\"><span class=\"ds-num\">02</span><p class=\"ds-q\">Comment chauffez-vous votre maison ?</p></li><li class=\"ds-row\"><span class=\"ds-num ds-mute\">03</span><p class=\"ds-fill\"><span class=\"ds-lab\">Code postal</span><span class=\"ds-dots\"></span></p></li></ol></div></div></div>",
+      "css": ".ds-field-deep{background:var(--color-deep,#083d2e);padding:32px 24px}.ds-sheet{max-width:440px;background:#fff;color:var(--color-ink,#192d27);border-radius:6px;box-shadow:0 1px 0 rgb(255 255 255/.6) inset,0 24px 48px -24px rgb(0 0 0/.45);font-family:Inter,system-ui,sans-serif}.ds-sheet-head{display:flex;justify-content:space-between;gap:12px;padding:16px 24px 12px;border-bottom:1px solid var(--color-line,#dce7df)}.ds-sheet-title{margin:0;font:700 .875rem/1.3 Inter,sans-serif;color:var(--color-deep,#083d2e)}.ds-sheet-sub{margin:0;font-size:.75rem;color:var(--color-muted,#4c5f58)}.ds-sheet-stamp{align-self:flex-start;padding:2px 8px;border:2px solid rgb(11 122 59/.7);border-radius:3px;color:var(--color-hdf,#0b7a3b);font:700 .7rem/1.25 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase}.ds-sheet-body{padding:16px 24px 8px}.ds-sheet-h{margin:0;font:700 1.25rem/1.3 Inter,sans-serif;color:var(--color-deep,#083d2e);letter-spacing:-.02em}.ds-tab{font-variant-numeric:tabular-nums;font-weight:600;color:var(--color-muted,#4c5f58)}.ds-progress{display:flex;gap:4px;margin:12px 0 0;padding:0;list-style:none}.ds-progress li{flex:1;height:6px;border-radius:1px;background:var(--color-line,#dce7df)}.ds-progress .on{background:var(--color-hdf,#0b7a3b)}.ds-progress .cur{background:var(--color-energy,#79c51d)}.ds-rows{margin:8px 0 0;padding:0;list-style:none}.ds-row{position:relative;display:grid;grid-template-columns:1.75rem 1fr;gap:0 12px;padding:12px 0;border-top:1px solid var(--color-line,#dce7df)}.ds-row:first-child{border-top:0}.ds-num{font:700 .875rem/1.8 Inter,sans-serif;font-variant-numeric:tabular-nums;color:var(--color-hdf,#0b7a3b)}.ds-num.ds-mute{font-weight:400;color:var(--color-muted,#4c5f58)}.ds-fill{display:flex;align-items:baseline;gap:8px;margin:0}.ds-lab{font-size:.875rem;color:var(--color-muted,#4c5f58)}.ds-dots{flex:1;min-width:12px;border-bottom:1px dotted rgb(8 61 46/.3);transform:translateY(-4px)}.ds-val{font:600 .95rem Inter,sans-serif;color:var(--color-deep,#083d2e)}.ds-active::before{content:'';position:absolute;top:12px;bottom:12px;left:-24px;width:4px;background:var(--color-energy,#79c51d)}.ds-q{margin:0;font:700 1.125rem/1.375 Inter,sans-serif;color:var(--color-deep,#083d2e)}"
+    },
+    {
+      "name": "Onglets de fiche",
+      "kind": "nav",
+      "refersTo": "sheet-tab",
+      "description": "Onglets de profil sur le bord haut de la feuille, pages profil uniquement.",
+      "html": "<div class=\"ds-tabs-wrap\"><nav class=\"ds-tabs\"><a href=\"#\" class=\"ds-tab-link\" aria-current=\"page\">Particuliers</a><a href=\"#\" class=\"ds-tab-link\">Professionnels</a><a href=\"#\" class=\"ds-tab-link\">Collectivités</a></nav><div class=\"ds-tabs-sheet\"></div></div>",
+      "css": ".ds-tabs-wrap{background:var(--color-deep,#083d2e);padding:24px 24px 0}.ds-tabs{display:flex;gap:4px}.ds-tab-link{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:6px 6px 0 0;background:rgb(255 255 255/.1);color:#fff;font:600 .875rem Inter,system-ui,sans-serif;text-decoration:none;transition:background-color .15s}.ds-tab-link:hover{background:rgb(255 255 255/.2)}.ds-tab-link[aria-current=page]{background:#fff;color:var(--color-deep,#083d2e)}.ds-tab-link:focus-visible{outline:3px solid var(--color-energy,#79c51d);outline-offset:3px}.ds-tabs-sheet{height:24px;background:#fff;border-radius:0 6px 0 0}"
+    },
+    {
+      "name": "Navigation principale",
+      "kind": "nav",
+      "description": "Liens de l'en-tête ; page courante en vert HDF soulignée.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link\" aria-current=\"page\">Particuliers</a><a href=\"#\" class=\"ds-nav-link\">Professionnels</a><a href=\"#\" class=\"ds-nav-link\">Aides</a><a href=\"#\" class=\"ds-nav-link\">FAQ</a></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;align-items:center}.ds-nav-link{padding:8px 12px;border-radius:6px;color:rgb(8 61 46/.85);font:500 .92rem Inter,system-ui,sans-serif;text-decoration:none;transition:background-color .15s,color .15s}.ds-nav-link:hover{background:rgb(8 61 46/.05);color:var(--color-deep,#083d2e)}.ds-nav-link[aria-current=page]{color:var(--color-hdf,#0b7a3b);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}.ds-nav-link:focus-visible{outline:3px solid var(--color-navy,#073b63);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Fiche d'étude",
+    "overview": "Chaque page est le dossier d'étude lui-même. Un champ vert profond occupe le haut de la page, et une feuille blanche y est posée : filets de 1px, pointillés de remplissage, rubriques numérotées en chiffres tabulaires, cases carrées, tampon de statut. Le visiteur remplit la fiche rubrique par rubrique et la voit se compléter sous ses yeux. Tout le système découle de la promesse « on étudie avant de proposer » : on présente une analyse, pas un résultat.\n\nLa densité est celle d'un formulaire administratif bien tenu : sobre, lisible, rangé. On ne décore pas : pas de photo, pas de carte « bénéfice » à icône, pas de bulle de chat. La profondeur vient du contraste entre le champ vert profond et la feuille blanche, jamais d'un empilement d'ombres. L'orange n'apparaît que là où l'on agit.\n\nSous le champ, la page alterne blanc et `surface` (vert très pâle), en colonnes de texte réglées par des filets `line`. Le site ne doit jamais « faire IA » : pas de dégradé, pas de verre dépoli, pas d'illustration générée.",
+    "keyCharacteristics": [
+      "Champ `deep` en tête de chaque page, feuille blanche posée dessus avec `shadow-sheet`.",
+      "Rubriques numérotées 01, 02… en chiffres tabulaires `hdf`, séparées par des filets `line`.",
+      "Pointillés (`border-dotted`, `deep` à 25–35 %) comme lignes de remplissage entre libellé et réponse.",
+      "Coins presque carrés : 6px pour feuille, boutons et champs ; 3px pour cases et tampon.",
+      "Orange `action` réservé aux boutons d'action ; tout le reste vit dans les verts.",
+      "Inter seule, en gras pour les titres, crénage resserré."
+    ],
+    "rules": [
+      {
+        "name": "The Orange-Is-Action Rule",
+        "body": "L'orange `action` sert uniquement de fond aux boutons qui font avancer (envoyer, étudier mon projet, demander un rappel). Jamais en texte, en icône, en bordure ou en anneau de focus.",
+        "section": "colors"
+      },
+      {
+        "name": "The Energy-On-Deep Rule",
+        "body": "Le vert énergie ne s'emploie que sur le champ `deep` ou comme marque d'état dans la feuille (barre active, segment en cours). Jamais comme couleur de texte sur blanc.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Tout chiffre qui se lit comme une donnée de dossier (01–10, 3/10, téléphone, référence, code postal) est en chiffres tabulaires.",
+        "section": "typography"
+      },
+      {
+        "name": "The Balanced Title Rule",
+        "body": "H1–H3 en `text-wrap: balance` et crénage négatif ; paragraphes en `text-wrap: pretty`.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Sheet Rule",
+        "body": "Seule une feuille posée sur le champ profond reçoit `shadow-sheet`. Les cartes, choix et sections sur fond clair restent plates, séparées par des filets.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** poser toute nouvelle saisie sur la feuille blanche (6px, `shadow-sheet`) au-dessus du champ `deep`, en rubriques numérotées 01, 02… en chiffres tabulaires `hdf`.",
+      "**Do** séparer par des filets `line` de 1px et des pointillés `deep` translucides plutôt que par des cartes ou des ombres.",
+      "**Do** réserver l'orange `action` aux boutons d'action, avec texte `ink`.",
+      "**Do** employer le vert énergie uniquement sur fond `deep` ou comme marque d'état dans la feuille.",
+      "**Do** placer `.on-deep` sur toute section à fond `deep` pour que le focus passe en vert énergie ; ailleurs, focus `navy` 3px décalé de 3px.",
+      "**Do** garder des cibles tactiles d'au moins 44px et respecter `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "**Don't** afficher de photographie ni de visuel généré tant que de vraies photos de chantier ne sont pas fournies.",
+      "**Don't** mettre un sur-titre ou une accroche en capitales au-dessus d'un H1 ou d'un H2.",
+      "**Don't** utiliser l'orange pour du texte, une icône, une bordure ou un focus.",
+      "**Don't** écrire en vert énergie sur fond blanc.",
+      "**Don't** arrondir au-delà de 6px, ni utiliser de pilules ou de puces rondes.",
+      "**Don't** construire une section en « trois cartes avantage avec icône » ou une bulle de chat flottante."
+    ]
+  }
+}

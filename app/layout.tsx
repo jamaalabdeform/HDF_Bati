@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { ConsentBanner } from "@/components/analytics/ConsentBanner";
-import { JawabotLauncher } from "@/components/jawabot/JawabotLauncher";
-import { JawabotProvider } from "@/components/jawabot/JawabotProvider";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
@@ -53,17 +51,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${inter.variable} no-js`} suppressHydrationWarning>
       <body>
-        <a href="#contenu" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-deep focus:px-4 focus:py-3 focus:font-semibold focus:text-white">
+        <a href="#contenu" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-deep focus:px-4 focus:py-3 focus:font-semibold focus:text-white">
           Aller au contenu
         </a>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd([businessJsonLd(), websiteJsonLd()])} />
-        <JawabotProvider>
-          <Header />
-          <main id="contenu">{children}</main>
-          <Footer />
-          <JawabotLauncher />
-          <MobileActionBar />
-        </JawabotProvider>
+        <Header />
+        <main id="contenu">{children}</main>
+        <Footer />
+        <MobileActionBar />
         <ConsentBanner />
         <AnalyticsProvider />
       </body>

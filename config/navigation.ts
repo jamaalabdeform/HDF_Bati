@@ -1,6 +1,8 @@
 /** Ancres de la landing — une seule définition, utilisée par l'en-tête et le pied de page. */
 export const anchors = {
   top: "haut",
+  /** La fiche d'étude (premier écran de l'accueil et des pages profil). */
+  etude: "etude",
   projets: "votre-projet",
   particuliers: "particuliers",
   professionnels: "professionnels",
@@ -14,20 +16,20 @@ export const anchors = {
 } as const;
 
 export const mainNav = [
-  { label: "Particuliers", href: `/#${anchors.particuliers}` },
-  { label: "Professionnels", href: `/#${anchors.professionnels}` },
-  { label: "Collectivités", href: `/#${anchors.collectivites}` },
-  { label: "Aides", href: `/#${anchors.aides}` },
+  { label: "Particuliers", href: "/particuliers" },
+  { label: "Professionnels", href: "/professionnels" },
+  { label: "Collectivités", href: "/collectivites" },
+  { label: "Aides", href: `/particuliers#${anchors.aides}` },
   { label: "FAQ", href: `/#${anchors.faq}` },
   { label: "Contact", href: `/#${anchors.contact}` },
 ] as const;
 
 export const footerNav = {
   offres: [
-    { label: "Particuliers", href: `/#${anchors.particuliers}` },
-    { label: "Professionnels", href: `/#${anchors.professionnels}` },
-    { label: "Collectivités", href: `/#${anchors.collectivites}` },
-    { label: "Énergie", href: `/#${anchors.professionnels}` },
+    { label: "Particuliers", href: "/particuliers" },
+    { label: "Professionnels", href: "/professionnels" },
+    { label: "Collectivités", href: "/collectivites" },
+    { label: "Aides financières", href: `/particuliers#${anchors.aides}` },
   ],
   legal: [
     { label: "Mentions légales", href: "/mentions-legales" },

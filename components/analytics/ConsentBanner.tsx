@@ -38,14 +38,14 @@ export function ConsentBanner() {
 
   return (
     <div role="dialog" aria-modal="false" aria-labelledby="consent-title" className="fixed inset-x-0 bottom-0 z-[70] p-3 sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-md sm:p-0">
-      <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-float)] ring-1 ring-deep/10">
+      <div className="rounded-md bg-white p-5 shadow-[var(--shadow-float)] ring-1 ring-deep/10">
         <p id="consent-title" className="font-bold text-deep">Vos choix de confidentialité</p>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           Avec votre accord, HDF Bâti mesure l’audience du site et l’efficacité de ses publicités. Vous pouvez changer d’avis à tout moment.{" "}
           <Link href="/cookies" className="font-semibold text-deep underline underline-offset-2">En savoir plus</Link>
         </p>
         {custom && (
-          <div className="mt-4 space-y-3 rounded-xl bg-surface p-3 text-sm">
+          <div className="mt-4 space-y-3 rounded-md bg-surface p-3 text-sm">
             {(tracking.gtmId || tracking.ga4Id) && (
               <label className="flex items-start gap-3">
                 <input type="checkbox" className="mt-0.5 size-5 accent-[#0B7A3B]" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} />
@@ -61,10 +61,10 @@ export function ConsentBanner() {
           </div>
         )}
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <button type="button" onClick={() => decide(false, false)} className="min-h-11 rounded-full border-2 border-deep/20 px-4 text-sm font-semibold text-deep hover:border-deep/40">
+          <button type="button" onClick={() => decide(false, false)} className="min-h-11 rounded-md border-2 border-deep/20 px-4 text-sm font-semibold text-deep hover:border-deep/40">
             Tout refuser
           </button>
-          <button type="button" onClick={() => decide(true, true)} className="min-h-11 rounded-full border-2 border-deep bg-deep px-4 text-sm font-semibold text-white hover:bg-[#0a4a38]">
+          <button type="button" onClick={() => decide(true, true)} className="min-h-11 rounded-md border-2 border-deep bg-deep px-4 text-sm font-semibold text-white hover:bg-[#0a4a38]">
             Tout accepter
           </button>
         </div>

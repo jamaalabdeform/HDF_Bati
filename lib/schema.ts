@@ -1,5 +1,6 @@
 import { company } from "@/config/company";
-import { faq } from "@/config/faq";
+import { faqFor } from "@/config/faq";
+import type { Segment } from "@/config/services";
 import { seo, siteUrl } from "@/config/site";
 import { publicValue } from "@/config/validation";
 
@@ -47,11 +48,11 @@ export function businessJsonLd() {
   };
 }
 
-export function faqJsonLd() {
+export function faqJsonLd(segment?: Segment) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    mainEntity: faqFor(segment).map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
   };
 }
 

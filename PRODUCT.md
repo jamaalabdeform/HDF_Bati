@@ -18,7 +18,7 @@ Job commun : comprendre en quelques secondes si HDF Bâti peut les aider, puis �
 
 ## Product Purpose
 
-Landing page d'acquisition de HDF Bâti (SAS, Anzin, Nord). Elle transforme le trafic (Meta Ads, Google Ads, SEO local, Google Business, réseaux sociaux) en demandes qualifiées : visiteur → choix du profil → Jawabot (pré-qualification) ou demande de rappel → lead scoré → CRM → WhatsApp de Farid → rendez-vous → devis → vente.
+Landing page d'acquisition de HDF Bâti (SAS, Anzin, Nord). Elle transforme le trafic (Meta Ads, Google Ads, SEO local, Google Business, réseaux sociaux) en demandes qualifiées : visiteur → page du profil → fiche d’étude par étapes (pré-qualification) ou demande de rappel → lead scoré → CRM → WhatsApp de Farid → rendez-vous → devis → vente.
 
 Succès : doubler la production (objectif Farid : 20 chantiers / mois minimum à 6 mois) et pouvoir relier chaque vente à la source qui l'a générée.
 
@@ -44,7 +44,7 @@ Ce que HDF Bâti peut affirmer et qu'un concurrent générique ne peut pas copie
 - Offres : pompe à chaleur, photovoltaïque, rénovation énergétique (particuliers, pros, collectivités) ; courtage en énergie (pros, collectivités).
 - Zone : Hauts-de-France, et partout en France selon le projet.
 - Stack existante : Next.js 16, TypeScript, Tailwind CSS 4 (voir README).
-- Jawabot : qualification déterministe configurable (`config/jawabot.ts`), scoring provisoire (`lib/scoring.ts`), à relire avec Farid.
+- Fiche d’étude (moteur « Jawabot ») : qualification déterministe configurable (`config/jawabot.ts`), scoring provisoire (`lib/scoring.ts`), à relire avec Farid.
 - Mesure : GA4 / GTM / Meta Pixel / CAPI après consentement ; UTM rattachés au lead.
 - Décisions ouvertes : budget média, délai de rappel public, horaires, numéro WhatsApp définitif, domaine, CRM, wording aides et RGE, offre pour les locataires.
 
@@ -60,7 +60,7 @@ Ce que HDF Bâti peut affirmer et qu'un concurrent générique ne peut pas copie
 
 - Fiche légale vérifiée (SIREN 925 387 680, RCS Valenciennes, siège 209 avenue Anatole France, 59410 Anzin).
 - 14 avis Google déclarés (note non communiquée) — ne rien afficher sans lien vérifiable.
-- **Aucune** photo réelle de chantier, aucun témoignage, aucun cas client, aucun chiffre de résultats à ce jour. Les visuels actuels sont provisoires (extraits de vidéos IA, `config/media.ts`). Ne jamais fabriquer d'avis, de chiffres, de certifications ou de clients.
+- **Aucune** photo réelle de chantier, aucun témoignage, aucun cas client, aucun chiffre de résultats à ce jour. Les visuels IA provisoires ont été retirés du site (28/09/2026) : aucune photo tant que de vraies photos de chantier ne sont pas fournies. Ne jamais fabriquer d'avis, de chiffres, de certifications ou de clients.
 - Liste des contenus à obtenir : `HDF_CONTENT_TO_VALIDATE.md`.
 
 ## Product Principles

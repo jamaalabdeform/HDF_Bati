@@ -6,18 +6,20 @@ import { Container } from "../ui/Container";
 import { Pending } from "../ui/Pending";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export function WhyHdf() {
+/** `withoutPromises` : sur l’accueil, les deux différences sont déjà dans le premier écran. */
+export function WhyHdf({ withoutPromises = false }: { withoutPromises?: boolean }) {
+  const shown = withoutPromises ? commitments.slice(2) : commitments;
   const confirmedProofs = proofs.filter((p) => p.data.status === "confirmed" && p.data.value);
   const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed");
 
   return (
-    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-surface py-14 sm:py-24">
+    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-white py-14 sm:py-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" intro="Un rappel rapide, des démarches d’aides faites avec vous, et une étude sérieuse avant toute proposition." />
 
           <dl className="grid gap-x-10 sm:grid-cols-2">
-            {commitments.map((c) => (
+            {shown.map((c) => (
               <div key={c.title} className="border-t-2 border-deep py-6">
                 <dt className="text-lg leading-snug font-bold text-deep">{c.title}</dt>
                 <dd className="mt-2 text-[0.95rem] leading-relaxed text-muted">{c.text}</dd>

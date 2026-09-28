@@ -39,6 +39,8 @@ export type JawabotAction =
   | { type: "segment"; segment: Segment }
   | { type: "answer"; stepId: string; value: string }
   | { type: "back" }
+  /** Reprend la fiche à une rubrique : efface sa réponse et toutes les suivantes. */
+  | { type: "rewind"; stepId: string }
   | { type: "contact"; contact: JawabotContact }
   | { type: "submitting" }
   | { type: "done"; leadId?: string }
@@ -90,6 +92,16 @@ export function reducer(state: JawabotState, action: JawabotAction): JawabotStat
       const last = answered[answered.length - 1];
       const answers = { ...state.answers };
       delete answers[last.id];
+      return { ...state, answers, status: "chatting" };
+    }
+    case "rewind": {
+      if (state.status === "done" || state.status === "submitting") return state;
+      if (action.stepId === "segment") return { ...state, segment: null, answers: {}, status: "chatting" };
+      const flow = state.segment ? getFlow(state.segment) : [];
+      const idx = flow.findIndex((s) => s.id === action.stepId);
+      if (idx < 0) return state;
+      const answers = { ...state.answers };
+      for (const s of flow.slice(idx)) delete answers[s.id];
       return { ...state, answers, status: "chatting" };
     }
     case "contact":

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
-import { JawabotTrigger } from "@/components/jawabot/JawabotTrigger";
+import { ButtonLink } from "@/components/ui/Button";
 import { publishedLocalPages } from "@/config/local-pages";
 
 export const dynamicParams = false;
@@ -39,7 +39,7 @@ export default async function LocalLandingPage({ params }: Props) {
           ))}
         </div>
         <div className="mt-10">
-          <JawabotTrigger origin={`local_${page.slug}`} segment="particulier" size="lg">Étudier mon projet</JawabotTrigger>
+          <ButtonLink href="/particuliers#etude" size="lg">Étudier mon projet</ButtonLink>
         </div>
       </Container>
     </section>

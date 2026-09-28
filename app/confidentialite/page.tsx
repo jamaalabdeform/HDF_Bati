@@ -18,7 +18,7 @@ export default function Confidentialite() {
       <section>
         <h2>Données collectées</h2>
         <ul>
-          <li>Via Jawabot ou le formulaire de rappel : nom, téléphone, e-mail (facultatif), code postal, informations sur votre projet et, pour les professionnels, la structure et la fonction.</li>
+          <li>Via la fiche d’étude ou le formulaire de rappel : nom, téléphone, e-mail (facultatif), code postal, informations sur votre projet et, pour les professionnels, la structure et la fonction.</li>
           <li>Données de navigation et de campagne (source publicitaire, paramètres UTM) pour savoir comment vous nous avez connus.</li>
         </ul>
       </section>

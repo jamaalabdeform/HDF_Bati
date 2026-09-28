@@ -1,14 +1,14 @@
 import { ExternalLink, Info } from "lucide-react";
 import { aides } from "@/config/aides";
 import { anchors } from "@/config/navigation";
-import { JawabotTrigger } from "../jawabot/JawabotTrigger";
+import { buttonClasses } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { Pending } from "../ui/Pending";
 import { SectionHeading } from "../ui/SectionHeading";
 
 export function Aides() {
   return (
-    <section id={anchors.aides} data-section="aides" aria-labelledby="aides-title" className="bg-white py-14 sm:py-24">
+    <section id={anchors.aides} data-section="aides" aria-labelledby="aides-title" className="scroll-mt-16 bg-white py-14 sm:py-20">
       <Container className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading id="aides-title" title={aides.title} intro={aides.intro} />
@@ -20,9 +20,9 @@ export function Aides() {
           </p>
           <Pending className="mt-4" label="Relecture juridique du bloc « Aides » avant mise en production." note="Formulations prudentes en place ; vérifier la conformité (DGCCRF / réglementation rénovation énergétique)." />
           <div className="mt-8">
-            <JawabotTrigger origin="aides" segment="particulier" preset={{ projet: "ne_sait_pas" }} size="lg">
-              Vérifier ma situation
-            </JawabotTrigger>
+            <a href={`#${anchors.etude}`} className={buttonClasses({ size: "lg" })}>
+              <span>Vérifier ma situation</span>
+            </a>
           </div>
         </div>
 

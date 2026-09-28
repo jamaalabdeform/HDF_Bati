@@ -21,8 +21,8 @@ import { ConsentField, SelectField, TextField } from "./Field";
 type Values = { segment: Segment | ""; name: string; phone: string; postalCode: string; project: string; bestTime: string };
 const empty: Values = { segment: "", name: "", phone: "", postalCode: "", project: "", bestTime: "" };
 
-export function CallbackForm() {
-  const [v, setV] = useState<Values>(empty);
+export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
+  const [v, setV] = useState<Values>({ ...empty, segment: defaultSegment ?? "" });
   const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof Values | "consent", string>>>({});
@@ -75,7 +75,7 @@ export function CallbackForm() {
 
   if (status === "done") {
     return (
-      <div className="rounded-[var(--radius-card)] bg-white p-7 text-center text-ink" role="status">
+      <div className="rounded-md bg-white p-7 text-center text-ink" role="status">
         <CheckCircle2 className="mx-auto size-12 text-hdf" aria-hidden />
         <p className="mt-4 text-xl font-bold text-deep">Demande de rappel bien reçue</p>
         <p className="mt-2 text-muted">HDF Bâti vous rappelle au moment indiqué. Merci pour votre confiance.</p>
@@ -85,15 +85,16 @@ export function CallbackForm() {
   }
 
   return (
-    <form id="callback-form" noValidate onSubmit={onSubmit} className="relative rounded-[var(--radius-card)] bg-white p-5 text-ink sm:p-7">
+    <form id="callback-form" noValidate onSubmit={onSubmit} className="relative rounded-md bg-white p-5 shadow-[var(--shadow-sheet)] text-ink sm:p-7">
       <div className="grid gap-4 sm:grid-cols-2">
+        {!defaultSegment && (
         <fieldset className="sm:col-span-2" aria-describedby={errors.segment ? "cb-segment-error" : undefined}>
           <legend className="mb-1.5 text-sm font-semibold text-deep">Vous êtes</legend>
           <div className="grid grid-cols-3 gap-2">
             {segmentOrder.map((id) => (
               <label
                 key={id}
-                className="flex min-h-12 cursor-pointer items-center justify-center rounded-xl border-2 border-deep/15 px-1 text-center text-[0.8rem] font-semibold sm:px-2 sm:text-sm text-deep transition-colors has-[:checked]:border-hdf has-[:checked]:bg-hdf/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-action"
+                className="group flex min-h-12 cursor-pointer items-center gap-2 rounded-md border border-deep/20 px-2 text-[0.8rem] font-semibold text-deep transition-colors hover:border-hdf sm:px-3 sm:text-sm has-[:checked]:border-hdf has-[:checked]:bg-surface has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-navy"
               >
                 <input
                   type="radio"
@@ -106,6 +107,9 @@ export function CallbackForm() {
                   }}
                   className="sr-only"
                 />
+                <span aria-hidden className="grid size-4 shrink-0 place-items-center rounded-[3px] border-2 border-deep/35 group-has-[:checked]:border-hdf">
+                  <span className="size-2 rounded-[1px] bg-hdf opacity-0 group-has-[:checked]:opacity-100" />
+                </span>
                 {segments[id].chooserLabel}
               </label>
             ))}
@@ -116,6 +120,7 @@ export function CallbackForm() {
             </p>
           )}
         </fieldset>
+        )}
         <TextField label="Nom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} className="sm:col-span-2" />
         <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" placeholder="06 12 34 56 78" value={v.phone} onChange={set("phone")} error={errors.phone} />
         <TextField label="Code postal" inputMode="numeric" autoComplete="postal-code" maxLength={5} value={v.postalCode} onChange={(e) => { e.target.value = e.target.value.replace(/\D/g, ""); set("postalCode")(e); }} error={errors.postalCode} />
@@ -133,12 +138,12 @@ export function CallbackForm() {
         <ConsentField checked={consent} onChange={(c) => { setConsent(c); setErrors((s) => ({ ...s, consent: undefined })); }} error={errors.consent} text={CONSENT_TEXT} />
       </div>
       {status === "error" && (
-        <p className="mt-4 rounded-xl bg-[#fdecea] p-3 text-sm text-[#8b1d12]" role="alert">
+        <p className="mt-4 rounded-md bg-[#fdecea] p-3 text-sm text-[#8b1d12]" role="alert">
           L’envoi n’a pas abouti. Réessayez ou appelez-nous au{" "}
           <a href={telHref} data-track="phone" data-track-location="callback_error" className="font-semibold underline">{company.phone.display}</a>.
         </p>
       )}
-      <button type="submit" disabled={status === "sending"} className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-action px-7 text-base font-semibold text-ink transition hover:bg-action-hover disabled:opacity-70">
+      <button type="submit" disabled={status === "sending"} className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-md bg-action px-7 text-base font-semibold text-ink transition hover:bg-action-hover disabled:opacity-70">
         {status === "sending" && <Loader2 className="size-5 animate-spin" aria-hidden />}
         {status === "sending" ? "Envoi en cours…" : "Demander un rappel"}
       </button>

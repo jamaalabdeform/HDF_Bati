@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cn } from "../ui/cn";
 
 const control =
-  "block w-full min-h-12 rounded-xl border border-deep/20 bg-white px-3.5 text-base text-ink placeholder:text-muted transition-[border-color,box-shadow] outline-none hover:border-deep/35 focus:border-hdf focus:ring-4 focus:ring-hdf/15 aria-[invalid=true]:border-[#b42318] aria-[invalid=true]:ring-[#b42318]/10";
+  "block w-full min-h-12 rounded-md border border-deep/20 bg-white px-3.5 text-base text-ink placeholder:text-muted transition-[border-color,box-shadow] outline-none hover:border-deep/35 focus:border-hdf focus:ring-4 focus:ring-hdf/15 aria-[invalid=true]:border-[#b42318] aria-[invalid=true]:ring-[#b42318]/10";
 
 interface FieldShell {
   label: string;
@@ -74,7 +74,7 @@ export function ConsentField({ checked, onChange, error, text, dark }: { checked
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
-          className="mt-0.5 size-5 shrink-0 cursor-pointer rounded accent-[#0B7A3B]"
+          className="mt-0.5 size-5 shrink-0 cursor-pointer rounded-[3px] accent-[#0B7A3B]"
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
           required

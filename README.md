@@ -4,7 +4,7 @@ Landing page de conversion de **HDF Bâti** (Anzin, Nord) : pompes à chaleur et
 pour les particuliers, solutions énergétiques pour les professionnels, courtage en énergie pour les
 professionnels et collectivités.
 
-Chaîne visée : **Publicité / SEO → landing → Jawabot (qualification) → scoring → CRM → WhatsApp Farid → RDV → devis → vente**.
+Chaîne visée : **Publicité / SEO → accueil ou page profil → fiche d’étude (qualification) → scoring → CRM → WhatsApp Farid → RDV → devis → vente**.
 
 - Stack : **Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · lucide-react**
 - Aucune librairie d'animation : apparitions et micro-interactions en CSS (+ IntersectionObserver), `prefers-reduced-motion` respecté.
@@ -37,7 +37,7 @@ npm run dev                     # http://localhost:3000
 | `npm run build` / `npm start` | Build et serveur de production |
 | `npm run lint` · `npm run typecheck` | ESLint · TypeScript |
 | `npm run check:content` | Liste tous les contenus `pending_validation` / `TODO_HDF_VALIDATION` du code |
-| `npm run qa:screens -- http://localhost:3000 qa-screens` | Contrôle visuel : captures 375 / 390 / 430 / 768 / 1024 / 1440 px, débordements, textes tronqués, cibles tactiles, erreurs console, parcours Jawabot + formulaire de rappel |
+| `npm run qa:screens -- http://localhost:3000 qa-screens` | Contrôle visuel : captures 375 / 390 / 430 / 768 / 1024 / 1440 px, débordements, textes tronqués, cibles tactiles, erreurs console, accueil + 3 pages profil, parcours complet de la fiche d’étude + formulaire de rappel |
 | `node scripts/build-og.mjs` | Régénère l'image de partage `public/og-hdf-bati.jpg` |
 | `python3 scripts/build-logo.py` | Régénère les SVG du logo corrigé (`pip install fonttools uharfbuzz`) |
 
@@ -56,18 +56,18 @@ app/
   mentions-legales, confidentialite, cookies
   sitemap.ts, robots.ts, manifest.ts, icon.svg, apple-icon.png
 components/
-  brand/      Logo (SVG officiels corrigés), SignatureCurve (motif du Brand Book)
-  layout/     Header (sticky), Footer, MobileActionBar, LegalPage
-  sections/   Hero, SegmentChooser, ProjectCards, ParcoursParticulier, ParcoursPro, Aides, WhyHdf, Callback, Faq, Contact
+  brand/      Logo (SVG officiels corrigés)
+  etude/      StudySheet (fiche d'étude par étapes), DossierHero, Sommaire, Rubriques (A → D), DossierEntries, ProfilePage
+  layout/     Header (sticky, bouton selon la page), Footer, MobileActionBar, LegalPage
+  sections/   Aides, WhyHdf, Callback, Faq, Contact
   forms/      Field (champs accessibles), CallbackForm
-  jawabot/    Provider (état + ouverture), Panel, Bubbles, Inputs, Launcher, Trigger
   analytics/  AnalyticsProvider (UTM, consentement, délégation des clics), ConsentBanner
-  ui/         Button, Badge, Container, SectionHeading, Reveal, MediaImage, Pending
+  ui/         Button, Container, SectionHeading, Pending
 config/       ← toute l'information métier, rien n'est dupliqué ailleurs
   company.ts  identité, NAP, légal, WhatsApp, réseaux (source unique)
   services.ts segments, cartes « Votre projet », parcours
-  jawabot.ts  arbre de questions Jawabot (données pures)
-  media.ts    visuels remplaçables
+  jawabot.ts  questions de la fiche d'étude par profil (données pures)
+  dossiers.ts contenu des pages profil : titre, sommaire, rubriques A → D
   proofs.ts, faq.ts, aides.ts, navigation.ts, site.ts, tracking.ts, local-pages.ts
   validation.ts  système pending_validation / [À CONFIRMER AVEC FARID]
 lib/
@@ -77,17 +77,17 @@ lib/
   scoring.ts     score 0-100 → chaud / tiède / froid
   consent.ts     consentement cookies (CNIL)
   schema.ts      données structurées schema.org
-  jawabot/engine.ts   moteur conversationnel pur (reducer)
+  jawabot/engine.ts   moteur de la fiche (reducer pur : réponses, retour à une rubrique, envoi)
   jawabot/adapter.ts  point d'extension backend (Knowledge Base / IA en V2)
   server/integrations.ts  webhooks CRM + alerte WhatsApp + Meta Conversions API
 ```
 
 ### Parcours de conversion
 
-- **3 segments distincts** (Particulier / Professionnel / Collectivité) : choix immédiat dans le hero, cartes dédiées, parcours pédagogiques séparés, questions Jawabot différentes, CTA propres.
-- **Jawabot** : bouton flottant (desktop) ou barre d'action (mobile), ouvert directement sur le bon segment depuis chaque CTA. Questions pilotées par `config/jawabot.ts`, progression, retour arrière, consentement explicite, récapitulatif → `/api/lead` → écran de succès proposant **ensuite** WhatsApp (message pré-rempli avec la référence du lead) ou l'appel.
+- **Accueil + une page par profil** (`/particuliers`, `/professionnels`, `/collectivites`) : chaque page ouvre sur la fiche d'étude du profil, puis le sommaire (5 étapes), les rubriques « Ce que nous étudions / Ce que vous préparez / Qui vous rappelle / Ce que vous recevez », la FAQ du profil et le rappel. Bouton principal et barre mobile reprennent le libellé du profil.
+- **Fiche d'étude** (`components/etude/StudySheet.tsx`) : formulaire par étapes intégré à la page (pas de fenêtre, pas de chat). Chaque rubrique se remplit en place, « Modifier » revient à une rubrique, progression « n/N », consentement explicite → `/api/lead` → fiche « Transmise » proposant **ensuite** WhatsApp (message pré-rempli avec la référence du lead) ou l'appel. Questions pilotées par `config/jawabot.ts`.
 - **Formulaire express** « Vous préférez être rappelé ? » (nom, téléphone, code postal, projet, moment, consentement, anti-spam).
-- Paramètre de campagne `?profil=particulier|professionnel|collectivite` : présélectionne le segment (utile pour des annonces Meta ciblées).
+- Paramètre de campagne `?profil=particulier|professionnel|collectivite` : présélectionne le profil dans la fiche de l’accueil (utile pour des annonces Meta ciblées).
 
 ### Leads → CRM → WhatsApp Farid
 
@@ -109,13 +109,13 @@ aucun appel à gtag/fbq ; les clics téléphone / WhatsApp sont captés par dél
 | Événement | Déclencheur | Meta |
 |---|---|---|
 | `view_landing` | chargement | (PageView du Pixel) |
-| `select_segment` | choix du profil (hero, Jawabot) | custom |
-| `start_jawabot` | ouverture d'une conversation | custom |
+| `select_segment` | choix du profil (fiche de l’accueil) | custom |
+| `start_jawabot` | première réponse dans la fiche | custom |
 | `jawabot_step` | chaque réponse (`step_id`, `step_index`) | custom |
-| `qualified_lead` | lead Jawabot envoyé (+ `generate_lead` GA4) | `Lead` |
+| `qualified_lead` | fiche d’étude envoyée (+ `generate_lead` GA4) | `Lead` |
 | `submit_callback` | formulaire de rappel envoyé (+ `generate_lead`) | `Lead` |
 | `click_whatsapp` / `click_phone` | clic sur un lien WhatsApp / tel: | `Contact` |
-| `appointment_request` | « Prendre rendez-vous » choisi dans Jawabot | `Schedule` |
+| `appointment_request` | « Convenir d’un rendez-vous » choisi dans la fiche | `Schedule` |
 
 Chaque événement porte les paramètres UTM de la session. Consent Mode v2 (tout refusé par défaut) ;
 GTM / GA4 / Pixel ne sont chargés qu'après accord.
@@ -177,13 +177,13 @@ une landing ; utiliser un store partagé si plusieurs instances.
 - [ ] Master logo corrigé validé par Farid ; assets print / réseaux remplacés.
 - [ ] Relecture juridique : mentions légales, confidentialité, bloc Aides, FAQ, texte de consentement.
 - [ ] Aucune qualification (RGE…), assurance, avis ou chiffre affiché sans preuve.
-- [ ] Visuels provisoires IA remplacés (ou assumés temporairement) dans `config/media.ts`.
+- [ ] Aucune photo n’est publiée tant que de vraies photos de chantier ne sont pas fournies (les visuels IA ont été retirés).
 
 **Configuration**
 - [ ] `NEXT_PUBLIC_SITE_ENV=production` et `NEXT_PUBLIC_SITE_URL` renseignés, build relancé.
-- [ ] Aucun badge « [À CONFIRMER AVEC FARID] » ni « Visuel provisoire » visible en production.
+- [ ] Aucun badge « [À CONFIRMER AVEC FARID] » ni « Visuel provisoire (plus utilisé) » visible en production.
 - [ ] `robots.txt` autorise l'indexation, `sitemap.xml` pointe vers le bon domaine.
-- [ ] Connecteur CRM et alerte WhatsApp testés de bout en bout (Jawabot **et** formulaire de rappel) : lead reçu, résumé lisible, score, UTM présents.
+- [ ] Connecteur CRM et alerte WhatsApp testés de bout en bout (fiche d’étude **et** formulaire de rappel) : lead reçu, résumé lisible, score, UTM présents.
 - [ ] Numéro WhatsApp correct (message pré-rempli reçu avec la référence du lead).
 
 **Mesure**
@@ -196,6 +196,6 @@ une landing ; utiliser un store partagé si plusieurs instances.
 
 **Qualité**
 - [ ] `npm run lint`, `npm run typecheck`, `npm run build` sans erreur.
-- [ ] `npm run qa:screens` : 0 problème sur les 6 largeurs, parcours Jawabot et rappel OK.
+- [ ] `npm run qa:screens` : 0 problème sur 4 pages × 6 largeurs, fiche d’étude et rappel OK.
 - [ ] Lighthouse mobile (Performance, Accessibilité, SEO, Bonnes pratiques) sur l'URL de production.
-- [ ] Test réel sur iPhone et Android (Safari / Chrome) : barre d'action, Jawabot plein écran, clavier, appel.
+- [ ] Test réel sur iPhone et Android (Safari / Chrome) : barre d'action, fiche d’étude au clavier virtuel, appel.

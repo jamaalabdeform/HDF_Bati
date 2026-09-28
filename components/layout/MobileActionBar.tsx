@@ -1,29 +1,29 @@
 "use client";
 
-import { MessageCircle, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Phone } from "lucide-react";
 import { telHref } from "@/config/company";
-import { jawabotCopy } from "@/config/jawabot";
 import { anchors } from "@/config/navigation";
-import { useJawabot } from "../jawabot/JawabotProvider";
+import { ctaForPath } from "./ctaForPath";
 import { useSectionInView } from "./useSectionInView";
 
-/** Barre d'action mobile : téléphone + Jawabot toujours accessibles au pouce. */
+/** Barre d'action mobile : téléphone + fiche d'étude toujours accessibles au pouce. */
 export function MobileActionBar() {
-  const { open, isOpen, preferredSegment } = useJawabot();
-  // Masquée sur le formulaire de rappel : elle recouvrirait ses champs et doublerait son bouton.
+  const cta = ctaForPath(usePathname());
+  // Masquée quand la fiche ou le formulaire de rappel sont à l'écran : elle recouvrirait leurs champs.
+  const onSheet = useSectionInView(anchors.etude);
   const onCallback = useSectionInView(anchors.rappel);
-  if (isOpen || onCallback) return null;
+  if (onSheet || onCallback) return null;
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-white/95 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur sm:hidden">
       <div className="grid grid-cols-[auto_1fr] gap-2">
-        <a href={telHref} data-track="phone" data-track-location="mobile_bar" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-deep/15 px-3.5 text-sm font-semibold whitespace-nowrap text-deep">
+        <a href={telHref} data-track="phone" data-track-location="mobile_bar" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border-2 border-deep/15 px-3.5 text-sm font-semibold whitespace-nowrap text-deep">
           <Phone className="size-4" aria-hidden />
           Appeler
         </a>
-        <button type="button" aria-haspopup="dialog" onClick={() => open({ origin: "mobile_bar", segment: preferredSegment ?? undefined })} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-action px-3 text-sm font-semibold whitespace-nowrap text-ink">
-          <MessageCircle className="size-4 shrink-0 max-[380px]:hidden" aria-hidden />
-          {jawabotCopy.launcher}
-        </button>
+        <a href={cta.href} className="inline-flex min-h-12 items-center justify-center rounded-md bg-action px-3 text-sm font-semibold whitespace-nowrap text-ink">
+          {cta.label}
+        </a>
       </div>
     </div>
   );
