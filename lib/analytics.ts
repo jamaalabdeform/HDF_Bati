@@ -19,7 +19,9 @@ export type AnalyticsEvent =
   | "submit_callback"
   | "click_whatsapp"
   | "click_phone"
-  | "appointment_request";
+  | "appointment_request"
+  /** Fiche envoyée par le visiteur sur WhatsApp (relais quand le serveur n’a pu transmettre). */
+  | "whatsapp_handoff";
 
 export type EventParams = Record<string, string | number | boolean | undefined>;
 

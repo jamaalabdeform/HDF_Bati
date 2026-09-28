@@ -149,11 +149,24 @@ for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/partic
   await sheet.getByRole("checkbox").check();
   await page.screenshot({ path: `${OUT}/${tag}-fiche-3.png` });
   await sheet.getByRole("button", { name: "Envoyer ma fiche" }).click();
+  // Sans destination serveur (préproduction), la fiche passe par le relais WhatsApp du visiteur.
+  const relay = sheet.getByRole("link", { name: "Envoyer ma fiche sur WhatsApp" });
+  await Promise.race([relay.waitFor({ timeout: 8000 }), sheet.getByText("Merci, votre fiche est transmise.").waitFor({ timeout: 8000 })]);
+  let relayText = null;
+  if (await relay.isVisible()) {
+    relayText = decodeURIComponent(new URL(await relay.getAttribute("href")).searchParams.get("text") ?? "");
+    await page.screenshot({ path: `${OUT}/${tag}-fiche-relais.png` });
+    const popup = page.waitForEvent("popup").catch(() => null);
+    await relay.click();
+    const p = await popup;
+    if (p) await p.close();
+  }
   await sheet.getByText("Merci, votre fiche est transmise.").waitFor({ timeout: 8000 });
   await page.waitForTimeout(600);
   await page.screenshot({ path: `${OUT}/${tag}-fiche-4.png` });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-  report.push({ width, flow: `fiche ${path}`, ok: true, events, errors, overflow });
+  if (relayText !== null && !/réf\. HDF-.*[\s\S]*Nom : Test QA[\s\S]*Téléphone : 06 12 34 56 78/.test(relayText)) errors.push("Texte du relais WhatsApp incomplet : " + relayText.slice(0, 120));
+  report.push({ width, flow: `fiche ${path}`, ok: true, relay: relayText !== null, events, errors, overflow });
   await context.close();
 }
 
@@ -180,6 +193,14 @@ for (const [width, path] of [[390, "/"], [390, "/particuliers"], [1440, "/partic
   await form.getByLabel("Meilleur moment pour être rappelé").selectOption("matin");
   await form.getByRole("checkbox").check();
   await form.getByRole("button", { name: "Demander un rappel" }).click();
+  const cbRelay = page.getByRole("link", { name: "Envoyer ma demande sur WhatsApp" });
+  await Promise.race([cbRelay.waitFor({ timeout: 8000 }), page.getByText("Merci, HDF Bâti vous rappelle.").waitFor({ timeout: 8000 })]);
+  if (await cbRelay.isVisible()) {
+    const popup = page.waitForEvent("popup").catch(() => null);
+    await cbRelay.click();
+    const p = await popup;
+    if (p) await p.close();
+  }
   await page.getByText("Merci, HDF Bâti vous rappelle.").waitFor({ timeout: 8000 });
   await page.getByText("Merci, HDF Bâti vous rappelle.").screenshot({ path: `${OUT}/375-callback-ok.png` });
   report.push({ width: 375, flow: "callback", validationErrorsShown: errorCount, events, errors });

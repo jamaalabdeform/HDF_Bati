@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Loader2 } from "lucide-react";
-import { company, telHref } from "@/config/company";
+import { Loader2, MessageCircle } from "lucide-react";
+import { company, telHref, whatsappHref } from "@/config/company";
 import { newEventId, track } from "@/lib/analytics";
 import { readConsent } from "@/lib/consent";
 import { bestTimeOptions, CONSENT_TEXT, CONSENT_TEXT_VERSION, normalizeFrenchPhone, submitLead } from "@/lib/lead";
@@ -43,6 +43,8 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
   const [errors, setErrors] = useState<Partial<Record<keyof Values | "consent", string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [leadId, setLeadId] = useState<string>();
+  // Relais WhatsApp si le serveur n'a pu transmettre la demande.
+  const [handoff, setHandoff] = useState<{ text: string; sent: boolean } | null>(null);
 
   // La fiche peut être remplie sur la même page juste avant : on relit ses réponses
   // quand le formulaire arrive à l'écran ou reçoit le focus (sessionStorage, après hydratation).
@@ -98,6 +100,7 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
       website,
     });
     if (res.ok) {
+      if (res.handoff === "whatsapp" && res.whatsappText) setHandoff({ text: res.whatsappText, sent: false });
       setStatus("done");
       setLeadId(res.leadId);
       track("submit_callback", { segment, best_time: v.bestTime, lead_id: res.leadId }, eventId);
@@ -105,6 +108,43 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
       setStatus("error");
     }
   };
+
+  if (status === "done" && handoff && !handoff.sent) {
+    return (
+      <div className="rounded-md bg-white text-ink shadow-[var(--shadow-sheet)]" role="status">
+        <div className="flex items-start justify-between gap-3 border-b border-line px-5 pt-4 pb-3 sm:px-7">
+          <p className="text-sm font-bold text-deep">Demande de rappel</p>
+          <span className="inline-flex shrink-0 items-center rounded-[3px] border-2 border-hdf/70 px-2 py-0.5 text-[0.7rem] font-bold tracking-[0.06em] text-hdf uppercase">Prête</span>
+        </div>
+        <div className="px-5 py-5 sm:px-7">
+          <p className="text-lg font-bold text-deep">Dernière étape : envoyez-la à HDF Bâti</p>
+          <p className="mt-1.5 text-[0.95rem] leading-relaxed text-muted">Un appui ouvre WhatsApp avec votre demande déjà rédigée : il ne reste qu’à l’envoyer.</p>
+          <a
+            href={whatsappHref(handoff.text)}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track="whatsapp"
+            data-track-location="rappel_relais"
+            onClick={() => {
+              track("whatsapp_handoff", { segment: v.segment || undefined, lead_id: leadId, source: "callback_form" });
+              setHandoff((h) => (h ? { ...h, sent: true } : h));
+            }}
+            className="mt-4 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-3 text-center text-base font-semibold text-ink transition-colors hover:bg-action-hover"
+          >
+            <MessageCircle className="size-5" aria-hidden />
+            Envoyer ma demande sur WhatsApp
+          </a>
+          <p className="mt-3 text-sm text-muted">
+            Pas de WhatsApp ? Appelez le{" "}
+            <a href={telHref} data-track="phone" data-track-location="rappel_relais" className="tabular font-semibold whitespace-nowrap text-deep underline">
+              {company.phone.display}
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (status === "done") {
     const best = bestTimeOptions.find((o) => o.value === v.bestTime)?.label;

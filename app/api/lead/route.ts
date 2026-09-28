@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { segments, type Segment } from "@/config/services";
 import {
   computeLead,
+  visitorWhatsappText,
   isValidEmail,
   isValidPostalCode,
   normalizeFrenchPhone,
@@ -90,20 +91,19 @@ export async function POST(req: NextRequest) {
   const delivered = channels.some((c) => c === true);
   const configured = channels.some((c) => c !== "not_configured");
 
-  if (!configured) {
-    // Aucun connecteur : acceptable en développement / préproduction, jamais en production.
-    if (process.env.NEXT_PUBLIC_SITE_ENV === "production") {
-      console.error("[lead] AUCUN CONNECTEUR CONFIGURÉ — lead non transmis", lead.id);
-      return NextResponse.json({ error: "lead_backend_not_configured" }, { status: 503 });
-    }
-    console.info("[lead] (préproduction) lead reçu, non transmis :\n" + lead.summary);
-    return NextResponse.json({ ok: true, leadId: lead.id, temperature: lead.score.temperature, preview: true });
-  }
-
   if (!delivered) {
-    // Journal complet : le lead reste récupérable dans les logs de l'hébergeur.
-    console.error("[lead] échec de transmission", lead.id, result, "\n" + lead.summary, lead.contact.name, lead.contact.phone);
-    return NextResponse.json({ error: "lead_delivery_failed" }, { status: 502 });
+    // Aucune destination n'a reçu la demande (aucune configurée, ou toutes en échec) :
+    // le lead complet est journalisé, et le visiteur l'envoie lui-même à HDF Bâti par
+    // WhatsApp (texte prêt). Ainsi aucune demande ne se termine sans arriver chez Farid.
+    console.warn(
+      `[lead] ${configured ? "échec de toutes les destinations" : "aucune destination configurée"} — relais WhatsApp par le visiteur`,
+      lead.id,
+      result,
+      "\n" + lead.summary,
+      lead.contact.name,
+      lead.contact.phone,
+    );
+    return NextResponse.json({ ok: true, leadId: lead.id, temperature: lead.score.temperature, handoff: "whatsapp", whatsappText: visitorWhatsappText(lead) });
   }
 
   if (result.whatsapp === false) console.error("[lead] alerte WhatsApp non remise (lead transmis ailleurs)", lead.id);

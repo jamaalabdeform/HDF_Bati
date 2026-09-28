@@ -146,6 +146,27 @@ export interface SubmitResult {
   leadId?: string;
   temperature?: LeadScore["temperature"];
   error?: string;
+  /**
+   * « whatsapp » : le serveur n'a pu transmettre la demande à aucune destination ;
+   * le visiteur l'envoie lui-même à HDF Bâti par WhatsApp (texte prêt dans whatsappText).
+   */
+  handoff?: "whatsapp";
+  whatsappText?: string;
+}
+
+/** Fiche rédigée pour être envoyée par le visiteur sur WhatsApp (sans le score interne). */
+export function visitorWhatsappText(lead: LeadRecord): string {
+  const lines = lead.summary.split("\n").filter((l) => !/^Score\s*:/.test(l));
+  const phone = lead.contact.phone.replace(/^\+33/, "0").replace(/(\d{2})(?=\d)/g, "$1 ");
+  return [
+    `Bonjour HDF Bâti, voici ma demande (réf. ${lead.id}) :`,
+    "",
+    ...lines,
+    "",
+    `Nom : ${lead.contact.name}`,
+    `Téléphone : ${phone}`,
+    ...(lead.contact.email ? [`E-mail : ${lead.contact.email}`] : []),
+  ].join("\n");
 }
 
 /** Envoi client → API interne (/api/lead). */

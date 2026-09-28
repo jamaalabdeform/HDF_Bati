@@ -99,8 +99,7 @@ construit le résumé pour Farid puis envoie en parallèle :
 3. Meta Conversions API (si `META_CAPI_TOKEN` et consentement publicité) : événement `Lead` dédupliqué avec le Pixel via `event_id`.
 4. **WhatsApp direct** (si `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_NOTIFY_TO`) : message à Farid (et à l'associé) via l'API officielle WhatsApp Business Cloud — `lib/server/whatsapp.ts`.
 
-Le lead est considéré comme transmis dès qu'**une** destination l'a reçu ; sinon le visiteur voit
-l'erreur avec le téléphone et WhatsApp en repli, et le lead complet est écrit dans les journaux du serveur.
+Le lead est considéré comme transmis dès qu'**une** destination l'a reçu ; sinon, relais WhatsApp par le visiteur (ci-dessous).
 
 #### Leads → WhatsApp de Farid : mise en place (une fois)
 
@@ -125,7 +124,7 @@ l'erreur avec le téléphone et WhatsApp en repli, et le lead complet est écrit
 Tant que le compte Meta n'est pas vérifié, l'envoi reste possible mais limité (quelques centaines de conversations par jour : largement suffisant pour une landing).
 
 Signature optionnelle : en-tête `X-HDF-Signature = sha256(LEAD_WEBHOOK_SECRET + corps)`.
-Sans connecteur : accepté et journalisé en préproduction ; **refusé (503) en production** pour ne jamais perdre un lead en silence.
+**Relais WhatsApp par le visiteur** : si aucune destination n'est configurée, ou si toutes échouent, le lead complet est journalisé et la fiche se termine sur « Dernière étape : envoyez votre fiche » — un bouton ouvre WhatsApp vers le numéro de HDF Bâti avec la demande déjà rédigée (sans le score interne). La fiche ne passe à « Transmise » qu'après cet appui. Aucune demande ne se termine donc sans être partie vers Farid.
 
 ### Analytics
 

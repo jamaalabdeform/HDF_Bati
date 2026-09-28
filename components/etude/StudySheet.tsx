@@ -56,6 +56,8 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const sheetRef = useRef<HTMLDivElement>(null);
   // Le consentement survit à un aller-retour « Modifier » (les coordonnées sont gardées dans l'état du moteur).
   const [consent, setConsent] = useState(false);
+  // Relais WhatsApp : si le serveur n'a pu transmettre la fiche, le visiteur l'envoie lui-même.
+  const [handoff, setHandoff] = useState<{ text: string; sent: boolean } | null>(null);
   const interacted = useRef(false);
   const startedTracking = useRef(false);
 
@@ -97,6 +99,8 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const rows: Row[] = [...(fixed ? [] : [{ id: "segment", label: "Votre demande" }]), ...steps.map((s) => ({ id: s.id, label: s.summaryLabel, step: s }))];
   const step = currentStep(state);
   const done = state.status === "done";
+  // « Transmise » seulement quand la fiche est réellement partie (serveur, ou WhatsApp du visiteur).
+  const sent = done && (!handoff || handoff.sent);
   const activeId = done ? null : !state.segment ? "segment" : step?.id ?? null;
   const isAnswered = (r: Row) => (r.id === "segment" ? state.segment !== null : r.step?.type === "contact" ? done : r.id in state.answers);
   const answeredCount = rows.filter(isAnswered).length;
@@ -168,6 +172,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
       consentMarketing: readConsent()?.marketing === true,
     });
     if (result.ok) {
+      if (result.handoff === "whatsapp" && result.whatsappText) setHandoff({ text: result.whatsappText, sent: false });
       dispatch({ type: "done", leadId: result.leadId });
       track("qualified_lead", { segment: state.segment, lead_id: result.leadId, lead_temperature: result.temperature, source: "jawabot" }, eventId);
       if (state.answers.contact_preference === "rdv") track("appointment_request", { segment: state.segment, lead_id: result.leadId, source: "jawabot" });
@@ -179,6 +184,7 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
   const restart = () => {
     interacted.current = true;
     startedTracking.current = false;
+    setHandoff(null);
     dispatch({ type: "restart" });
     if (fixed) dispatch({ type: "segment", segment: fixed });
   };
@@ -225,13 +231,13 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
             </p>
           </div>
           <span
-            key={done ? "sent" : "open"}
+            key={sent ? "sent" : done ? "ready" : "open"}
             className={cn(
               "stamp mt-0.5 inline-flex shrink-0 items-center rounded-[3px] border-2 px-2 py-0.5 text-[0.7rem] font-bold tracking-[0.06em] uppercase",
-              done ? "stamp-press border-hdf bg-hdf text-white" : "border-hdf/70 text-hdf",
+              sent ? "stamp-press border-hdf bg-hdf text-white" : "border-hdf/70 text-hdf",
             )}
           >
-            {done ? "Transmise" : "À compléter"}
+            {sent ? "Transmise" : done ? "Prête" : "À compléter"}
           </span>
         </div>
 
@@ -367,7 +373,36 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
           </p>
         )}
 
-        {done ? (
+        {done && handoff && !handoff.sent ? (
+          <div data-sheet-done tabIndex={-1} role="status" className="border-t-2 border-hdf px-4 py-5 outline-none sm:px-6">
+            <p className="text-lg font-bold text-deep">Dernière étape : envoyez votre fiche à HDF Bâti</p>
+            <p className="mt-1.5 text-[0.95rem] leading-relaxed text-muted">
+              Votre fiche est prête. Un appui l’ouvre dans WhatsApp, déjà rédigée : il ne reste qu’à l’envoyer au {company.phone.display}.
+            </p>
+            <a
+              href={whatsappHref(handoff.text)}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track="whatsapp"
+              data-track-location="fiche_relais"
+              onClick={() => {
+                track("whatsapp_handoff", { segment: state.segment ?? undefined, lead_id: state.leadId, source: "jawabot" });
+                setHandoff((h) => (h ? { ...h, sent: true } : h));
+              }}
+              className="mt-4 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-3 text-center text-base font-semibold text-ink transition-colors hover:bg-action-hover"
+            >
+              <MessageCircle className="size-5" aria-hidden />
+              Envoyer ma fiche sur WhatsApp
+            </a>
+            <p className="mt-3 text-sm text-muted">
+              Pas de WhatsApp ? Appelez le{" "}
+              <a href={telHref} data-track="phone" data-track-location="fiche_relais" className="tabular font-semibold whitespace-nowrap text-deep underline">
+                {company.phone.display}
+              </a>{" "}
+              en citant la référence <strong className="tabular text-deep">{state.leadId}</strong>.
+            </p>
+          </div>
+        ) : done ? (
           <div data-sheet-done tabIndex={-1} role="status" className="border-t-2 border-hdf px-4 py-5 outline-none sm:px-6">
             {/* Le tampon est reposé ici : sur mobile, l'en-tête de la fiche est alors hors écran. */}
             <div className="flex items-start justify-between gap-3">
