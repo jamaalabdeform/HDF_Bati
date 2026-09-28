@@ -15,6 +15,12 @@ Chaîne visée : **Publicité / SEO → landing → Jawabot (qualification) → 
 
 ---
 
+## Outils IA du projet
+
+Le dossier `.claude/` contient les outils utilisés pour faire évoluer le site avec Claude Code : **Impeccable** (design, détecteur anti-« look IA »), **Ponytail** (sobriété du code), **Graphify** (graphe du code) et les skills Anthropic `frontend-design` et `webapp-testing`. Voir `CLAUDE.md`. Aucun impact sur le site en production.
+
+---
+
 ## Installation
 
 Prérequis : Node.js ≥ 20.9 (testé avec Node 22).
