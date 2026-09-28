@@ -22,7 +22,7 @@ export function SegmentChooser() {
   const { open, preferredSegment, setPreferredSegment } = useJawabot();
   return (
     <fieldset className="mt-7">
-      <legend className="mb-3 text-sm font-semibold text-deep">Vous êtes :</legend>
+      <legend className="mb-3 text-sm font-semibold text-deep">Vous êtes :</legend>
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {segmentOrder.map((id) => {
           const s = segments[id];
@@ -38,7 +38,7 @@ export function SegmentChooser() {
                 open({ segment: id, origin: "hero_chooser" });
               }}
               className={cn(
-                "group relative flex min-h-[5.5rem] flex-col items-start justify-between gap-2 rounded-2xl border-2 border-deep/10 bg-white p-3 text-left shadow-[var(--shadow-card)] transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] sm:p-4",
+                "group relative flex min-h-[5.5rem] flex-col items-start justify-between gap-2 rounded-2xl border-2 border-deep/12 bg-white p-3 text-left transition-[border-color,background-color] duration-200 hover:bg-white/60 sm:p-4",
                 toneRing[id],
               )}
             >

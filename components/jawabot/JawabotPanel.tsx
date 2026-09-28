@@ -180,7 +180,7 @@ export function JawabotPanel() {
           )}
 
           {state.status === "done" && (
-            <div className="animate-bubble-in rounded-2xl bg-white p-4 shadow-[var(--shadow-card)] ring-1 ring-hdf/20">
+            <div className="animate-bubble-in rounded-2xl bg-white p-4 shadow-[var(--shadow-float)] ring-1 ring-hdf/20">
               <p className="flex items-center gap-2 font-bold text-deep">
                 <span className="grid size-7 place-items-center rounded-full bg-hdf text-white"><Check className="size-4" aria-hidden /></span>
                 {jawabotCopy.successTitle}

@@ -10,8 +10,8 @@ const base =
 
 const variants: Record<Variant, string> = {
   // Orange action : texte encre (contraste AA 4.7:1) — l'orange est réservé à l'action.
-  primary: "bg-action text-ink shadow-[0_6px_18px_-8px_rgb(228_122_23_/_0.8)] hover:bg-action-hover hover:shadow-[0_10px_24px_-10px_rgb(228_122_23_/_0.9)] hover:-translate-y-px",
-  secondary: "bg-hdf text-white hover:bg-hdf-dark hover:-translate-y-px shadow-[0_6px_18px_-10px_rgb(11_122_59_/_0.8)]",
+  primary: "bg-action text-ink hover:bg-action-hover",
+  secondary: "bg-hdf text-white hover:bg-hdf-dark",
   outline: "border-2 border-deep/15 bg-white text-deep hover:border-hdf hover:text-hdf",
   ghost: "text-deep hover:text-hdf underline-offset-4 hover:underline",
   light: "bg-white text-deep hover:bg-surface",

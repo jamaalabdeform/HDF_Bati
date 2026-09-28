@@ -4,7 +4,7 @@
  * TODO_HDF_VALIDATION : relecture juridique de ce bloc avant la mise en production.
  */
 export const aides = {
-  title: "Aides financières : un accompagnement, pas une promesse",
+  title: "Aides financières : un accompagnement, pas une promesse",
   intro:
     "Selon votre situation et votre projet, certains dispositifs d’aide peuvent être mobilisables. HDF Bâti vous aide à identifier les dispositifs applicables.",
   points: [

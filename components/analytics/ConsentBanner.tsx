@@ -38,7 +38,7 @@ export function ConsentBanner() {
 
   return (
     <div role="dialog" aria-modal="false" aria-labelledby="consent-title" className="fixed inset-x-0 bottom-0 z-[70] p-3 sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-md sm:p-0">
-      <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-lift)] ring-1 ring-deep/10">
+      <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-float)] ring-1 ring-deep/10">
         <p id="consent-title" className="font-bold text-deep">Vos choix de confidentialité</p>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           Avec votre accord, HDF Bâti mesure l’audience du site et l’efficacité de ses publicités. Vous pouvez changer d’avis à tout moment.{" "}

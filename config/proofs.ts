@@ -9,24 +9,20 @@ import { confirmed, pending, type Validated } from "./validation";
 
 export const commitments = [
   {
-    icon: "user-round",
     title: "Un interlocuteur, du premier échange au suivi",
-    text: `${company.contactPerson.firstName} et l’équipe HDF Bâti suivent votre demande personnellement : vous savez toujours à qui parler.`,
+    text: `${company.contactPerson.firstName} et l’équipe HDF Bâti suivent votre demande personnellement : vous savez toujours à qui parler.`,
   },
   {
-    icon: "clipboard-check",
     title: "On étudie avant de proposer",
     text: "Votre logement, votre bâtiment ou vos contrats sont analysés avant toute proposition. Nous expliquons les étapes avant que vous vous engagiez.",
   },
   {
-    icon: "map-pin",
     title: "Une entreprise des Hauts-de-France",
     text: `Basée à ${company.address.city} (${company.address.department}), HDF Bâti intervient dans la région et, selon le projet, partout en France.`,
   },
   {
-    icon: "scale",
     title: "Des réponses honnêtes",
-    text: "Pas de promesse d’aide garantie ni d’économie chiffrée à l’aveugle : nous vous disons ce qui est possible pour votre situation.",
+    text: "Pas de promesse d’aide garantie ni d’économie chiffrée à l’aveugle : nous vous disons ce qui est possible pour votre situation.",
   },
 ] as const;
 
@@ -55,7 +51,7 @@ export const proofs: ProofItem[] = [
   {
     id: "assurance",
     label: "Assurances",
-    data: pending("Assurance décennale / RC Pro : assureur, activités couvertes, attestation"),
+    data: pending("Assurance décennale / RC Pro : assureur, activités couvertes, attestation"),
   },
   {
     id: "chantiers",

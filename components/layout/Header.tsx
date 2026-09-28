@@ -31,8 +31,8 @@ export function Header() {
     <header
       data-section="header"
       className={cn(
-        "sticky top-0 z-40 transition-[background-color,box-shadow,backdrop-filter] duration-300",
-        scrolled || menuOpen ? "bg-white/92 shadow-[0_1px_0_rgb(8_61_46_/_0.08),0_8px_24px_-18px_rgb(8_61_46_/_0.35)] backdrop-blur-md" : "bg-surface",
+        "sticky top-0 z-40 border-b border-transparent transition-colors duration-300",
+        scrolled || menuOpen ? "border-line bg-white" : "bg-surface",
       )}
     >
       <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[76rem] items-center gap-4 px-4 sm:px-6 lg:px-8">

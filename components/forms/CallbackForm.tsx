@@ -73,7 +73,7 @@ export function CallbackForm() {
 
   if (status === "done") {
     return (
-      <div className="rounded-[var(--radius-card)] bg-white p-7 text-center text-ink shadow-[var(--shadow-lift)]" role="status">
+      <div className="rounded-[var(--radius-card)] bg-white p-7 text-center text-ink" role="status">
         <CheckCircle2 className="mx-auto size-12 text-hdf" aria-hidden />
         <p className="mt-4 text-xl font-bold text-deep">Demande de rappel bien reçue</p>
         <p className="mt-2 text-muted">HDF Bâti vous rappelle au moment indiqué. Merci pour votre confiance.</p>
@@ -83,7 +83,7 @@ export function CallbackForm() {
   }
 
   return (
-    <form id="callback-form" noValidate onSubmit={onSubmit} className="relative rounded-[var(--radius-card)] bg-white p-5 text-ink shadow-[var(--shadow-lift)] sm:p-7">
+    <form id="callback-form" noValidate onSubmit={onSubmit} className="relative rounded-[var(--radius-card)] bg-white p-5 text-ink sm:p-7">
       <div className="grid gap-4 sm:grid-cols-2">
         <TextField label="Nom" autoComplete="name" value={v.name} onChange={set("name")} error={errors.name} className="sm:col-span-2" />
         <TextField label="Téléphone" type="tel" inputMode="tel" autoComplete="tel" value={v.phone} onChange={set("phone")} error={errors.phone} />
@@ -107,7 +107,7 @@ export function CallbackForm() {
           <a href={telHref} data-track="phone" data-track-location="callback_error" className="font-semibold underline">{company.phone.display}</a>.
         </p>
       )}
-      <button type="submit" disabled={status === "sending"} className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-action px-7 text-base font-semibold text-ink shadow-[0_6px_18px_-8px_rgb(228_122_23_/_0.8)] transition hover:bg-action-hover disabled:opacity-70">
+      <button type="submit" disabled={status === "sending"} className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-action px-7 text-base font-semibold text-ink transition hover:bg-action-hover disabled:opacity-70">
         {status === "sending" && <Loader2 className="size-5 animate-spin" aria-hidden />}
         {status === "sending" ? "Envoi en cours…" : "Demander un rappel"}
       </button>

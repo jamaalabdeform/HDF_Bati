@@ -26,7 +26,7 @@ export function Footer() {
         </div>
 
         <div>
-          <p className="text-xs font-bold tracking-[0.16em] text-energy uppercase">HDF Bâti</p>
+          <p className="text-sm font-semibold text-white/60">HDF Bâti</p>
           <ul className="mt-4 space-y-1">
             {footerNav.offres.map((l) => (
               <li key={l.href}>
@@ -38,8 +38,9 @@ export function Footer() {
           </ul>
         </div>
 
+        {(liveSocials.length > 0 || SHOW_PENDING) && (
         <div>
-          <p className="text-xs font-bold tracking-[0.16em] text-energy uppercase">Suivez-nous</p>
+          <p className="text-sm font-semibold text-white/60">Suivez-nous</p>
           <ul className="mt-4 space-y-1">
             {liveSocials.map((s) => (
               <li key={s.key}>
@@ -58,9 +59,10 @@ export function Footer() {
                 ))}
           </ul>
         </div>
+        )}
 
         <address className="not-italic">
-          <p className="text-xs font-bold tracking-[0.16em] text-energy uppercase">Contact</p>
+          <p className="text-sm font-semibold text-white/60">Contact</p>
           <ul className="mt-4 space-y-3 text-sm">
             <li>
               <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="flex gap-2.5 text-white/85 hover:text-white">

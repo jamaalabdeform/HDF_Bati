@@ -32,7 +32,7 @@ export default async function LocalLandingPage({ params }: Props) {
         <p className="mt-4 text-lg text-muted">{page.intro}</p>
         <div className="mt-10 grid gap-4">
           {page.realisations.map((r) => (
-            <article key={r.title} className="rounded-[var(--radius-card)] bg-white p-6 shadow-[var(--shadow-card)]">
+            <article key={r.title} className="rounded-[var(--radius-card)] bg-white p-6 border border-line">
               <h2 className="text-xl font-bold text-deep">{r.title}</h2>
               <p className="mt-2 text-muted">{r.text}</p>
             </article>

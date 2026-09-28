@@ -29,7 +29,7 @@ export function JawabotLauncher() {
       aria-haspopup="dialog"
       onClick={() => open({ origin: "launcher", segment: preferredSegment ?? undefined })}
       className={cn(
-        "fixed right-5 bottom-5 z-50 hidden items-center gap-2.5 rounded-full bg-deep py-2 pr-5 pl-2 text-sm font-semibold text-white shadow-[var(--shadow-lift)] ring-1 ring-white/10 transition-[opacity,transform,background-color] duration-500 ease-[var(--ease-out-soft)] hover:bg-[#0a4a38] sm:inline-flex",
+        "fixed right-5 bottom-5 z-50 hidden items-center gap-2.5 rounded-full bg-deep py-2 pr-5 pl-2 text-sm font-semibold text-white shadow-[var(--shadow-float)] ring-1 ring-white/10 transition-[opacity,transform,background-color] duration-500 ease-[var(--ease-out-soft)] hover:bg-[#0a4a38] sm:inline-flex",
         visible && !isOpen ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
       )}
       tabIndex={visible && !isOpen ? 0 : -1}

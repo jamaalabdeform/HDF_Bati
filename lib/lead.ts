@@ -87,16 +87,16 @@ export function buildSummary(input: Pick<LeadInput, "segment" | "answers" | "con
     for (const step of getFlow(input.segment)) {
       if (step.type === "contact") continue;
       const v = input.answers[step.id];
-      if (v) lines.push(`${step.summaryLabel} : ${answerLabel(step, v)}`);
+      if (v) lines.push(`${step.summaryLabel} : ${answerLabel(step, v)}`);
     }
   } else {
     const project = callbackProjectOptions.find((o) => o.value === input.answers.projet)?.label;
-    if (project) lines.push(`Projet : ${project}`);
-    if (input.contact.postalCode) lines.push(`Code postal : ${input.contact.postalCode}`);
+    if (project) lines.push(`Projet : ${project}`);
+    if (input.contact.postalCode) lines.push(`Code postal : ${input.contact.postalCode}`);
     const best = bestTimeOptions.find((o) => o.value === input.contact.bestTime)?.label;
-    if (best) lines.push(`Rappel souhaité : ${best}`);
+    if (best) lines.push(`Rappel souhaité : ${best}`);
   }
-  lines.push(`Score : ${score.score}/100 (${score.temperature})`);
+  lines.push(`Score : ${score.score}/100 (${score.temperature})`);
   return lines.join("\n");
 }
 

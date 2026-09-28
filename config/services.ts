@@ -57,7 +57,6 @@ export const segmentOrder: Segment[] = ["particulier", "professionnel", "collect
 export interface ProjectCard {
   id: string;
   anchor: string;
-  eyebrow: string;
   badge: string;
   tone: SegmentDef["tone"];
   title: string;
@@ -75,7 +74,6 @@ export const projectCards: ProjectCard[] = [
   {
     id: "particuliers",
     anchor: anchors.particuliers + "-carte",
-    eyebrow: "Particuliers",
     badge: "Habitat",
     tone: "green",
     title: "Améliorez le confort de votre logement",
@@ -88,7 +86,6 @@ export const projectCards: ProjectCard[] = [
   {
     id: "professionnels",
     anchor: anchors.professionnels + "-carte",
-    eyebrow: "Professionnels",
     badge: "Pro",
     tone: "navy",
     title: "Maîtrisez les besoins énergétiques de votre activité",
@@ -101,7 +98,6 @@ export const projectCards: ProjectCard[] = [
   {
     id: "energie",
     anchor: anchors.energie,
-    eyebrow: "Énergie",
     badge: "Énergie",
     tone: "orange",
     title: "Reprenez le contrôle de vos contrats d’énergie",
@@ -118,7 +114,7 @@ export const projectCards: ProjectCard[] = [
 export const parcoursParticulier = [
   {
     title: "Je décris mon projet",
-    text: "En quelques questions, en ligne ou par téléphone : votre maison, votre chauffage actuel, vos attentes.",
+    text: "En quelques questions, en ligne ou par téléphone : votre maison, votre chauffage actuel, vos attentes.",
   },
   {
     title: "HDF Bâti analyse ma situation",
@@ -142,15 +138,15 @@ export const parcoursParticulier = [
 export const parcoursPro = [
   {
     title: "Compréhension de votre structure",
-    text: "Activité, bâtiments, sites, organisation : nous partons de votre réalité.",
+    text: "Activité, bâtiments, sites, organisation : nous partons de votre réalité.",
   },
   {
     title: "Analyse du besoin",
-    text: "Chauffage, performance du bâtiment, production d’énergie ou contrats : nous clarifions les priorités.",
+    text: "Chauffage, performance du bâtiment, production d’énergie ou contrats : nous clarifions les priorités.",
   },
   {
     title: "Analyse des contrats et consommations",
-    text: "Lorsque c’est pertinent : lecture de vos contrats, échéances et historiques de consommation.",
+    text: "Lorsque c’est pertinent : lecture de vos contrats, échéances et historiques de consommation.",
   },
   {
     title: "Identification des pistes d’optimisation",
