@@ -292,14 +292,16 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
               </li>
             );
           })}
+          {/* Accueil, avant le choix du profil : deux lignes à remplir suffisent à montrer la suite. */}
           {!counted &&
-            Array.from({ length: hubTotal - 1 }, (_, i) => (
+            Array.from({ length: 2 }, (_, i) => (
               <li key={`blank${i}`} aria-hidden className="grid grid-cols-[1.75rem_1fr] gap-x-2 border-t border-line py-3 sm:gap-x-3">
                 <span className="tabular text-sm text-muted">{String(i + 2).padStart(2, "0")}</span>
                 <span className="mt-3 border-b border-dotted border-deep/25" />
               </li>
             ))}
         </ol>
+        {!counted && <p className="px-4 pb-3 text-sm text-muted sm:px-6">Puis {hubTotal - 3} autres questions courtes, adaptées à votre profil.</p>}
 
         {done ? (
           <div data-sheet-done tabIndex={-1} role="status" className="border-t-2 border-hdf px-4 py-5 outline-none sm:px-6">

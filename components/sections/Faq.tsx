@@ -10,7 +10,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 export function Faq({ segment }: { segment?: Segment }) {
   return (
     <section id={anchors.faq} data-section="faq" aria-labelledby="faq-title" className="border-t border-line bg-white py-14 sm:py-20">
-      <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <Container width="text">
         <SectionHeading id="faq-title" title="Les questions que l’on nous pose le plus" intro={
             <>
               Une autre question ? Posez-la directement à HDF Bâti au{" "}
@@ -20,7 +20,7 @@ export function Faq({ segment }: { segment?: Segment }) {
               .
             </>
           } />
-          <div className="divide-y divide-line border-y-2 border-y-deep bg-white">
+          <div className="mt-8 divide-y divide-line border-y-2 border-y-deep bg-white">
             {faqFor(segment).map((item) => (
               <details key={item.q} className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-base font-semibold text-deep">

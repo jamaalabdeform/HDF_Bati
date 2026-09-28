@@ -13,12 +13,12 @@ export function WhyHdf({ withoutPromises = false }: { withoutPromises?: boolean 
   const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed");
 
   return (
-    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-white py-14 sm:py-20">
+    <section id={anchors.pourquoi} data-section="pourquoi" aria-labelledby="pourquoi-title" className="bg-surface py-14 sm:py-20">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" intro="Un rappel rapide, des démarches d’aides faites avec vous, et une étude sérieuse avant toute proposition." />
+        <div>
+          <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" intro={withoutPromises ? "Une étude sérieuse avant toute proposition, et des réponses honnêtes sur ce qui est possible." : "Un rappel rapide, des démarches d’aides faites avec vous, et une étude sérieuse avant toute proposition."} />
 
-          <dl className="grid gap-x-10 sm:grid-cols-2">
+          <dl className={`mt-8 grid gap-x-10 sm:grid-cols-2 ${withoutPromises ? "" : "lg:grid-cols-4"}`}>
             {shown.map((c) => (
               <div key={c.title} className="border-t-2 border-deep py-6">
                 <dt className="text-lg leading-snug font-bold text-deep">{c.title}</dt>

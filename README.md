@@ -57,7 +57,7 @@ app/
   sitemap.ts, robots.ts, manifest.ts, icon.svg, apple-icon.png
 components/
   brand/      Logo (SVG officiels corrigés)
-  etude/      StudySheet (fiche d'étude par étapes), DossierHero, Sommaire, Rubriques (A → D), DossierEntries, ProfilePage
+  etude/      StudySheet (fiche d'étude par étapes), DossierHero, Dossier (sommaire + rubriques A → D), DossierEntries, ProfilePage
   layout/     Header (sticky, bouton selon la page), Footer, MobileActionBar, LegalPage
   sections/   Aides, WhyHdf, Callback, Faq, Contact
   forms/      Field (champs accessibles), CallbackForm
@@ -84,7 +84,7 @@ lib/
 
 ### Parcours de conversion
 
-- **Accueil + une page par profil** (`/particuliers`, `/professionnels`, `/collectivites`) : chaque page ouvre sur la fiche d'étude du profil, puis le sommaire (5 étapes), les rubriques « Ce que nous étudions / Ce que vous préparez / Qui vous rappelle / Ce que vous recevez », la FAQ du profil et le rappel. Bouton principal et barre mobile reprennent le libellé du profil.
+- **Accueil + une page par profil** (`/particuliers`, `/professionnels`, `/collectivites`) : chaque page ouvre sur la fiche d'étude du profil, puis le dossier d'étude (sommaire en 5 étapes + rubriques « Ce que nous étudions / Ce que vous préparez / Qui vous rappelle / Ce que vous recevez »), la FAQ du profil et le rappel. Bouton principal et barre mobile reprennent le libellé du profil.
 - **Fiche d'étude** (`components/etude/StudySheet.tsx`) : formulaire par étapes intégré à la page (pas de fenêtre, pas de chat). Chaque rubrique se remplit en place, « Modifier » revient à une rubrique, progression « n/N », consentement explicite → `/api/lead` → fiche « Transmise » proposant **ensuite** WhatsApp (message pré-rempli avec la référence du lead) ou l'appel. Questions pilotées par `config/jawabot.ts`.
 - **Formulaire express** « Vous préférez être rappelé ? » (nom, téléphone, code postal, projet, moment, consentement, anti-spam).
 - Paramètre de campagne `?profil=particulier|professionnel|collectivite` : présélectionne le profil dans la fiche de l’accueil (utile pour des annonces Meta ciblées).

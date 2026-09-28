@@ -241,7 +241,8 @@ Directs et sans ornement ; l'orange signifie qu'on avance.
 
 ### Cards / Containers
 - **Corner Style:** 6px.
-- **Background:** blanc sur champ profond ; sur fond clair, pas de carte : des colonnes réglées de filets.
+- **Background:** blanc sur champ profond ; sur fond clair, pas de carte : des colonnes réglées de filets (seule exception : la feuille du dossier d'étude, bordée, sans ombre).
+- **Sections du bas:** pas de gabarit répété ; FAQ empilée à largeur de texte, « Pourquoi » titre au-dessus des colonnes, Contact en bandeau de trois coordonnées.
 - **Shadow Strategy:** voir The One Sheet Rule.
 - **Internal Padding:** 16–24px dans la feuille, 20–28px dans le formulaire de rappel.
 
@@ -263,6 +264,10 @@ La feuille blanche posée sur le champ profond.
 - **Rubriques:** remplie = numéro `hdf`, libellé `muted`, pointillé, réponse `deep` en semi-gras et lien « Modifier » ; active = barre verticale `energy` de 4px dans la marge, entrée `rubric-in` (280ms) ; à venir = numéro et libellé `muted` suivis d'un pointillé.
 - **Choix:** lignes de 48px, bordure `deep` à 20 %, case carrée 3px ; survol bordure `hdf` et fond `surface`.
 - **Onglets:** Particuliers / Professionnels / Collectivités sur le bord haut de la feuille des pages profil, coins hauts 6px ; actif blanc texte `deep`, inactifs blanc à 10 % texte blanc. La fiche de l'accueil n'a pas d'onglets : la rubrique 01 est le choix du profil.
+- **Modifier:** ne reprend que la rubrique choisie ; les autres réponses, les coordonnées et le consentement sont conservés. Sur l'accueil, avant le choix du profil : deux lignes à remplir puis « Puis n autres questions courtes ».
+
+### Dossier d'étude (pages profil)
+- Seconde feuille blanche sur fond `surface`, bordure 1px `line`, coins 6px, sans ombre : en-tête « Dossier d'étude · Profil », sommaire des 5 étapes en marge (collant sur grand écran, filet 2px `deep`, numéros `hdf`), rubriques A → D dans le corps (lettre dans un carré 3px bordé `hdf`, puces carrées).
 
 ## Do's and Don'ts
 

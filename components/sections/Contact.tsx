@@ -4,8 +4,8 @@ import { anchors } from "@/config/navigation";
 import { genericWhatsappMessage } from "@/lib/lead";
 import { Container } from "../ui/Container";
 import { Pending } from "../ui/Pending";
-import { SectionHeading } from "../ui/SectionHeading";
 
+/** Coordonnées en bandeau : trois entrées côte à côte et WhatsApp pour une question rapide. */
 export function Contact() {
   const items = [
     { label: "Téléphone", value: company.phone.display, href: telHref, track: "phone", tabular: true },
@@ -13,32 +13,34 @@ export function Contact() {
     { label: "Adresse", value: fullAddress, href: mapsHref, external: true },
   ];
   return (
-    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-20">
-      <Container className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <SectionHeading id="contact-title" title={`Contacter ${company.name}`} intro={`Entreprise basée à ${company.address.city}, dans le ${company.address.department}. Nous intervenons dans les Hauts-de-France et, selon le projet, partout en France.`} />
-          <div className="mt-8 max-w-[60ch] border-t border-line pt-6">
-            <p className="font-bold text-deep">Une question rapide ?</p>
-            <p className="mt-1 text-sm leading-relaxed text-muted">Écrivez-nous sur WhatsApp. Pour un projet, remplissez d’abord la fiche d’étude : nous vous répondrons avec tous les éléments en main.</p>
-            <a
-              href={whatsappHref(genericWhatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-track="whatsapp"
-              data-track-location="contact"
-              className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-md border-2 border-hdf px-5 font-semibold text-hdf transition-colors hover:bg-hdf hover:text-white"
-            >
-              <MessageCircle className="size-5" aria-hidden />
-              Échanger avec HDF Bâti
-            </a>
-            {company.whatsapp.number.status !== "confirmed" && <Pending className="mt-4" label="Numéro WhatsApp Business définitif" note={company.whatsapp.number.note} />}
+    <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-16">
+      <Container>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 id="contact-title" className="text-[1.85rem] leading-[1.1] font-bold text-deep sm:text-4xl">
+              Contacter {company.name}
+            </h2>
+            <p className="mt-3 max-w-[60ch] text-muted">
+              Entreprise basée à {company.address.city}, dans le {company.address.department}. Nous intervenons dans les Hauts-de-France et, selon le projet, partout en France.
+            </p>
           </div>
+          <a
+            href={whatsappHref(genericWhatsappMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track="whatsapp"
+            data-track-location="contact"
+            className="inline-flex min-h-12 shrink-0 items-center gap-2 self-start rounded-md border-2 border-hdf px-5 font-semibold text-hdf transition-colors hover:bg-hdf hover:text-white sm:self-auto"
+          >
+            <MessageCircle className="size-5" aria-hidden />
+            Échanger avec HDF Bâti
+          </a>
         </div>
 
-        <address className="not-italic lg:pt-2">
-          <dl className="divide-y divide-line border-y border-line">
+        <address className="mt-8 not-italic">
+          <dl className="grid border-t-2 border-deep md:grid-cols-3">
             {items.map((it) => (
-              <div key={it.label} className="grid gap-1 py-5 sm:grid-cols-[8rem_1fr] sm:items-baseline">
+              <div key={it.label} className="border-b border-line py-5 md:border-b-0 md:border-l md:px-6 md:first:border-l-0 md:first:pl-0">
                 <dt className="text-sm text-muted">{it.label}</dt>
                 <dd>
                   <a
@@ -53,8 +55,11 @@ export function Contact() {
               </div>
             ))}
           </dl>
-          {company.address.publicDisplay.status !== "confirmed" && <Pending className="mt-4" label="Adresse publique" note={company.address.publicDisplay.note} />}
         </address>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {company.whatsapp.number.status !== "confirmed" && <Pending label="Numéro WhatsApp Business définitif" note={company.whatsapp.number.note} />}
+          {company.address.publicDisplay.status !== "confirmed" && <Pending label="Adresse publique" note={company.address.publicDisplay.note} />}
+        </div>
       </Container>
     </section>
   );
