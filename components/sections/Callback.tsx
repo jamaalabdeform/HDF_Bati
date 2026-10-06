@@ -28,7 +28,7 @@ export function Callback({ segment }: { segment?: Segment }) {
               <span>Un échange simple, sans engagement.</span>
             </li>
           </ul>
-          {company.openingHours.status !== "confirmed" && <Pending className="mt-6" label="Horaires et délai de rappel à annoncer" note={company.responseTime.note} />}
+          {company.openingHours.status !== "confirmed" && <Pending className="mt-6" label="Horaires de disponibilité à annoncer" note={company.openingHours.note} />}
         </div>
         <CallbackForm defaultSegment={segment} />
       </Container>

@@ -68,9 +68,7 @@ export const company = {
   ),
 
   openingHours: pending<string>("Horaires de disponibilité à annoncer (rappel, WhatsApp)"),
-  responseTime: pending<string>(
-    "Délai de rappel annoncé publiquement (Farid indique « dans la minute » pour un prospect chaud — à formaliser)",
-  ),
+  responseTime: confirmed("Réponse dans l’heure", "Farid, 06/10/2026"),
 
   geo: pending<{ lat: number; lng: number }>("Coordonnées GPS exactes de la fiche Google Business"),
 

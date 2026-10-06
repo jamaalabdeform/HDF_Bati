@@ -1,5 +1,4 @@
 import { anchors } from "@/config/navigation";
-import { positioning } from "@/config/positioning";
 import { proofs } from "@/config/proofs";
 import { SHOW_PENDING } from "@/config/validation";
 import { Container } from "../ui/Container";
@@ -31,12 +30,6 @@ export function WhyHdf() {
           </ul>
         )}
 
-        {SHOW_PENDING && (
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            <Pending label="Réactivité — version chiffrée" note={positioning.reactivite.precise.note} />
-            <Pending label="Aides — mécanisme précis" note={positioning.aides.precise.note} />
-          </div>
-        )}
 
         {SHOW_PENDING && pendingProofs.length > 0 && (
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Preuves à valider">

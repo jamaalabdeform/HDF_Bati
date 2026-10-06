@@ -37,7 +37,7 @@ const rappel: Rubrique = {
   title: "Qui vous rappelle, et quand",
   items: [
     "Un responsable de HDF Bâti reprend lui-même votre fiche : pas de centre d’appels.",
-    "Il vous rappelle rapidement, au moment que vous avez indiqué, avec vos réponses sous les yeux.",
+    "Il vous répond dans l’heure, ou vous rappelle au moment que vous avez indiqué, avec vos réponses sous les yeux.",
     "Vous n’avez pas à tout réexpliquer : l’échange porte directement sur votre situation.",
   ],
   precise: positioning.reactivite.precise,
@@ -57,6 +57,7 @@ export const dossiers: Record<Segment, Dossier> = {
     etudions: {
       title: "Ce que nous étudions",
       items: [
+        "Une étude complète de votre maison : dimensionnement de l’installation et choix du matériel installé.",
         "Votre maison : nos projets de pompe à chaleur concernent les maisons individuelles.",
         "Votre chauffage actuel (gaz, fioul, électrique…) et ce qu’une pompe à chaleur, des panneaux ou des travaux de rénovation changeraient.",
         "Les aides qui pourraient s’appliquer à votre foyer, selon conditions d’éligibilité.",
@@ -75,8 +76,8 @@ export const dossiers: Record<Segment, Dossier> = {
       title: "Ce que vous recevez",
       items: [
         "Une réponse claire : le projet est-il adapté à votre maison ?",
-        "Si c’est le cas, une proposition établie à partir de votre situation réelle, avec les étapes expliquées avant tout engagement.",
-        "Les démarches d’aides, faites avec vous.",
+        "Si c’est le cas, une proposition établie à partir de cette étude, avec le matériel choisi et les étapes expliquées avant tout engagement.",
+        "Un accompagnement complet dans les démarches d’aides, sans avance de frais de votre part. Selon conditions d’éligibilité.",
       ],
       precise: positioning.aides.precise,
     },

@@ -35,7 +35,7 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 | 12 | **Chantiers réalisés** | `config/proofs.ts` → `chantiers` ; `config/media.ts` | 4 à 5 vrais chantiers : photos avant/pendant/après, commune, équipement, accord client. |
 | 13 | **Garanties / SAV** | `config/proofs.ts` → `garanties` | Garanties matériel / main-d'œuvre, organisation du SAV. |
 | 14 | **Marques posées** | `config/proofs.ts` → `marques` | Marques / gammes de PAC et de panneaux. |
-| 15 | **Horaires & délai de rappel** | `config/company.ts` → `openingHours`, `responseTime` | Farid indique rappeler « dans la minute » un prospect chaud : définir une promesse publique tenable (ex. « sous 24 h ouvrées »). |
+| 15 | **Horaires** (délai confirmé) | `config/company.ts` → `openingHours` | **Délai confirmé par Farid le 06/10/2026 : « Réponse dans l'heure » (affiché).** Reste à fournir : horaires de disponibilité (rappel, WhatsApp), et préciser si « dans l'heure » vaut aux heures ouvrées. |
 | 16 | **Coordonnées GPS** | `config/company.ts` → `geo` | Latitude / longitude de la fiche Google Business (schema.org `geo`). |
 | 17 | **Réseaux sociaux** | `config/company.ts` → `social` | URLs Facebook, Instagram, LinkedIn (les liens n'apparaissent qu'une fois renseignés). |
 
@@ -43,8 +43,9 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 
 | # | Sujet | Où | Détail |
 |---|-------|----|--------|
-| 17a | **Réactivité** | `config/positioning.ts` → `reactivite.precise` | Affiché aujourd'hui : « Un conseiller vous rappelle rapidement » / « Pas de centre d'appels ». À fournir : délai public tenable (Farid : « dans la minute » pour un prospect chaud) et horaires. |
-| 17b | **Aides gérées en direct** | `config/positioning.ts` → `aides.precise`, `config/aides.ts` | Affiché aujourd'hui : « Nous nous occupons des démarches d'aides avec vous », « Selon conditions d'éligibilité ». À valider juridiquement : mécanisme exact (HDF Bâti perçoit l'aide et règle le sous-traitant), ce que le client n'a pas à faire ou à avancer. |
+| 17a | **Réactivité** — ✅ confirmé | `config/positioning.ts` → `reactivite` | Farid, 06/10/2026 : « Réponse dans l'heure ». Affiché : « Une réponse dans l'heure », par l'équipe HDF Bâti elle-même. |
+| 17b | **Aides gérées en direct** — ✅ confirmé, relecture juridique restante | `config/positioning.ts` → `aides`, `config/aides.ts`, `config/dossiers.ts` | Farid, 06/10/2026 : « Aucune avance de frais », « Accompagnement complet dans les démarches ». Affiché avec « Selon conditions d'éligibilité ». **À faire relire (point 7)** : la mention « sans avance de frais » est une promesse commerciale encadrée en rénovation énergétique. |
+| 17c | **Étude** — ✅ confirmé | `config/dossiers.ts` → particulier | Farid, 06/10/2026 : « Étude complète sur le dimensionnement de la maison et le choix du matériel installé ». Affiché dans « Ce que nous étudions » et « Ce que vous recevez » (page Particuliers). Applicable aussi aux pros / collectivités ? |
 
 ## 3. Visuels
 

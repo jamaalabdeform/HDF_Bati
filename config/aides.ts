@@ -13,8 +13,8 @@ export const aides = {
       text: "Les aides dépendent notamment du logement, des travaux envisagés et de la situation du foyer. Elles ne sont jamais automatiques.",
     },
     {
-      title: "Nous nous occupons des démarches avec vous",
-      text: "Lors de l’étude, nous identifions les dispositifs potentiellement applicables et nous prenons en charge les démarches avec vous, en vous indiquant les justificatifs à fournir.",
+      title: "Un accompagnement complet, sans avance de frais",
+      text: "Lors de l’étude, nous identifions les dispositifs potentiellement applicables et nous vous accompagnons dans toutes les démarches, en vous indiquant les justificatifs à fournir. Vous n’avez pas à avancer les frais des aides.",
     },
     {
       title: "Des informations officielles",
