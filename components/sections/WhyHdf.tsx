@@ -11,7 +11,9 @@ import { SectionHeading } from "../ui/SectionHeading";
  */
 export function WhyHdf() {
   const confirmedProofs = proofs.filter((p) => p.data.status === "confirmed" && p.data.value);
-  const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed");
+  // Les avis Google sont gérés par la section GoogleReviews dès que la fiche est reliée.
+  const reviewsLinked = Boolean(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
+  const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed" && !(reviewsLinked && p.id === "avis"));
   if (confirmedProofs.length === 0 && !SHOW_PENDING) return null;
 
   return (

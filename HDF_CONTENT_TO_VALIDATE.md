@@ -31,7 +31,7 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 |---|-------|----|--------|
 | 9 | **Qualifications / RGE** | `config/proofs.ts` → `qualifications` | Farid indique que les travaux sont réalisés par une **société partenaire** qualifiée RGE (QualiPAC, QualiPV, Qualisol, Qualibois). Il faut : nom du partenaire, certificats, périmètres, dates de validité et **wording validé juridiquement**. HDF Bâti ne doit **pas** être présentée comme titulaire de ces qualifications. |
 | 10 | **Assurances** | `config/proofs.ts` → `assurance` | Décennale / RC Pro : assureur, activités couvertes (PAC, PV), attestation. |
-| 11 | **Avis Google** | `config/company.ts` → `googleBusiness` ; `config/proofs.ts` → `avis` | 14 avis déclarés au 27/09/2026, **note non communiquée**. Fournir le lien public de la fiche ; n'afficher qu'une donnée vérifiable (idéalement via lien/widget). Aucun `aggregateRating` n'est déclaré en schema.org. |
+| 11 | **Avis Google** | `.env` → `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `NEXT_PUBLIC_GOOGLE_BUSINESS_URL` | Section prête (note, nombre d'avis, 5 avis via l'API officielle Google Places, mise à jour quotidienne). À fournir : **lien de la fiche** et **Place ID** ; créer la clé API (README § Avis Google). Aucun avis n'est recopié à la main ; pas d'`aggregateRating` schema.org. |
 | 12 | **Chantiers réalisés** | `config/proofs.ts` → `chantiers` ; `config/media.ts` | 4 à 5 vrais chantiers : photos avant/pendant/après, commune, équipement, accord client. |
 | 13 | **Garanties / SAV** | `config/proofs.ts` → `garanties` | Garanties matériel / main-d'œuvre, organisation du SAV. |
 | 14 | **Marques posées** | `config/proofs.ts` → `marques` | Marques / gammes de PAC et de panneaux. |

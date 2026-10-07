@@ -10,6 +10,7 @@ export const anchors = {
   energie: "energie",
   aides: "aides",
   pourquoi: "pourquoi-hdf-bati",
+  avis: "avis",
   faq: "questions-frequentes",
   rappel: "etre-rappele",
   contact: "contact",

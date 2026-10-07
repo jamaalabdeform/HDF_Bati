@@ -73,7 +73,9 @@ export const company = {
   geo: pending<{ lat: number; lng: number }>("Coordonnées GPS exactes de la fiche Google Business"),
 
   googleBusiness: {
-    url: pending<string>("Lien public de la fiche Google Business Profile (Farid a les accès)"),
+    url: process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL
+      ? confirmed(process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL, "Variable NEXT_PUBLIC_GOOGLE_BUSINESS_URL")
+      : pending<string>("Lien public de la fiche Google Business Profile (Farid a les accès) — NEXT_PUBLIC_GOOGLE_BUSINESS_URL"),
     reviewsCount: pending<number>(
       "14 avis déclarés au 27/09/2026 ; note moyenne non communiquée. Afficher uniquement via widget/lien vérifiable.",
       14,

@@ -126,6 +126,22 @@ Tant que le compte Meta n'est pas vérifié, l'envoi reste possible mais limité
 Signature optionnelle : en-tête `X-HDF-Signature = sha256(LEAD_WEBHOOK_SECRET + corps)`.
 **Relais WhatsApp par le visiteur** : si aucune destination n'est configurée, ou si toutes échouent, le lead complet est journalisé et la fiche se termine sur « Dernière étape : envoyez votre fiche » — un bouton ouvre WhatsApp vers le numéro de HDF Bâti avec la demande déjà rédigée (sans le score interne). La fiche ne passe à « Transmise » qu'après cet appui. Aucune demande ne se termine donc sans être partie vers Farid.
 
+### Avis Google
+
+`components/sections/GoogleReviews.tsx` affiche la note, le nombre d'avis et jusqu'à 5 avis de la fiche
+Google de HDF Bâti (3 sur mobile), avec l'auteur et le lien vers Google, sur l'accueil et les pages profil.
+Les données viennent de l'**API officielle Google Places (New)**, rafraîchies une fois par jour ; rien
+n'est recopié à la main. Sans configuration, la section n'apparaît pas en production.
+
+1. Google Cloud Console → créer un projet → activer **Places API (New)** → créer une **clé API**,
+   restreinte à cette API (facturation à activer ; l'usage d'une landing reste dans le quota gratuit mensuel).
+2. Trouver l'**identifiant de la fiche** : outil « Place ID Finder » de Google (rechercher « HDF Bâti Anzin »).
+3. Chez l'hébergeur : `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, et `NEXT_PUBLIC_GOOGLE_BUSINESS_URL`
+   (lien public de la fiche), puis redéployer.
+
+Pas de balisage `aggregateRating` schema.org : Google ne l'accepte pas pour des avis de sa propre plateforme
+affichés sur le site de l'entreprise.
+
 ### Analytics
 
 Un seul point d'entrée : `track(event, params)` dans `lib/analytics.ts`. Les composants ne contiennent
