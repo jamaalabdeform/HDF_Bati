@@ -1,6 +1,7 @@
 import { ExternalLink, Star } from "lucide-react";
 import { anchors } from "@/config/navigation";
-import { SHOW_PENDING } from "@/config/validation";
+import { company } from "@/config/company";
+import { publicValue, SHOW_PENDING } from "@/config/validation";
 import { getGoogleReviews } from "@/lib/server/google-reviews";
 import { Container } from "../ui/Container";
 import { Pending } from "../ui/Pending";
@@ -23,6 +24,27 @@ function Stars({ value, className = "size-4" }: { value: number; className?: str
  */
 export async function GoogleReviews() {
   const data = await getGoogleReviews();
+  const ficheUrl = publicValue(company.googleBusiness.url);
+  if (!data && ficheUrl) {
+    // Sans clé API : un simple lien vers la fiche, sans note ni avis recopiés.
+    return (
+      <section id={anchors.avis} data-section="avis" aria-label="Avis Google" className="scroll-mt-16 border-t border-line bg-white py-10">
+        <Container className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-lg font-bold text-deep">Les avis de nos clients sont sur notre fiche Google.</p>
+          <a
+            href={ficheUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 w-fit items-center gap-2 font-semibold text-hdf underline decoration-hdf/40 underline-offset-4 hover:decoration-hdf"
+          >
+            Voir nos avis sur Google
+            <ExternalLink className="size-4" aria-hidden />
+            <span className="sr-only">(nouvel onglet)</span>
+          </a>
+        </Container>
+      </section>
+    );
+  }
   if (!data) {
     if (!SHOW_PENDING) return null;
     return (
@@ -52,9 +74,9 @@ export async function GoogleReviews() {
               <span className="sr-only">Note moyenne {fr(data.rating)} sur 5, {data.count} avis Google.</span>
             </p>
           </div>
-          {data.reviewsUrl && (
+          {(data.reviewsUrl ?? ficheUrl) && (
             <a
-              href={data.reviewsUrl}
+              href={data.reviewsUrl ?? ficheUrl ?? undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 w-fit items-center gap-2 font-semibold text-hdf underline decoration-hdf/40 underline-offset-4 hover:decoration-hdf"

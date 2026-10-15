@@ -10,8 +10,8 @@ export const positioning = {
   reactivite: {
     short: "Réponse dans l’heure",
     title: "Une réponse dans l’heure",
-    heroText: "Par l’équipe HDF Bâti elle-même, pas par un centre d’appels.",
-    text: "Vous laissez vos coordonnées : l’équipe HDF Bâti vous répond elle-même, dans l’heure. Pas de centre d’appels.",
+    heroText: "7 jours sur 7, soir et week-end compris, par l’équipe HDF Bâti elle-même.",
+    text: "Vous laissez vos coordonnées : l’équipe HDF Bâti vous répond elle-même, dans l’heure, 7 jours sur 7. Pas de centre d’appels.",
     precise: confirmed("Réponse dans l’heure", "Farid, 06/10/2026"),
   },
   aides: {

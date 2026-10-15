@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { company, fullAddress, mailHref, mapsHref, telHref, whatsappHref } from "@/config/company";
 import { anchors } from "@/config/navigation";
+import { publicValue } from "@/config/validation";
 import { genericWhatsappMessage } from "@/lib/lead";
 import { Container } from "../ui/Container";
 import { Pending } from "../ui/Pending";
@@ -10,7 +11,7 @@ export function Contact() {
   const items = [
     { label: "Téléphone", value: company.phone.display, href: telHref, track: "phone", tabular: true },
     { label: "E-mail", value: company.email, href: mailHref },
-    { label: "Adresse", value: fullAddress, href: mapsHref, external: true },
+    { label: "Adresse", value: fullAddress, href: publicValue(company.googleBusiness.url) ?? mapsHref, external: true },
   ];
   return (
     <section id={anchors.contact} data-section="contact" aria-labelledby="contact-title" className="bg-white py-14 sm:py-16">
