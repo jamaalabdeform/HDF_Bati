@@ -1,6 +1,6 @@
 import { parcoursParticulier, parcoursPro, type Segment } from "./services";
 import { positioning } from "./positioning";
-import { pending, type Validated } from "./validation";
+import type { Validated } from "./validation";
 
 /**
  * Contenu des pages profil, composées comme une fiche d'étude :
@@ -137,8 +137,10 @@ export const dossiers: Record<Segment, Dossier> = {
     },
     preparez: {
       title: "Ce que vous préparez",
-      items: ["Rien d’obligatoire pour un premier échange : une estimation du nombre de sites et la date de fin des contrats suffisent."],
-      precise: pending("Pièces utiles pour l’étude d’une collectivité (contrats, historiques de consommation, contraintes de marché public) — à confirmer avec Farid"),
+      items: [
+        "Vos dernières factures d’électricité : elles permettent d’étudier vos consommations et vos contrats.",
+        "Une estimation du nombre de sites et la date de fin des contrats suffisent pour un premier échange.",
+      ],
     },
     rappel,
     recevez: {

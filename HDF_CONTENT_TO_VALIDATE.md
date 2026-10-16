@@ -62,7 +62,7 @@ Rubriques affichées d'après le questionnaire de Farid (RDV du 27/09/2026) — 
 |---|-------|----|--------|
 | 19a | **Qui rappelle** | `dossiers.*.rappel` | « Un responsable de HDF Bâti reprend lui-même votre fiche : pas de centre d'appels. » (Farid ou son associé rappellent eux-mêmes ; Farid n'est pas nommé sur le site.) |
 | 19b | **Pièces à préparer (particulier)** | `dossiers.particulier.preparez` | Adresse, mode de chauffage, **dernier avis d'imposition envoyé par e-mail** pour vérifier l'éligibilité aux aides. |
-| 19c | **Pièces à préparer (pro / collectivité)** — pro ✅ | `dossiers.professionnel.preparez` | Farid, 16/10/2026 : **factures d'électricité** (affiché pour les professionnels). Collectivités : toujours à confirmer (mêmes pièces ?). |
+| 19c | **Pièces à préparer (pro / collectivité)** — ✅ | `dossiers.professionnel/collectivite.preparez` | Farid, 16/10/2026 : **factures d'électricité**, pour les professionnels comme pour les collectivités. |
 | 19d | **Ce que reçoit le client** | `dossiers.*.recevez` | Formulations prudentes (réponse sur la faisabilité, proposition après étude, pas d'économie chiffrée avant l'étude). |
 
 ## 4. Logo — correction effectuée, à valider

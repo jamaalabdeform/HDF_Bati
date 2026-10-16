@@ -1,3 +1,4 @@
+import { company } from "@/config/company";
 import { anchors } from "@/config/navigation";
 import { proofs } from "@/config/proofs";
 import { SHOW_PENDING } from "@/config/validation";
@@ -12,7 +13,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 export function WhyHdf() {
   const confirmedProofs = proofs.filter((p) => p.data.status === "confirmed" && p.data.value);
   // Les avis Google sont gérés par la section GoogleReviews dès que la fiche est reliée.
-  const reviewsLinked = Boolean(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
+  const reviewsLinked = company.googleBusiness.url.status === "confirmed" || Boolean(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
   const pendingProofs = proofs.filter((p) => p.data.status !== "confirmed" && !(reviewsLinked && p.id === "avis"));
   if (confirmedProofs.length === 0 && !SHOW_PENDING) return null;
 
