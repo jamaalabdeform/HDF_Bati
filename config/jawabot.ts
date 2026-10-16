@@ -129,7 +129,11 @@ const flows: Record<Segment, Step[]> = {
       options: [
         { value: "proprietaire_occupant", label: "Propriétaire occupant" },
         { value: "proprietaire_bailleur", label: "Propriétaire bailleur" },
-        { value: "locataire", label: "Locataire" },
+        {
+          value: "locataire",
+          label: "Locataire",
+          reply: "Nos projets de pompe à chaleur sont aussi ouverts aux locataires : nous voyons avec vous les conditions lors de l’échange.",
+        },
       ],
     },
     {

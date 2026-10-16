@@ -42,6 +42,7 @@ const rules: Record<Segment, Rule[]> = {
     { when: (a) => a.logement === "appartement", points: -25, reason: "Appartement (hors cible PAC)" },
     { when: (a) => a.statut === "proprietaire_occupant", points: 15, reason: "Propriétaire occupant" },
     { when: (a) => a.statut === "proprietaire_bailleur", points: 10, reason: "Propriétaire bailleur" },
+    { when: (a) => a.statut === "locataire", points: 5, reason: "Locataire (pompe à chaleur possible, Farid 16/10/2026)" },
     { when: (a) => a.chauffage === "gaz" || a.chauffage === "fioul", points: 15, reason: "Chauffage gaz / fioul" },
     { when: (a) => a.chauffage === "electrique", points: 8, reason: "Chauffage électrique" },
     { when: (a) => a.projet === "pac" || a.projet === "photovoltaique", points: 5, reason: "Projet identifié" },

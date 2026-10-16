@@ -34,7 +34,7 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 | 11 | **Avis Google** — lien ✅, avis en attente de clé | `config/company.ts` → `googleBusiness.url` ; `.env` → `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID` | Lien de la fiche fourni le 15/10/2026 (https://maps.app.goo.gl/xBE36dihMVkMGd6NA) : le site affiche « Voir nos avis sur Google ». Pour afficher la note et 5 avis : créer la clé API Places (New) et renseigner le Place ID (README § Avis Google). |
 | 12 | **Chantiers réalisés** | `config/proofs.ts` → `chantiers` ; `config/media.ts` | 4 à 5 vrais chantiers : photos avant/pendant/après, commune, équipement, accord client. |
 | 13 | **Garanties / SAV** — ✅ décision du 16/10/2026 | `config/proofs.ts` → `garanties` | Garanties légales génériques (parfait achèvement 1 an, bon fonctionnement 2 ans, décennale 10 ans, selon l'installation), garantie constructeur précisée au devis, interlocuteur pour le suivi. Aucune durée commerciale inventée. |
-| 14 | **Marques posées** | `config/proofs.ts` → `marques` | Marques / gammes de PAC et de panneaux. |
+| 14 | **Marques posées** — décision du 16/10/2026 : non affichées | — | Farid : « ça dépend de plein de choses ». Aucune marque sur le site ; la garantie constructeur renvoie au devis. |
 | 15 | **Horaires** — ✅ confirmé | `config/company.ts` → `openingHours` | Farid, 15/10/2026 : réponse dans l'heure **7 jours sur 7, soir et week-end compris**. |
 | 16 | **Coordonnées GPS** | `config/company.ts` → `geo` | Latitude / longitude de la fiche Google Business (schema.org `geo`). |
 | 17 | **Réseaux sociaux** | `config/company.ts` → `social` | URLs Facebook, Instagram, LinkedIn (les liens n'apparaissent qu'une fois renseignés). |
@@ -62,7 +62,7 @@ Rubriques affichées d'après le questionnaire de Farid (RDV du 27/09/2026) — 
 |---|-------|----|--------|
 | 19a | **Qui rappelle** | `dossiers.*.rappel` | « Un responsable de HDF Bâti reprend lui-même votre fiche : pas de centre d'appels. » (Farid ou son associé rappellent eux-mêmes ; Farid n'est pas nommé sur le site.) |
 | 19b | **Pièces à préparer (particulier)** | `dossiers.particulier.preparez` | Adresse, mode de chauffage, **dernier avis d'imposition envoyé par e-mail** pour vérifier l'éligibilité aux aides. |
-| 19c | **Pièces à préparer (pro / collectivité)** | `dossiers.professionnel/collectivite.preparez.precise` | Non communiqué : factures, contrats, historiques ? (masqué en production). |
+| 19c | **Pièces à préparer (pro / collectivité)** — pro ✅ | `dossiers.professionnel.preparez` | Farid, 16/10/2026 : **factures d'électricité** (affiché pour les professionnels). Collectivités : toujours à confirmer (mêmes pièces ?). |
 | 19d | **Ce que reçoit le client** | `dossiers.*.recevez` | Formulations prudentes (réponse sur la faisabilité, proposition après étude, pas d'économie chiffrée avant l'étude). |
 
 ## 4. Logo — correction effectuée, à valider
@@ -87,7 +87,7 @@ print et réseaux sociaux (carte de visite, avatars, templates) qui portent enco
 |---|-------|----|--------|
 | 20 | **Arbre de questions** | `config/jawabot.ts` | Relire avec Farid : questions des 3 premières minutes d'appel (PAC, PV, B2B), vouvoiement, ton. |
 | 21 | **Règles de scoring** | `lib/scoring.ts` | Pondérations provisoires basées sur les critères cités par Farid (maison, chauffage gaz, zone, délai, propriétaire). Seuils : chaud ≥ 70, tiède ≥ 45. À recalibrer sur les ventes réelles. |
-| 22 | **Locataires** | `config/jawabot.ts` → `statut` | Farid indique avoir désormais « accès au locataire » : préciser ce qui est proposé aux locataires. |
+| 22 | **Locataires** — ✅ | `config/jawabot.ts` → `statut`, `lib/scoring.ts` | Farid, 16/10/2026 : pompe à chaleur possible pour les locataires. Message affiché dans la fiche ; +5 au score. |
 | 23 | **Appartements** | `config/jawabot.ts`, `config/faq.ts` | Message actuel : « Nos projets de pompe à chaleur concernent aujourd'hui les maisons individuelles ». À confirmer. |
 | 24 | **Courtage** | `config/faq.ts` | Mode de rémunération (commission fournisseur) : vérifier l'obligation d'information du client et le wording. |
 

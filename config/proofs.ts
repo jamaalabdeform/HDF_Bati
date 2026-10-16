@@ -64,11 +64,6 @@ export const proofs: ProofItem[] = [
       "Un interlocuteur HDF Bâti pour le suivi après l’installation.",
     ],
   },
-  {
-    id: "marques",
-    label: "Marques installées",
-    data: pending("Marques / gammes de PAC et panneaux réellement posées"),
-  },
 ];
 
 export const legalCreation = confirmed(

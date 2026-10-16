@@ -102,8 +102,10 @@ export const dossiers: Record<Segment, Dossier> = {
     },
     preparez: {
       title: "Ce que vous préparez",
-      items: ["Rien d’obligatoire pour un premier échange : les informations que vous avez sous la main suffisent."],
-      precise: pending("Pièces utiles pour l’étude d’un professionnel (factures d’énergie, contrats en cours…) — à confirmer avec Farid"),
+      items: [
+        "Vos dernières factures d’électricité : elles permettent d’étudier vos consommations et votre contrat.",
+        "Les informations que vous avez sous la main sur vos bâtiments suffisent pour un premier échange.",
+      ],
     },
     rappel,
     recevez: {
