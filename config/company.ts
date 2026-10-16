@@ -7,6 +7,10 @@ import { confirmed, pending, type Validated } from "./validation";
 
 const SRC_BRIEF = "Brief landing HDF Bâti + carte de visite Farid (UI Kit V2)";
 const SRC_LEGAL = "Fiche légale publique — questionnaire Farid V3 prérempli (27/09/2026)";
+function socialUrl(url: string, note: string): Validated<string> {
+  return url ? confirmed(url, "Compte créé par l’équipe HDF Bâti") : pending<string>(note);
+}
+
 const SRC_FARID = "Réponses de Farid — questionnaire V3 (RDV du 27/09/2026)";
 
 export const company = {
@@ -76,10 +80,14 @@ export const company = {
     ),
   },
 
+  /**
+   * Réseaux sociaux : coller l'URL du compte ici (à la place de "") ou dans la variable
+   * d'environnement indiquée. Tant qu'une URL manque, l'icône renvoie vers l'accueil du réseau.
+   */
   social: {
-    facebook: pending<string>("URL de la page Facebook HDF Bâti"),
-    instagram: pending<string>("URL du compte Instagram HDF Bâti"),
-    linkedin: pending<string>("URL de la page LinkedIn HDF Bâti"),
+    facebook: socialUrl(process.env.NEXT_PUBLIC_FACEBOOK_URL || "", "URL de la page Facebook HDF Bâti"),
+    instagram: socialUrl(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "", "URL du compte Instagram HDF Bâti"),
+    linkedin: socialUrl(process.env.NEXT_PUBLIC_LINKEDIN_URL || "", "URL de la page LinkedIn HDF Bâti"),
   } satisfies Record<string, Validated<string>>,
 
   foundingDate: confirmed("2024-04-05", SRC_LEGAL),

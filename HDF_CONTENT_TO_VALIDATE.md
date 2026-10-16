@@ -37,7 +37,7 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 | 14 | **Marques posées** — décision du 16/10/2026 : non affichées | — | Farid : « ça dépend de plein de choses ». Aucune marque sur le site ; la garantie constructeur renvoie au devis. |
 | 15 | **Horaires** — ✅ confirmé | `config/company.ts` → `openingHours` | Farid, 15/10/2026 : réponse dans l'heure **7 jours sur 7, soir et week-end compris**. |
 | 16 | **Coordonnées GPS** | `config/company.ts` → `geo` | Latitude / longitude de la fiche Google Business (schema.org `geo`). |
-| 17 | **Réseaux sociaux** | `config/company.ts` → `social` | URLs Facebook, Instagram, LinkedIn (les liens n'apparaissent qu'une fois renseignés). |
+| 17 | **Réseaux sociaux** | `config/company.ts` → `social` | URLs Facebook, Instagram, LinkedIn : variables `NEXT_PUBLIC_FACEBOOK_URL`, `NEXT_PUBLIC_INSTAGRAM_URL`, `NEXT_PUBLIC_LINKEDIN_URL` chez l'hébergeur. Les icônes sont déjà affichées ; sans URL, elles renvoient vers l'accueil du réseau. |
 
 ## 2 bis. Positionnement (PRODUCT.md) — formulations prudentes en ligne
 
