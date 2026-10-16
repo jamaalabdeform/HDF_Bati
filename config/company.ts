@@ -47,8 +47,8 @@ export const company = {
     source: SRC_BRIEF,
   },
 
-  // Adresse Gmail conservée jusqu’à l’achat du nom de domaine (décision du 28/09/2026).
-  email: "HDF.bati@gmail.com",
+  // Adresse sur le domaine hdf-bati.fr (remplace l’ancienne adresse Gmail, 17/10/2026).
+  email: "contact@hdf-bati.fr",
 
   /** Numéro WhatsApp qui reçoit les prospects (Farid + associé selon le questionnaire). */
   whatsapp: {
