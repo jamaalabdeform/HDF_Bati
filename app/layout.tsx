@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { Footer } from "@/components/layout/Footer";
@@ -10,6 +11,9 @@ import { tracking } from "@/config/tracking";
 import { SITE_ENV } from "@/config/validation";
 import { businessJsonLd, jsonLd, websiteJsonLd } from "@/lib/schema";
 import "./globals.css";
+
+/** Clé publique du widget Jawabot (assistant en ligne). Variable vide = widget désactivé. */
+const jawabotKey = process.env.NEXT_PUBLIC_JAWABOT_WIDGET_KEY ?? "jwbw_fviauhmj9jekz7ambasje89s";
 
 const inter = localFont({
   src: "./inter-latin-wght.woff2",
@@ -61,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileActionBar />
         <ConsentBanner />
         <AnalyticsProvider />
+        {jawabotKey && <Script src="https://jawabot.stipway.com/widget.js" data-key={jawabotKey} strategy="lazyOnload" />}
       </body>
     </html>
   );
