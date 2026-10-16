@@ -22,11 +22,21 @@ export function WhyHdf() {
         <SectionHeading id="pourquoi-title" title="Pourquoi HDF Bâti ?" />
 
         {confirmedProofs.length > 0 && (
-          <ul className="mt-8 grid gap-4 sm:grid-cols-3">
+          <ul className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
             {confirmedProofs.map((p) => (
-              <li key={p.id} className="border-t-2 border-deep pt-4">
-                <p className="text-sm text-muted">{p.label}</p>
-                <p className="mt-1 text-lg font-bold text-deep">{p.data.value}</p>
+              <li key={p.id} className="border-t-2 border-deep pt-5">
+                <h3 className="text-lg font-bold text-deep">{p.label}</h3>
+                <p className="mt-2 max-w-[60ch] text-[0.95rem] leading-relaxed text-muted">{p.data.value}</p>
+                {p.items && (
+                  <ul className="mt-3 space-y-2.5">
+                    {p.items.map((it) => (
+                      <li key={it} className="relative max-w-[60ch] pl-5 text-[0.95rem] leading-relaxed text-ink">
+                        <span aria-hidden className="absolute top-[0.55em] left-0 size-2 rounded-[1px] bg-hdf" />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>

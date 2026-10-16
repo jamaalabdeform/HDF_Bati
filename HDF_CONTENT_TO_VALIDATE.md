@@ -29,11 +29,11 @@ Brand Book V6, UI Kit Site & Jawabot V2, Logo Master FINAL, fiche légale publiq
 
 | # | Sujet | Où | Détail |
 |---|-------|----|--------|
-| 9 | **Qualifications / RGE** | `config/proofs.ts` → `qualifications` | Farid indique que les travaux sont réalisés par une **société partenaire** qualifiée RGE (QualiPAC, QualiPV, Qualisol, Qualibois). Il faut : nom du partenaire, certificats, périmètres, dates de validité et **wording validé juridiquement**. HDF Bâti ne doit **pas** être présentée comme titulaire de ces qualifications. |
-| 10 | **Assurances** | `config/proofs.ts` → `assurance` | Décennale / RC Pro : assureur, activités couvertes (PAC, PV), attestation. |
+| 9 | **Qualifications / RGE** — ✅ décision du 16/10/2026 | `config/proofs.ts` → `qualifications` | Affiché sans nom ni certificat : « Les installations sont réalisées par une entreprise partenaire qualifiée RGE… ». HDF Bâti n'est pas présentée comme titulaire. **À faire relire (point 7)** : mention RGE d'un partenaire non nommé. |
+| 10 | **Assurances** — décision du 16/10/2026 : non publiée | — | Aucune attestation sur le site. L'assureur décennal reste obligatoire sur les devis et factures. |
 | 11 | **Avis Google** — lien ✅, avis en attente de clé | `config/company.ts` → `googleBusiness.url` ; `.env` → `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID` | Lien de la fiche fourni le 15/10/2026 (https://maps.app.goo.gl/xBE36dihMVkMGd6NA) : le site affiche « Voir nos avis sur Google ». Pour afficher la note et 5 avis : créer la clé API Places (New) et renseigner le Place ID (README § Avis Google). |
 | 12 | **Chantiers réalisés** | `config/proofs.ts` → `chantiers` ; `config/media.ts` | 4 à 5 vrais chantiers : photos avant/pendant/après, commune, équipement, accord client. |
-| 13 | **Garanties / SAV** | `config/proofs.ts` → `garanties` | Garanties matériel / main-d'œuvre, organisation du SAV. |
+| 13 | **Garanties / SAV** — ✅ décision du 16/10/2026 | `config/proofs.ts` → `garanties` | Garanties légales génériques (parfait achèvement 1 an, bon fonctionnement 2 ans, décennale 10 ans, selon l'installation), garantie constructeur précisée au devis, interlocuteur pour le suivi. Aucune durée commerciale inventée. |
 | 14 | **Marques posées** | `config/proofs.ts` → `marques` | Marques / gammes de PAC et de panneaux. |
 | 15 | **Horaires** — ✅ confirmé | `config/company.ts` → `openingHours` | Farid, 15/10/2026 : réponse dans l'heure **7 jours sur 7, soir et week-end compris**. |
 | 16 | **Coordonnées GPS** | `config/company.ts` → `geo` | Latitude / longitude de la fiche Google Business (schema.org `geo`). |

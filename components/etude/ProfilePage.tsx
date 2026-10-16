@@ -2,6 +2,7 @@ import { Aides } from "../sections/Aides";
 import { Callback } from "../sections/Callback";
 import { Faq } from "../sections/Faq";
 import { GoogleReviews } from "../sections/GoogleReviews";
+import { WhyHdf } from "../sections/WhyHdf";
 import { dossiers } from "@/config/dossiers";
 import type { Segment } from "@/config/services";
 import { faqJsonLd, jsonLd } from "@/lib/schema";
@@ -17,6 +18,7 @@ export function ProfilePage({ segment }: { segment: Segment }) {
       <DossierHero segment={segment} />
       <Dossier d={d} />
       <GoogleReviews />
+      <WhyHdf />
       {segment === "particulier" && <Aides />}
       <Faq segment={segment} />
       <Callback segment={segment} />

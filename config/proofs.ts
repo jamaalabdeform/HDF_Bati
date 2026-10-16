@@ -25,6 +25,8 @@ export interface ProofItem {
   id: string;
   label: string;
   data: Validated<string>;
+  /** Détail affiché sous le texte une fois confirmé. */
+  items?: string[];
 }
 
 /** Preuves à obtenir de Farid — rendues uniquement lorsqu'elles sont confirmées. */
@@ -38,15 +40,13 @@ export const proofs: ProofItem[] = [
   },
   {
     id: "qualifications",
-    label: "Qualifications des installations",
-    data: pending(
-      "Farid indique que les travaux sont réalisés par une société partenaire qualifiée RGE (QualiPAC, QualiPV, Qualisol, Qualibois). Wording exact, nom du partenaire, certificats et périmètres à valider juridiquement avant tout affichage. HDF Bâti ne doit pas être présentée comme titulaire de ces qualifications.",
+    label: "Installation par un professionnel RGE",
+    // Décision du 16/10/2026 : le nom du partenaire et ses certificats ne sont pas publiés.
+    // HDF Bâti n'est jamais présentée comme titulaire de la qualification.
+    data: confirmed(
+      "Les installations sont réalisées par une entreprise partenaire qualifiée RGE, condition pour bénéficier des aides de l’État à la rénovation énergétique.",
+      "Farid (questionnaire 27/09/2026) ; décision du 16/10/2026 : partenaire non nommé",
     ),
-  },
-  {
-    id: "assurance",
-    label: "Assurances",
-    data: pending("Assurance décennale / RC Pro : assureur, activités couvertes, attestation"),
   },
   {
     id: "chantiers",
@@ -55,8 +55,14 @@ export const proofs: ProofItem[] = [
   },
   {
     id: "garanties",
-    label: "Garanties et SAV",
-    data: pending("Garanties proposées (matériel, main-d'œuvre) et organisation du SAV"),
+    label: "Garanties",
+    // Garanties légales et usuelles du métier (décision du 16/10/2026), sans durée commerciale inventée.
+    data: confirmed("Vos travaux et votre matériel sont couverts.", "Garanties légales (Code civil) et garanties constructeur ; décision du 16/10/2026"),
+    items: [
+      "Garanties légales des travaux : parfait achèvement (1 an), bon fonctionnement des équipements (2 ans) et décennale (10 ans), selon la nature de l’installation.",
+      "Garantie constructeur sur le matériel, selon la marque et le modèle, précisée sur votre devis.",
+      "Un interlocuteur HDF Bâti pour le suivi après l’installation.",
+    ],
   },
   {
     id: "marques",
