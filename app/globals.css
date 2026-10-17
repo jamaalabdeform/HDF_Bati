@@ -11,6 +11,7 @@
   --color-navy: #073b63; /* Bleu confiance */
   --color-action: #e47a17; /* Orange action — réservé aux CTA */
   --color-action-hover: #ec8b30;
+  --color-action-ink: #a4500a; /* Orange lisible en texte sur fond clair (5,6:1) */
   --color-surface: #f2f7f4;
   --color-line: #dce7df;
   --color-ink: #192d27;

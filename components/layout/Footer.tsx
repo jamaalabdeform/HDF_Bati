@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { company, fullAddress, mailHref, mapsHref, telHref } from "@/config/company";
 import { footerNav } from "@/config/navigation";
+import { segmentTone } from "@/config/services";
+import { cn } from "../ui/cn";
 import { hasAnyTracker } from "@/config/tracking";
 import { Logo } from "../brand/Logo";
 import { Container } from "../ui/Container";
@@ -59,7 +61,8 @@ export function Footer() {
           <ul className="mt-4 grid grid-cols-2 gap-x-6 sm:grid-cols-1">
             {footerNav.offres.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="inline-flex min-h-10 items-center text-sm text-white/85 hover:text-white hover:underline">
+                <Link href={l.href} className="inline-flex min-h-10 items-center gap-2.5 text-sm text-white/85 hover:text-white hover:underline">
+                  {"segment" in l && <span aria-hidden className={cn("h-4 w-1 rounded-[1px] ring-1 ring-white/35", segmentTone(l.segment).mark)} />}
                   {l.label}
                 </Link>
               </li>

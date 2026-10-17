@@ -162,7 +162,7 @@ Une palette de verts institutionnels, un bleu de confiance pour l'information, e
 - **Vert profond** (`deep`) : le champ qui porte la feuille (héros, bloc de rappel, pied de page), la couleur des titres (H2, H3) sur fond clair, et la base des bordures translucides (`deep` à 20 % pour les champs et les choix, 25–35 % pour les pointillés).
 
 ### Secondary
-- **Orange action** (`action`) : fond de tous les boutons d'appel à l'action, avec texte `ink` (contraste AA). `action-hover` au survol. Rien d'autre n'est orange.
+- **Orange action** (`action`) : fond de tous les boutons d'appel à l'action, avec texte `ink` (contraste AA). `action-hover` au survol. Seule autre utilisation : couleur du profil collectivité (voir The Three-Doors Rule) ; `action-ink` pour ce profil en texte sur fond clair.
 - **Vert énergie** (`energy`) : accent sur fond profond uniquement. Seconde ligne du H1 d'accueil, icônes du pied de page et du bloc de rappel, barre verticale de la rubrique active, segment de progression en cours, anneau de focus dans `.on-deep`. Jamais comme texte sur blanc.
 
 ### Tertiary
@@ -178,6 +178,8 @@ Une palette de verts institutionnels, un bleu de confiance pour l'information, e
 
 ### Named Rules
 **The Orange-Is-Action Rule.** L'orange `action` sert uniquement de fond aux boutons qui font avancer (envoyer, étudier mon projet, demander un rappel). Jamais en texte, en icône, en bordure ou en anneau de focus.
+
+**The Three-Doors Rule.** Chaque profil a sa couleur, toujours la même : particulier = `hdf` (vert), professionnel = `navy` (bleu), collectivité = `action` (orange). Elle s'applique aux onglets et filets des trois dossiers, au filet gauche des choix de profil dans la fiche, au repère des choix du rappel, à la page profil (étiquette, filets, carrés de rubrique, puces, « Étape n ») et aux liens de navigation (page courante, menu mobile, pied de page). Exception assumée à la règle de l'orange : en couleur de profil, l'orange reste une marque (onglet, filet, puce), avec texte `ink` sur fond orange ; en texte sur fond clair, on emploie `action-ink` (#a4500a, 5,6:1). Classes : `toneClasses` / `segmentTone()` dans `config/services.ts`.
 
 **The Energy-On-Deep Rule.** Le vert énergie ne s'emploie que sur le champ `deep` ou comme marque d'état dans la feuille (barre active, segment en cours). Jamais comme couleur de texte sur blanc.
 

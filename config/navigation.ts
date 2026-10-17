@@ -17,9 +17,9 @@ export const anchors = {
 } as const;
 
 export const mainNav = [
-  { label: "Particuliers", href: "/particuliers" },
-  { label: "Professionnels", href: "/professionnels" },
-  { label: "Collectivités", href: "/collectivites" },
+  { label: "Particuliers", href: "/particuliers", segment: "particulier" },
+  { label: "Professionnels", href: "/professionnels", segment: "professionnel" },
+  { label: "Collectivités", href: "/collectivites", segment: "collectivite" },
   { label: "Aides", href: `/particuliers#${anchors.aides}` },
   { label: "FAQ", href: `/#${anchors.faq}` },
   { label: "Contact", href: `/#${anchors.contact}` },
@@ -27,9 +27,9 @@ export const mainNav = [
 
 export const footerNav = {
   offres: [
-    { label: "Particuliers", href: "/particuliers" },
-    { label: "Professionnels", href: "/professionnels" },
-    { label: "Collectivités", href: "/collectivites" },
+    { label: "Particuliers", href: "/particuliers", segment: "particulier" },
+    { label: "Professionnels", href: "/professionnels", segment: "professionnel" },
+    { label: "Collectivités", href: "/collectivites", segment: "collectivite" },
     { label: "Aides financières", href: `/particuliers#${anchors.aides}` },
   ],
   legal: [

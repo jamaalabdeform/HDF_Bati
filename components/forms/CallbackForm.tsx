@@ -7,7 +7,7 @@ import { newEventId, track } from "@/lib/analytics";
 import { readConsent } from "@/lib/consent";
 import { bestTimeOptions, CONSENT_TEXT, CONSENT_TEXT_VERSION, normalizeFrenchPhone, submitLead } from "@/lib/lead";
 import { getAttribution } from "@/lib/utm";
-import { segmentOrder, segments, type Segment } from "@/config/services";
+import { segmentOrder, segments, segmentTone, type Segment } from "@/config/services";
 import { cn } from "../ui/cn";
 import { ConsentField, SelectField, TextField } from "./Field";
 
@@ -205,7 +205,8 @@ export function CallbackForm({ defaultSegment }: { defaultSegment?: Segment }) {
                   <span aria-hidden className="grid size-5 shrink-0 place-items-center rounded-[3px] border-2 border-deep/35 group-has-[:checked]:border-hdf">
                     <span className="size-2.5 rounded-[1px] bg-hdf opacity-0 group-has-[:checked]:opacity-100" />
                   </span>
-                  {segments[id].chooserLabel}
+                  <span className="flex-1">{segments[id].chooserLabel}</span>
+                  <span aria-hidden className={cn("h-5 w-1 rounded-[1px]", segmentTone(id).mark)} />
                 </label>
               ))}
             </div>

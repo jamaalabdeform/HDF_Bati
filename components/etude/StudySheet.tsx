@@ -6,7 +6,7 @@ import { ArrowRight, Loader2, MessageCircle, Phone } from "lucide-react";
 import { answerLabel, jawabotCopy, segmentChoices, type ChoiceOption, type Step, type TextStep } from "@/config/jawabot";
 import { company, telHref, whatsappHref } from "@/config/company";
 import { dossierHref } from "@/config/dossiers";
-import { segmentOrder, segments, type Segment } from "@/config/services";
+import { segmentOrder, segments, segmentTone, type Segment } from "@/config/services";
 import { positioning } from "@/config/positioning";
 import { newEventId, track } from "@/lib/analytics";
 import { readConsent } from "@/lib/consent";
@@ -227,7 +227,15 @@ export function StudySheet({ segment: fixed, origin }: { segment?: Segment; orig
           <div>
             <p className="text-sm font-bold text-deep">Fiche d’étude</p>
             <p className="text-xs text-muted">
-              {company.name} · {state.segment ? `${segments[state.segment].label}` : "Nouvelle demande"}
+              {company.name} ·{" "}
+              {state.segment ? (
+                <>
+                  <span aria-hidden className={cn("mr-1 inline-block size-2 rounded-[1px] align-middle", segmentTone(state.segment).mark)} />
+                  {segments[state.segment].label}
+                </>
+              ) : (
+                "Nouvelle demande"
+              )}
             </p>
           </div>
           <span
@@ -484,7 +492,7 @@ function ActiveRubric({
         <h3 id={qid} className="text-lg leading-snug font-bold text-deep">
           {jawabotCopy.segmentQuestion}
         </h3>
-        <Choices key="segment" labelledBy={qid} options={segmentChoices} onPick={(v) => onSegment(v as Segment)} />
+        <Choices key="segment" labelledBy={qid} options={segmentChoices} accent={(v) => segmentTone(v as Segment).accent} onPick={(v) => onSegment(v as Segment)} />
         {!fixed && <p className="mt-2 text-xs text-muted">Vous pourrez modifier chaque réponse avant l’envoi.</p>}
       </div>
     );
@@ -520,7 +528,20 @@ function ActiveRubric({
  * Choix unique : la case se coche un court instant, puis la fiche avance (flèche en bout de ligne).
  * En mode « Modifier », la réponse actuelle est cochée d'emblée.
  */
-function Choices({ options, onPick, labelledBy, selected }: { options: readonly Pick<ChoiceOption, "value" | "label">[]; onPick: (v: string) => void; labelledBy: string; selected?: string }) {
+function Choices({
+  options,
+  onPick,
+  labelledBy,
+  selected,
+  accent,
+}: {
+  options: readonly Pick<ChoiceOption, "value" | "label">[];
+  onPick: (v: string) => void;
+  labelledBy: string;
+  selected?: string;
+  /** Filet de couleur à gauche de chaque choix (couleur du profil). */
+  accent?: (v: string) => string;
+}) {
   const [picked, setPicked] = useState<string | undefined>();
   const current = picked ?? selected;
   const choose = (v: string) => {
@@ -544,6 +565,7 @@ function Choices({ options, onPick, labelledBy, selected }: { options: readonly 
             className={cn(
               "group flex min-h-12 items-center gap-3 rounded-md border bg-white px-3 py-2 text-left text-[0.95rem] leading-tight font-semibold text-deep transition-[border-color,background-color] duration-150 hover:border-hdf hover:bg-surface",
               on ? "border-hdf bg-surface" : "border-deep/20",
+              accent && cn("border-l-4", accent(o.value)),
             )}
           >
             <span aria-hidden className={cn("grid size-5 shrink-0 place-items-center rounded-[3px] border-2 transition-colors group-hover:border-hdf", on ? "border-hdf" : "border-deep/35")}>

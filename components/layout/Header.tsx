@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { company, telHref } from "@/config/company";
 import { mainNav } from "@/config/navigation";
+import { segmentTone } from "@/config/services";
 import { Logo } from "../brand/Logo";
 import { buttonClasses } from "../ui/Button";
 import { cn } from "../ui/cn";
@@ -48,7 +49,10 @@ export function Header() {
           <ul className="flex items-center gap-0.5 xl:gap-1">
             {mainNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined} className="rounded-md px-2.5 py-2 text-[0.92rem] font-medium whitespace-nowrap text-deep/85 transition-colors hover:bg-deep/5 hover:text-deep aria-[current=page]:text-hdf aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8 xl:px-3">
+                <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={cn(
+                    "rounded-md px-2.5 py-2 text-[0.92rem] font-medium whitespace-nowrap text-deep/85 transition-colors hover:bg-deep/5 hover:text-deep aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8 xl:px-3",
+                    "segment" in item ? segmentTone(item.segment).current : "aria-[current=page]:text-hdf",
+                  )}>
                   {item.label}
                 </Link>
               </li>
@@ -97,7 +101,8 @@ export function Header() {
         <ul className="mx-auto grid max-w-[76rem] gap-1 px-4 py-3 sm:px-6">
           {mainNav.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center rounded-md px-3 text-base font-semibold text-deep hover:bg-surface">
+              <Link href={item.href} onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 rounded-md px-3 text-base font-semibold text-deep hover:bg-surface">
+                {"segment" in item && <span aria-hidden className={cn("h-5 w-1 rounded-[1px]", segmentTone(item.segment).mark)} />}
                 {item.label}
               </Link>
             </li>

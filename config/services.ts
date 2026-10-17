@@ -6,6 +6,18 @@ import { anchors } from "./navigation";
  */
 export type Segment = "particulier" | "professionnel" | "collectivite";
 
+export type SegmentTone = "green" | "navy" | "orange";
+
+/**
+ * Classes de la couleur de chaque profil (onglets, filets, repères, liens).
+ * Sur l'orange, le texte est foncé (ink) ; en texte sur fond clair, on utilise action-ink.
+ */
+export const toneClasses = {
+  green: { chip: "bg-hdf text-white", rule: "border-hdf", text: "text-hdf", mark: "bg-hdf", accent: "border-l-hdf hover:border-l-hdf", current: "aria-[current=page]:text-hdf aria-[current=page]:decoration-hdf", link: "text-hdf decoration-hdf/40 hover:decoration-hdf" },
+  navy: { chip: "bg-navy text-white", rule: "border-navy", text: "text-navy", mark: "bg-navy", accent: "border-l-navy hover:border-l-navy", current: "aria-[current=page]:text-navy aria-[current=page]:decoration-navy", link: "text-navy decoration-navy/40 hover:decoration-navy" },
+  orange: { chip: "bg-action text-ink", rule: "border-action", text: "text-action-ink", mark: "bg-action", accent: "border-l-action hover:border-l-action", current: "aria-[current=page]:text-action-ink aria-[current=page]:decoration-action", link: "text-action-ink decoration-action hover:decoration-action-ink" },
+} as const satisfies Record<SegmentTone, Record<string, string>>;
+
 export interface SegmentDef {
   id: Segment;
   label: string;
@@ -14,8 +26,8 @@ export interface SegmentDef {
   chooserHint: string;
   /** Badge d'activité (Brand Book). */
   badge: string;
-  /** Couleur de segment : particulier = vert, pro = bleu, collectivité = vert profond (l’orange est réservé à l’action). */
-  tone: "green" | "navy" | "deep";
+  /** Couleur de segment : particulier = vert, pro = bleu, collectivité = orange. */
+  tone: SegmentTone;
   cta: string;
 }
 
@@ -44,7 +56,7 @@ export const segments: Record<Segment, SegmentDef> = {
     chooserLabel: "Collectivité",
     chooserHint: "Ma structure publique",
     badge: "Collectivités",
-    tone: "deep",
+    tone: "orange",
     cta: "Optimiser mes contrats",
   },
 };
@@ -66,6 +78,8 @@ export interface ProjectCard {
   /** Sous-besoin pré-sélectionné dans Jawabot (optionnel). */
   presetNeed?: string;
 }
+
+export const segmentTone = (s: Segment) => toneClasses[segments[s].tone];
 
 export const projectCards: ProjectCard[] = [
   {
@@ -94,7 +108,7 @@ export const projectCards: ProjectCard[] = [
     id: "collectivites",
     anchor: anchors.energie,
     badge: "Collectivités",
-    tone: "deep",
+    tone: "orange",
     title: "Reprenez le contrôle de vos contrats d’énergie",
     text: "Communes, intercommunalités et établissements publics : analyse et optimisation de vos contrats d’électricité et de gaz, et accompagnement de vos projets de bâtiments.",
     points: ["Contrats d’électricité et de gaz", "Échéances et renouvellements", "Chauffage et photovoltaïque des bâtiments"],
